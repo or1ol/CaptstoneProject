@@ -1,0 +1,11 @@
+Para subir un archivo desde local a GitHub:
+  - Source Control
+  - Stage files (dando al button plus '+' de los ficheros a subir)
+  - Escribimos descriptivo del archivo
+  - Commit
+  - Sync + Push
+  
+  
+Para descargar un archivo desde GitHub a local:
+  - Source control
+  - Fetch / Pull
