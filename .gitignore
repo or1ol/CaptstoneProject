@@ -115,3 +115,6 @@ dades/2023/BicingNou_INFORMACIO/2023_03_Marc_BicingNou_INFORMACIO.csv
 dades/Estat_Estacions_Bicing.json
 dades/Informacio_Estacions_Bicing.json
 .ipynb_checkpoints/**
+/dades/
+/dades_secundaris/
+/.ipynb_checkpoints/

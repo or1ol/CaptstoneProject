@@ -1,12 +1,11 @@
 import sys
 import os
 
-i2m = list(zip(range(1,13), ['Gener','Febrer','Marc','Abril','Maig','Juny','Juliol','Agost','Setembre','Octubre','Novembre','Desembre']))
+month_names = ['Gener','Febrer','Marc','Abril','Maig','Juny','Juliol','Agost','Setembre','Octubre','Novembre','Desembre']
+months = range(1,13)
+i2m = list(zip(months, month_names))
 
-if __name__ == "__main__":
-    year = sys.argv[1]
-    dataset = sys.argv[2]
-    link = sys.argv[3]
+def download_data(year, dataset, link):
     
     print("Current working directory before")
     cwd = os.getcwd()
@@ -52,4 +51,10 @@ if __name__ == "__main__":
         print("Restoring the path")
         os.chdir(cwd)
         print("Current directory is-", cwd)
+
+if __name__ == "__main__":
+    year = sys.argv[1]
+    dataset = sys.argv[2]
+    link = sys.argv[3]
     
+    download_data(year,dataset,link)
