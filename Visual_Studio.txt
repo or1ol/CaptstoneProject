@@ -8,4 +8,4 @@ Para subir un archivo desde local a GitHub:
   
 Para descargar un archivo desde GitHub a local:
   - Source control
-  - Fetch / Pull
+  - Fetch (Captura) / Pull
