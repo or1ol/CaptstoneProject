@@ -82,14 +82,23 @@ def get_features_zero(df:pd.DataFrame):
 def get_nans_counts(df:pd.DataFrame, column:str, mean_of_column:str, mean_of_value):
     return df[df[mean_of_column] == mean_of_value][column].isna().sum()
 
-def get_columns(df: pd.DataFrame, cat_only:bool=False, num_only:bool=False) -> dict:
+def get_columns_nunique(df: pd.DataFrame, cat_only:bool=False, num_only:bool=False) -> dict:
     if cat_only:
         cat_col = df.select_dtypes(include=['object']).columns
         return {col:len(set(df[col])) for col in cat_col}
     if num_only:
         num_col = df.select_dtypes(exclude=['object']).columns
         return {col:len(set(df[col])) for col in num_col}
-    return {col:len(set(df[col])) for col in df.columns}
+    return {col:df[col].nunique() for col in df.columns}
+
+def get_columns_unique(df: pd.DataFrame, cat_only:bool=False, num_only:bool=False) -> dict:
+    if cat_only:
+        cat_col = df.select_dtypes(include=['object']).columns
+        return {col:len(set(df[col])) for col in cat_col}
+    if num_only:
+        num_col = df.select_dtypes(exclude=['object']).columns
+        return {col:len(set(df[col])) for col in num_col}
+    return {col:df[col].unique() for col in df.columns}
 
 def cross_val_evaluation(model,X_train, y_train, model_name):
     scores = cross_val_score(model, X_train, y_train,cv=5) # scoring="neg_root_mean_squared_error"
@@ -159,7 +168,8 @@ def show_column_counts(df:pd.DataFrame, column:str):
 
 # We need to convert the timestamp column to datetime and merge the two datasets considering year, month, day and hour. (minutes and seconds will be merged and replaced with the mean)
 from typing import List
-def convert_timestamp(df:pd.DataFrame, columns:List[str], sort:bool=False, add:bool=False, unit:str='s', pattern:str=None) -> pd.DataFrame:    
+def convert_timestamp(df:pd.DataFrame, columns:List[str], sort:bool=False, add:bool=False, unit:str='s', pattern:str=None) -> pd.DataFrame: 
+
     for column in columns: 
         if pattern:
             df[f'{column}_date'] = pd.to_datetime(df[column], format=pattern)
@@ -191,8 +201,6 @@ def add_time_columns(df:pd.DataFrame, column:str):
     
 # This function works only for data of one station
 def remove_duplicates(df:pd.DataFrame, column:str) -> pd.DataFrame:
-    assert column != ''
-    assert df[column] is not None
 
     repeated_data = df[column].value_counts()[df[column].value_counts() > 1]
 
@@ -207,14 +215,14 @@ def remove_duplicates(df:pd.DataFrame, column:str) -> pd.DataFrame:
 
         aux = candidates.mean().round().astype(np.int)
         
-        for cat_col in cat_cols: 
-            aux[cat_col] = candidates.dropna().groupby([column])[cat_col].max()
+        for cat_col in cat_cols:
+            aux[cat_col] = candidates.dropna()[cat_col].value_counts().index[0]
         
         assert df.shape[1] == aux.shape[0]
         
         df.drop(df[index].index, inplace=True)
         df = df.append(aux, ignore_index=True)
-    
+        
     # reorder the list
     df = df.sort_values(column, ascending=True).reset_index(drop=True)
     
@@ -247,6 +255,9 @@ def timestamp_multipleof(
     hour_column:str,
     minutes_column:str
 ) -> pd.DataFrame:    
+    
+    assert column != ''
+    assert df[column] is not None
     
     # convert time to multiples of 3
     df.loc[:,[column]] = (df[column]/devide_by).apply(np.floor)*devide_by
@@ -295,16 +306,19 @@ def print_duplicates(df:pd.DataFrame, columns:list):
     # check if conversion was done correctly
     return df.groupby(columns).nunique().max()
 
-def correct_columns(df, prim_column , column, drop=True, correct_column:pd.DataFrame=pd.DataFrame()):
+def correct_columns(df:pd.DataFrame, prim_column:str, column:str, drop:bool=True, correct_column:pd.DataFrame=pd.DataFrame(), take:str='max'):
     #print(df.shape)
     #print(column)
     
     if correct_column.empty:
-        correct_column['unique'] = dades_2019_Febrer_info_old.dropna()[[prim_column,column]].value_counts().reset_index().groupby([prim_column])[column].unique()
-        
-        correct_column.loc[:, 'first'] = [l[0] if len(l) > 0 else np.nan for l in correct_column.loc[:, 'unique']]
-        
-        correct_column = pd.DataFrame(correct_column.first)
+        aux = pd.DataFrame()
+        aux['unique'] = df.dropna()[[prim_column,column]].value_counts().reset_index().groupby([prim_column])[column].unique()
+        if take == 'first':
+            aux.loc[:, column] = [l[0] if len(l) > 0 else np.nan for l in aux.loc[:, 'unique']]
+        elif take == 'max':
+            aux.loc[:, column] = [l.max() if len(l) > 0 else np.nan for l in aux.loc[:, 'unique']]
+            
+        correct_column = pd.DataFrame(aux[column])
 
     if drop:
         df.drop(column, axis=1, inplace=True)
