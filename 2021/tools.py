@@ -29,6 +29,8 @@ import re
 
 from tqdm.notebook import tqdm
 
+import dask.dataframe as dd
+
 # study of skewness of the data population
 def skewness(df:pd.DataFrame, column:str):
     """
@@ -201,14 +203,16 @@ def add_time_columns(df:pd.DataFrame, column:str):
     
 # This function works only for data of one station
 def remove_duplicates(df:pd.DataFrame, column:str) -> pd.DataFrame:
-
-    repeated_data = df[column].value_counts()[df[column].value_counts() > 1]
+    
+    aux = df[column].value_counts()
+    repeated_data = aux[aux > 1]
 
     for value in repeated_data.index:
         index = df[column] == value
         aux = df[index]  # taking only the ones with ttl bigger then 10
         
-        candidates = aux.loc[aux['ttl'] > 10, :] if aux.loc[aux['ttl'] > 10, :].shape[0] > 1 else aux
+        candidates = aux.loc[aux['ttl'] > 10, :]
+        candidates = candidates if candidates.shape[0] > 1 else aux
 
         cat_cols = df.select_dtypes(include=['object']).columns
         num_cols = df.select_dtypes(exclude=['object']).columns
@@ -237,6 +241,57 @@ def remove_duplicates_all(df:pd.DataFrame, column:str) -> pd.DataFrame:
     for station_id in tqdm(df.station_id.unique().tolist()):
         df_s = df[df.station_id == station_id]
         df_s = remove_duplicates(df_s.copy(), column)
+        result[station_id] = df_s.copy()
+    
+    # concat the result values
+    df_ = pd.concat(list(result.values()), axis=0)
+    
+    return df_
+
+# This function works only for data of one station
+def remove_duplicates_dask(df:pd.DataFrame, column:str, station_id:int, config:dict) -> pd.DataFrame:
+    assert column != ''
+    assert df[column] is not None
+    
+    df_dd = dd.from_pandas(df, npartitions=1, name=f'{config.year}-{config.month}-{station_id}')
+    
+    aux = df_dd[column].value_counts()
+    repeated_data = aux[aux > 1].compute()
+    
+    for value in repeated_data.index:
+        index = df_dd[column] == value
+        aux = df_dd[index] # taking only the ones with ttl bigger then 10
+
+        candidates = aux[aux['ttl'] >= 10]
+        candidates = candidates if candidates.shape[0].compute() > 1 else aux
+
+        cat_cols = df_dd.select_dtypes(include=['object']).columns
+        num_cols = df_dd.select_dtypes(exclude=['object']).columns
+
+        aux = candidates.mean().compute() #.round().astype(np.int)
+
+        for cat_col in cat_cols:
+            aux[cat_col] = candidates.dropna()[cat_col].value_counts().compute().index[0]
+
+        assert df_dd.shape[1] == aux.shape[0]
+
+        df_dd = df_dd[~index]
+        df_dd = df_dd.append(aux)
+        
+    # reorder the list
+    df_dd = df_dd.reset_index(drop=True)
+
+    return df_dd.compute()
+
+def remove_duplicates_all_dask(df:pd.DataFrame, column:str, config:dict) -> pd.DataFrame:
+    assert column != ''
+    assert df[column] is not None
+    
+    result = {}
+    
+    for station_id in tqdm(df.station_id.unique().tolist()):
+        df_s = df[df.station_id == station_id]
+        df_s = remove_duplicates_dask(df_s.copy(), column, station_id, config)
         result[station_id] = df_s.copy()
     
     # concat the result values
