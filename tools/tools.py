@@ -1,3 +1,5 @@
+import os
+
 # Python ≥3.5 is required
 import sys
 assert sys.version_info >= (3, 5)
@@ -31,80 +33,111 @@ from tqdm.notebook import tqdm
 
 import dask.dataframe as dd
 
+from typing import List, Dict
+
 month_names = ['Gener','Febrer','Marc','Abril','Maig','Juny','Juliol','Agost','Setembre','Octubre','Novembre','Desembre']
 months = range(1,13)
 i2m = list(zip(months, month_names))
 
 # study of skewness of the data population
-def skewness(df:pd.DataFrame, column:str):
+def skewness(s:pd.Series) -> float:
     """
     Mesures of asymetry: 
     Negative deviation indicates that the destribution skews left. The skewness of a normal distrubtion is zero. And any symetric data must have skewness equal to zero.
     The alternative to this is by lookig into the relationship between the mean and the median.
     """
-    assert df[column] is not None
-    assert column != ''
+    
+    assert not s.empty
+    
+    data_count = s.shape[0]
+    assert data_count > 0
+    
+    data_mean = s.mean()
+    data_std = s.std()
     
     result = 0
-    series = df[column]
-    data_mean = series.mean()
-    data_std = series.std()
-    data_count = len(series)
-    
-    for i in series:
+    for i in s:
         result += ((i - data_mean) * (i - data_mean) * (i - data_mean))
     result /= (data_count * data_std * data_std * data_std)
     
     return result
 
 # Pearson median skewness coefficient
-def pearson(df:pd.DataFrame, column:str):
+def pearson(df:pd.Series) -> float:
     """
     is an alternative to skewness coefficient
     """
-    assert df[column] is not None
-    assert column != ''
     
-    result = 0
-    series = df[column]
-    data_mean = series.mean()
-    data_median = series.median()
-    data_std = series.std()
-    data_count = len(series)
+    assert not s.empty
+    
+    data_count = s.shape[0]
+    assert data_count > 0
+    
+    data_mean = s.mean()
+    data_median = s.median()
+    data_std = s.std()
+    data_count = s.shape[0]
     
     result = 3*(data_mean - data_median)*data_std
-    
     return result
 
-
-def get_features_nans(df:pd.DataFrame):
-    result = (df.isna().sum()/df.shape[0])*100
+def get_features_nans(df) -> Dict[str, float]:    
+    result = None
+    if type(df) == pd.DataFrame:
+        result = (df.isna().sum()/df.shape[0])*100
+    elif type(df) == dd.core.DataFrame:
+        result = (df.isna().sum().compute()/df.shape[0].compute())*100
+    else:
+        raise Exception('Datatype not supported yet')
     return result[result > 0].to_dict()
 
-def get_features_zero(df:pd.DataFrame):
-    result = (df.isin([0]).sum()/df.shape[0])*100
+def get_features_zero(df:pd.DataFrame) -> Dict[str, float]:
+    result = None
+    if type(df) == pd.DataFrame:
+        result = (df.isin([0]).sum()/df.shape[0])*100
+    elif type(df) == dd.core.DataFrame:
+        result = (df.isin([0]).sum().compute()/df.shape[0].compute())*100
+    else:
+        raise Exception('Datatype not supported yet')
     return result[result > 0].to_dict()
 
-def get_nans_counts(df:pd.DataFrame, column:str, mean_of_column:str, mean_of_value):
-    return df[df[mean_of_column] == mean_of_value][column].isna().sum()
-
-def get_columns_nunique(df: pd.DataFrame, cat_only:bool=False, num_only:bool=False) -> dict:
+def get_columns_nunique(df, cat_only:bool=False, num_only:bool=False) -> dict:
+    
+    assert (cat_only and num_only) is not True, 'can\'t be both true'
+    
+    columns = df.columns
+    
     if cat_only:
-        cat_col = df.select_dtypes(include=['object']).columns
-        return {col:len(set(df[col])) for col in cat_col}
+        columns = df.select_dtypes(include=['object']).columns    
+    
     if num_only:
-        num_col = df.select_dtypes(exclude=['object']).columns
-        return {col:len(set(df[col])) for col in num_col}
-    return {col:df[col].nunique() for col in df.columns}
+        columns = df.select_dtypes(exclude=['object']).columns
+    
+    if type(df) == pd.DataFrame:
+        return {column:df[column].nunique() for column in columns}
+    elif type(df) == dd.core.DataFrame:
+        return {column:df[column].nunique().compute() for column in columns}
+    else:
+        raise Exception('Datatype not supported yet')
 
-def get_columns_unique(df: pd.DataFrame, cat_only:bool=False, num_only:bool=False) -> dict:
+def get_columns_unique(df, cat_only:bool=False, num_only:bool=False) -> dict:
+    
+    assert (cat_only and num_only) is not True, 'can\'t be both true'
+    
+    columns = df.columns
+    
     if cat_only:
-        cat_col = df.select_dtypes(include=['object']).columns
-        return {col:len(set(df[col])) for col in cat_col}
+        columns = df.select_dtypes(include=['object']).columns    
+    
     if num_only:
-        num_col = df.select_dtypes(exclude=['object']).columns
-        return {col:len(set(df[col])) for col in num_col}
-    return {col:df[col].unique() for col in df.columns}
+        columns = df.select_dtypes(exclude=['object']).columns
+    
+    if type(df) == pd.DataFrame:
+        return {column:df[column].unique() for column in columns}
+    elif type(df) == dd.core.DataFrame:
+        return {column:df[column].unique().compute() for column in columns}
+    else:
+        raise Exception('Datatype not supported yet')
 
 def cross_val_evaluation(model,X_train, y_train, model_name):
     scores = cross_val_score(model, X_train, y_train,cv=5) # scoring="neg_root_mean_squared_error"
@@ -132,46 +165,54 @@ def calcualte_scores(y, y_hat, show=True):
         plt.show()
     return mdl_mse,mdl_rmse,mdl_mae,mdl_r2score
 
-def show_column_counts(df:pd.DataFrame, column:str):
+def show_column_counts(df:pd.DataFrame, column:str) -> None:
     assert column != ''
     assert df[column] is not None
     
+    show_column_counts(df[column])
+
+def show_counts(s:pd.Series) -> None:
+    
+    assert not s.empty
+    
+    data_count = s.shape[0]
+    assert data_count > 0
     
     fig, axs = plt.subplots(3, 2, figsize=(20,10))
-    axs[0][0].hist(df[column], label=f'{column} hist',bins=40)
+    axs[0][0].hist(s, label=f'{s.name} hist',bins=40)
     axs[0][0].set_xlabel('values')
     axs[0][0].set_ylabel('counts')
     axs[0][0].set_title('')
 
-    axs[0][1].scatter(df[column].index, df[column].values, label=f'{column} scatter')
+    axs[0][1].scatter(s.index, s.values, label=f'{s.name} scatter')
     axs[0][1].set_xlabel('index')
     axs[0][1].set_ylabel('values')
     axs[0][1].set_title('')
     
-    axs[1][0].scatter(df[column].value_counts().index, df[column].value_counts().values,label=f'{column} counts')
+    axs[1][0].scatter(s.value_counts().index, s.value_counts().values,label=f'{s.name} counts')
     axs[1][0].set_xlabel('values')
     axs[1][0].set_ylabel('counts')
     axs[1][0].set_title('')
     
-    axs[1][1].hist(df[column].value_counts(),label=f'{column} counts', bins=df[column].value_counts().shape[0])
+    axs[1][1].hist(s.value_counts(),label=f'{s.name} counts', bins=s.value_counts().shape[0])
     axs[1][1].set_xlabel('counts')
     axs[1][1].set_ylabel('values')
     axs[1][1].set_title('')
     
     
-    axs[2][0].hist(df[column], density=True, histtype='step', cumulative=True,  linewidth=3.5, bins=30, color=sns.desaturate("indianred", .75))
+    axs[2][0].hist(s, density=True, histtype='step', cumulative=True,  linewidth=3.5, bins=30, color=sns.desaturate("indianred", .75))
     axs[2][0].set_xlabel('values')
     axs[2][0].set_ylabel('counts')
     axs[2][0].set_title('')
     
-    axs[2][1].boxplot(df[column])
+    axs[2][1].boxplot(s)
     axs[2][1].set_xlabel('counts')
     axs[2][1].set_ylabel('values')
     axs[2][1].set_title('')
 
     plt.tight_layout()
-    plt.show()
-
+    plt.show()    
+    
 # We need to convert the timestamp column to datetime and merge the two datasets considering year, month, day and hour. (minutes and seconds will be merged and replaced with the mean)
 from typing import List
 def convert_timestamp(df:pd.DataFrame, columns:List[str], sort:bool=False, add:bool=False, unit:str='s', pattern:str=None) -> pd.DataFrame: 
@@ -341,26 +382,6 @@ def timestamp_multipleof(
     df[new_column] = (dates - pd.Timestamp("1970-01-01")) // pd.Timedelta('1s')
 
     return df
-
-def Cov(X, Y):
-    def _get_dvis(V):
-        return [v - np.mean(V) for v in V]
-    dxis = _get_dvis(X)
-    dyis = _get_dvis(Y)
-    return np.sum([x * y for x, y in zip(dxis, dyis)])/len(X)
-
-def PearsonCorr(X, Y):
-    assert len(X) == len(Y)
-    return Cov(X, Y) / np.prod([np.std(V) for V in [X, Y]])
-
-def list2rank(l):
-    #l is a list of numbers
-    # returns a list of 1-based index; mean when multiple instances
-    return [np.mean([i+1 for i, sorted_el in enumerate(sorted(l)) if sorted_el == el]) for el in l]
-
-def spearmanRank(X, Y):
-    # X and Y are same-length lists
-    return PearsonCorr(list2rank(X), list2rank(Y))
 
 def print_duplicates(df:pd.DataFrame, columns:list):
     # check if conversion was done correctly
@@ -586,3 +607,80 @@ def read_informacion_estacion_anual(input_dataset:str, year:int):
             print('found file with shape equal to: ', get_file_length(config))
             
         print('Done -------- ----------')
+
+def print_partitions(ddf:dd.core.DataFrame) -> None:
+    for i in range(ddf.npartitions):
+        print('Partion:', i)
+        print(ddf.partitions[i].head())
+
+def read_dask_dataframe(folder_path:str, folder_type:str, config:dict, add_meta:bool=False) -> dd.core.DataFrame:
+    assert folder_path != '' 
+    assert folder_type != '' 
+    assert not config.empty
+    
+    ddf = None
+    
+    if folder_type == 'csv':
+        # re read file
+        ddf = dd.read_csv(
+            urlpath=f'{folder_path}/{config.year}/{config.dataset}/{config.year}_{config.month:02d}_{config.monthname}_{config.dataset}.{folder_type}',
+            blocksize='default',
+            lineterminator=None,
+            compression='infer',
+            sample=256000,
+            enforce=False,
+            assume_missing=False,
+            storage_options=None,
+            include_path_column=False,
+            header=0
+        )
+    else: 
+        raise 'Not supported yet'
+    
+    if add_meta: 
+        ddf._name = f'{config.year}-{config.month}'
+        # we have one partion
+        # TODO
+        # ddf.divisions = (0, ddf.shape[0].compute()-1)
+    
+    return ddf
+
+def read_dask_dataframes(folder_path:str, folder_type:str, input_dataset:str, years:List[int]) -> Dict[str, dd.core.DataFrame]:
+    assert folder_path != '' 
+    assert folder_type != ''
+    assert input_dataset != ""
+    
+    data = dict()
+    
+    for year in tqdm(years):
+        assert year >= 2018 and year <= 2023
+        ddf_year_list = list()
+        
+        #print('--> ', year, input_dataset)
+        
+        config = pd.Series({
+            'year':year,
+            'dataset': input_dataset,
+            'month': np.nan,
+            'monthname': np.nan
+        })
+        
+        for month, month_name in tqdm(i2m):
+            config.month = month
+            config.monthname = month_name
+            #print('----> ', year, month, month_name, input_dataset)
+            
+            ddf_year_list.append(
+                read_dask_dataframe(folder_path, folder_type, config)
+            )
+            
+            #print('----> ', 'Done -------- ----------')
+        
+        data[year] = dd.concat(ddf_year_list, interleave_partitions=False)
+        
+        #print('--> ', 'Done -------- ----------')
+        
+    return data
+
+def get_ddf_shape(ddf:dd.core.DataFrame):
+    return ddf.shape[0].compute(), ddf.shape[1]
