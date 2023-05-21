@@ -169,7 +169,7 @@ def show_column_counts(df:pd.DataFrame, column:str) -> None:
     assert column != ''
     assert df[column] is not None
     
-    show_column_counts(df[column])
+    show_counts(df[column])
 
 def show_counts(s:pd.Series) -> None:
     
@@ -294,57 +294,6 @@ def remove_duplicates_all(df:pd.DataFrame, column:str) -> pd.DataFrame:
     
     return df_
 
-# This function works only for data of one station
-def remove_duplicates_dask(df:pd.DataFrame, column:str, station_id:int, config:dict) -> pd.DataFrame:
-    assert column != ''
-    assert df[column] is not None
-    
-    df_dd = dd.from_pandas(df, npartitions=1, name=f'{config.year}-{config.month}-{station_id}')
-    
-    aux = df_dd[column].value_counts()
-    repeated_data = aux[aux > 1].compute()
-    
-    for value in repeated_data.index:
-        index = df_dd[column] == value
-        aux = df_dd[index] # taking only the ones with ttl bigger then 10
-
-        candidates = aux[aux['ttl'] >= 10]
-        candidates = candidates if candidates.shape[0].compute() > 1 else aux
-
-        cat_cols = df_dd.select_dtypes(include=['object']).columns
-        num_cols = df_dd.select_dtypes(exclude=['object']).columns
-
-        aux = candidates.mean().compute() #.round().astype(np.int)
-
-        for cat_col in cat_cols:
-            aux[cat_col] = candidates.dropna()[cat_col].value_counts().compute().index[0]
-
-        assert df_dd.shape[1] == aux.shape[0]
-
-        df_dd = df_dd[~index]
-        df_dd = df_dd.append(aux)
-        
-    # reorder the list
-    df_dd = df_dd.reset_index(drop=True)
-
-    return df_dd.compute()
-
-def remove_duplicates_all_dask(df:pd.DataFrame, column:str, config:dict) -> pd.DataFrame:
-    assert column != ''
-    assert df[column] is not None
-    
-    result = {}
-    
-    for station_id in tqdm(df.station_id.unique().tolist()):
-        df_s = df[df.station_id == station_id]
-        df_s = remove_duplicates_dask(df_s.copy(), column, station_id, config)
-        result[station_id] = df_s.copy()
-    
-    # concat the result values
-    df_ = pd.concat(list(result.values()), axis=0)
-    
-    return df_
-
 def timestamp_multipleof(
     devide_by:int, 
     column:str,
@@ -419,194 +368,6 @@ def correct_columns(df:pd.DataFrame, prim_column:str, column:str, drop:bool=True
     #print(df.shape)
     
     return df
-
-def read_status_estacion_mes(config:dict):
-    data_df = pd.read_csv(f'../dades/{config.year}/{config.datafrom}/{config.year}_{config.month:02d}_{config.monthname}_{config.datafrom}.csv')
-
-    intial_size = data_df.shape[0]
-    print(data_df.shape)
-
-    # change column to one hot enconding
-    data_df['is_charging_station'] = data_df.is_charging_station.astype(np.int)
-
-    # STATUS = IN_SERVICE=En servei, CLOSED=Tancada, MAINTENANCE=installed but closed for MAINTENANCE, PLANNED=not installed and closed
-    # replace IN_SERVICE with 1 and CLOSED with 0 
-    data_df['status'].replace(
-        to_replace=['IN_SERVICE', 'OPEN', 'OPN', 'CLS', 'CLOSED', 'NOT_IN_SERVICE', 'MAINTENANCE', 'PLANNED'],                       
-        value=[0, 0, 0, 1, 1, 1,  2, 3], inplace=True)
-    
-    data_df.loc[data_df.last_reported.isna(), 'last_reported'] = data_df.loc[data_df.last_reported.isna(), 'last_updated']
-
-    # will remove the duplicate for last reported for all stations in the dataset
-    data_df = remove_duplicates_all(data_df.copy(), 'last_reported')
-
-    # convert timestamps of last_updated
-    data_df = convert_timestamp(data_df.copy(), ['last_updated'], sort=True, add=True)
-
-    # convert timestamps to multimple of 60
-    data_df = timestamp_multipleof(
-        devide_by=config.devide_by, 
-        column='minutes_last_updated_date',
-        df=data_df.copy(), 
-        new_column='last_updated', 
-        year_column='year_last_updated_date',
-        month_column='month_last_updated_date',
-        day_column='dayofmonth_last_updated_date',
-        hour_column='hour_last_updated_date',
-        minutes_column='minutes_last_updated_date'
-    )
-    
-    # print(data_df.minutes_last_updated_date.value_counts())
-    data_df.drop(['minutes_last_updated_date'], axis=1, inplace=True)
-
-    ### will remove the duplicate for last reported for all stations in the dataset
-    data_df = remove_duplicates_all(data_df.copy(), 'last_updated')
-    
-    print(data_df.shape)
-    print('removed:', intial_size-data_df.shape[0])
-    
-    data_df.reset_index(drop=True, inplace=True)
-
-    data_df.drop(['ttl'], axis=1, inplace=True)
-
-    # save checkpoint
-    data_df.to_csv(f'../dades/{config.year}/{config.dataset}/{config.year}_{config.month:02d}_{config.monthname}_{config.dataset}.csv', index=False)
-
-
-def read_status_informacio_mes(config:dict) -> dd.core.DataFrame:
-
-    data_df = pd.read_csv(f'../dades/{config.year}/{config.datafrom}/{config.year}_{config.month:02d}_{config.monthname}_{config.datafrom}.csv')
-
-    intial_size = data_df.shape[0]
-    print(data_df.shape)
-    
-    # drop not needed columns
-    # data_df.drop(['nearbyStations', 'cross_street'], axis=1, inplace=True)
-
-    data_df.loc[data_df.altitude.isin(['0.1', 'nan', np.nan]), 'altitude'] = '0'
-    data_df.altitude = data_df.altitude.astype(np.int).astype(str)
-
-    cond = (~data_df.altitude.isin([str(x) for x in range(200)] + [np.nan]))
-    print(data_df[cond].shape)
-    # 485 row does not have 0 in the altitud column
-    # capacity is filled with values 1 to fix this we need to shift the data 
-
-    # Fix data 
-    data_df.loc[cond, ['capacity']] = data_df[cond].post_code
-    data_df.loc[cond, ['post_code']] = data_df[cond].address
-    data_df.loc[cond, ['address']] = data_df[cond].altitude
-    data_df.loc[cond, ['altitude']] = '0'
-    data_df.altitude.fillna('0', inplace=True)
-
-    # post code is wrong need fixing using long & lat. 
-    # can be fixed using post code data from old dataset after the merge
-    data_df['post_code'] = '0'
-
-    data_df = convert_timestamp(data_df.copy(), ['last_updated'], sort=True, add=True)
-
-    # convert timestamps to multimple of 3
-    data_df = timestamp_multipleof(
-        devide_by=config.devide_by, 
-        column='minutes_last_updated_date',
-        df=data_df.copy(), 
-        new_column='last_updated', 
-        year_column='year_last_updated_date',
-        month_column='month_last_updated_date',
-        day_column='dayofmonth_last_updated_date',
-        hour_column='hour_last_updated_date',
-        minutes_column='minutes_last_updated_date'
-    )
-
-    # drop not needed columns
-    data_df.drop(
-        [
-            'year_last_updated_date', 'month_last_updated_date',
-            'week_last_updated_date', 'dayofweek_last_updated_date',
-            'dayofmonth_last_updated_date', 'dayofyear_last_updated_date',
-            'hour_last_updated_date', 'minutes_last_updated_date'
-        ],
-        axis=1,
-        inplace=True
-    )
-
-    data_df['physical_configuration'].replace(to_replace=['REGULAR', 'BIKE','BIKESTATION', 'BIKE-ELECTRIC', 'ELECTRICBIKESTATION'], value=[0, 0, 0, 1, 1], inplace=True)
-
-    # create mew column of last reported and last updated 
-    data_df['street_name'] = data_df.apply(
-        lambda x: " ".join(re.findall("[a-zA-Z]+", x['name'])),
-        axis=1
-    )
-
-    def lambda_fun(name):
-        ret = 'nan'
-        try:
-            ret = re.findall("\d+$", name)[0]
-        except:
-            ret = 'nan'
-
-        return ret
-
-    # create mew column of last reported and last updated 
-    data_df['street_number'] = data_df.apply(
-        lambda x: lambda_fun(x['name']),
-        axis=1
-    )
-
-    # we don't have this column anywhere in the new dataset so it got removed
-    data_df.drop(['address', 'name'], axis=1, inplace=True)
-
-    ### will remove the duplicate for last reported for all stations in the dataset
-    data_df = remove_duplicates_all(data_df.copy(), 'last_updated')
-    
-    print(data_df.shape)
-    print('removed:', intial_size-data_df.shape[0])
-    
-    data_df.reset_index(drop=True, inplace=True)
-
-    data_df.drop(['ttl'], axis=1, inplace=True)
-
-    # save checkpoint
-    data_df.to_csv(f'../dades/{config.year}/{config.dataset}/{config.year}_{config.month:02d}_{config.monthname}_{config.dataset}.csv', index=False)
-
-
-def get_file_length(config:dict):
-    data_df = pd.read_csv(
-        filepath_or_buffer=f'../dades/{config.year}/{config.datafrom}/{config.year}_{config.month:02d}_{config.monthname}_{config.datafrom}.csv',
-        header=0,
-        low_memory=False,
-    )
-    return data_df.shape
-    
-def read_informacion_estacion_anual(input_dataset:str, year:int):
-    assert input_dataset != ""
-    assert year >= 2018 and year <= 2023
-
-    config = pd.Series({
-        'devide_by':60,
-        'year':year,
-        'datafrom': input_dataset,
-        'dataset': f'{input_dataset}_CLEAN',
-        'ttl': 30,
-        'month': np.nan,
-        'monthname': np.nan
-    })
-
-    os.system(f"mkdir -p ../dades/{config.year}/{config.dataset}")
-
-    for month, month_name in i2m:
-        config.month = month
-        config.monthname = month_name
-        print(year, month, month_name, input_dataset)
-        if not os.path.exists(f'../dades/{config.year}/{config.dataset}/{config.year}_{config.month:02d}_{config.monthname}_{config.dataset}.csv'):
-            if input_dataset == 'BicingNou_ESTACIONS':
-                read_status_estacion_mes(config)
-            elif input_dataset == 'BicingNou_INFORMACIO':
-                read_status_informacio_mes(config)
-            # TODO add elif para cada dataset que queramso anadir en el futuro ()
-        else:
-            print('found file with shape equal to: ', get_file_length(config))
-            
-        print('Done -------- ----------')
 
 def print_partitions(ddf:dd.core.DataFrame) -> None:
     for i in range(ddf.npartitions):
@@ -684,3 +445,147 @@ def read_dask_dataframes(folder_path:str, folder_type:str, input_dataset:str, ye
 
 def get_ddf_shape(ddf:dd.core.DataFrame):
     return ddf.shape[0].compute(), ddf.shape[1]
+
+def get_column(df, column:str) -> pd.Series:
+    assert column != ''
+    assert df[column] is not None
+    
+    if type(df) == pd.DataFrame:
+        return df[column]
+    elif type(df) == dd.core.DataFrame: 
+        return df[column].compute()
+    
+    raise Exception('Datatype not supported yet')
+    
+def get_column_value_counts(s) -> pd.Series:
+    
+    assert s is not None
+    
+    if type(s) == pd.Series:
+        return s.value_counts()
+    elif type(s) == dd.core.Series: 
+        return s.value_counts().compute()
+    
+    raise Exception('Datatype not supported yet')
+    
+
+def scatter_columns(
+    df, 
+    col_x:str, 
+    col_y:str, 
+    col_z:str, 
+    tail:bool=False, 
+    xticks:np.ndarray=np.ndarray((0,0)), 
+    yticks:np.ndarray=np.ndarray((0,0)),
+    figsize:tuple=(20,25),
+    count:int=5,
+    label:str=None
+) -> None:
+    
+    assert col_x != ''
+    assert col_y != ''
+    assert col_z != ''
+    
+    assert df[col_x] is not None
+    assert df[col_y] is not None
+    assert df[col_z] is not None
+    
+    plt.rcParams["figure.figsize"] = figsize
+    
+    counts = get_column_value_counts(df[col_z])
+    
+    print('value counts stats', {'max':counts.max(),'mean':counts.mean(),'median':counts.median(),'std':counts.std(),'min':counts.min()})
+    
+    if tail:
+        keys = counts.tail(count).keys()
+    else:    
+        keys = counts.head(count).keys()
+    
+    colors = mpl.cm.rainbow(np.linspace(0, 1, len(keys)))
+
+    label = f'-{label}' if label else ''
+    
+    for i, value in enumerate(tqdm(keys)):
+        
+        computed = df[df[col_z] == value].groupby([col_x])[col_y].mean().reset_index().compute().sort_values(by=col_x)
+        
+        x = get_column(computed, col_x)
+        y = get_column(computed, col_y)
+        
+        plt.scatter(x, y, linewidths=True, label=f'{col_z}:{value}{label}', edgecolors=colors[i])
+        plt.plot(x, y, linestyle='dashed', color='gray')
+        
+    if xticks.any():
+        plt.xticks(xticks)
+        
+    if yticks.any():
+        plt.yticks(yticks)
+    
+    plt.legend() # keys.astype(np.int)
+    #plt.show()
+    
+# code to save checkpoint
+
+def save_checkpoint(ddf:dd.core.DataFrame, config_year:dict):
+    
+    path_to_file = f'{config_year.path}/{config_year.year}/{config_year.dataset}'
+    
+    os.system(f"mkdir -p {path_to_file}")
+
+    ddf.to_csv(f'{path_to_file}/{config_year.year}_{config_year.dataset}_*.csv',  index=False)
+    
+    print('checkpoint saved.')
+    
+    
+
+def load_checkpoint(config_year:dict) -> dd.core.DataFrame:
+    
+    path_files_year = f'{config_year.path}/{config_year.year}/{config_year.dataset}'
+
+    if os.path.exists(f'{path_files_year}/{config_year.year}_{config_year.dataset}_00.csv'):
+
+        ddf = dd.read_csv(
+            f'{path_files_year}/{config_year.year}_{config_year.dataset}_*.csv', 
+            dtype={
+                'month': 'int64',
+                'year': 'int64',
+                'day': 'int64',
+                'dayofweek': 'int64',
+                'dayofyear': 'int64',
+                'hour': 'int64',
+                'timestamp': 'int64',
+                'is_charging_station': 'int64',
+                'is_installed': 'int64',
+                'is_renting': 'int64',
+                'is_returning': 'int64',
+                'station_id': 'int64',
+                'status': 'int64'
+            }
+        )
+        
+        print('checkpoint reloaded.')
+    
+        return ddf
+    else:
+        raise Exception('Files not found.')
+
+def Cov(X, Y): 
+    def _get_dvis(V):
+        return [v - np.mean(V) for v in V]
+    dxis = _get_dvis(X)
+    dyis = _get_dvis(Y)
+    return np.sum([x * y for x, y in zip(dxis, dyis)])/len(X)
+
+def PearsonCorr(X, Y):
+    assert len(X) == len(Y)
+    return Cov(X, Y) / np.prod([np.std(V) for V in [X, Y]])
+
+def list2rank(l):
+    #l is a list of numbers
+    # returns a list of 1-based index; mean when multiple instances
+    return [np.mean([i+1 for i, sorted_el in enumerate(sorted(l)) if sorted_el == el]) for el in l]
+
+def spearmanRank(X, Y):
+    # X and Y are same-length lists
+    return PearsonCorr(list2rank(X), list2rank(Y))
+
