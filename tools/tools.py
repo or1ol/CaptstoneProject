@@ -1,4 +1,4 @@
-import os
+import os, shutil
 
 # Python ≥3.5 is required
 import sys
@@ -527,16 +527,25 @@ def scatter_columns(
 # code to save checkpoint
 
 def save_checkpoint(ddf:dd.core.DataFrame, config_year:dict):
-    
-    path_to_file = f'{config_year.path}/{config_year.year}/{config_year.dataset}'
-    
-    os.system(f"mkdir -p {path_to_file}")
 
-    ddf.to_csv(f'{path_to_file}/{config_year.year}_{config_year.dataset}_*.csv',  index=False)
+    path_to_file = f'{config_year.path}/{config_year.year}/{config_year.dataset}'
+
+    # DASK has so many issue it does replace files if already exists. For that reason it was needed to do this fix
+    # deleting files before saving 
+    # delete_dataset(path_to_file)
+
+    os.system(f"mkdir -p {path_to_file}")
+    
+    ddf.to_csv(f'{path_to_file}/{config_year.year}_{config_year.dataset}_*.csv', index=False, mode='wt')
     
     print('checkpoint saved.')
     
+def delete_dataset(path_to_dataset_folder:str):
     
+    try:
+        shutil.rmtree(path_to_dataset_folder)
+    except Exception as e:
+        print('Failed to delete %s. Reason: %s' % (path_to_dataset_folder, e))
 
 def load_checkpoint(config_year:dict) -> dd.core.DataFrame:
     
