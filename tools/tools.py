@@ -393,7 +393,8 @@ def read_dask_dataframe(folder_path:str, folder_type:str, config:dict, add_meta:
             assume_missing=False,
             storage_options=None,
             include_path_column=False,
-            header=0
+            header=0,
+            dtype={'post_code': 'float64','street_number': 'object','street_name': 'object'}
         )
     else: 
         raise 'Not supported yet'
