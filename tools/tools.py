@@ -139,32 +139,6 @@ def get_columns_unique(df, cat_only:bool=False, num_only:bool=False) -> dict:
     else:
         raise Exception('Datatype not supported yet')
 
-def cross_val_evaluation(model,X_train, y_train, model_name):
-    scores = cross_val_score(model, X_train, y_train,cv=5) # scoring="neg_root_mean_squared_error"
-    print("\n ",model_name)
-    display_scores(scores)
-    
-def calcualte_scores(y, y_hat, show=True):
-    ## Evaluate the model and plot it
-    mdl_mse = mean_squared_error(y, y_hat)
-    mdl_rmse = np.sqrt(mdl_mse)
-    mdl_mae = mean_absolute_error(y, y_hat)
-    mdl_r2score = r2_score(y, y_hat)
-    
-    # Best possible score is 1.0, lower values are worse.
-    if show:
-        print("----- EVALUATION ON VAL SET ------")
-        print('MSE:', mdl_mse)
-        print('RMSE', mdl_rmse)
-        print('MAE:', mdl_mae)
-        print('R^2: ', mdl_r2score) 
-        print()
-        plt.scatter(y, y_hat)
-        plt.xlabel('y')
-        plt.ylabel('y^')
-        plt.show()
-    return mdl_mse,mdl_rmse,mdl_mae,mdl_r2score
-
 def show_column_counts(df:pd.DataFrame, column:str) -> None:
     assert column != ''
     assert df[column] is not None
@@ -598,4 +572,365 @@ def list2rank(l):
 def spearmanRank(X, Y):
     # X and Y are same-length lists
     return PearsonCorr(list2rank(X), list2rank(Y))
+
+
+
+
+
+def plot_history(history):
+    'accuracy',
+    'RootMeanSquaredError',
+    'MeanAbsoluteError',
+    'MeanSquaredError'    
+        
+    fig, axs = plt.subplots(2, 2, figsize=(35,10))
+    axs[0][0].plot(history.history['loss'], label='train_loss')
+    axs[0][0].plot(history.history['val_loss'], label='val_loss')
+    axs[0][0].set_xlabel('Epochs')
+    axs[0][0].set_ylabel('Loss')
+    axs[0][0].set_title('(Loss - rmse)')
+    axs[0][0].legend()
+
+    axs[0][1].plot(history.history['lr'], label='train_lr')
+    axs[0][1].set_xlabel('Epochs')
+    axs[0][1].set_ylabel('Accuracy')
+    axs[0][1].set_title('(lr)')
+    axs[0][1].legend()
+    
+    axs[1][0].plot(history.history['root_mean_squared_error'], label='train_RootMeanSquaredError')
+    axs[1][0].plot(history.history['val_root_mean_squared_error'], label='val_RootMeanSquaredError')
+    axs[1][0].set_xlabel('Epochs')
+    axs[1][0].set_ylabel('Loss')
+    axs[1][0].set_title('(rmse)')
+    axs[1][0].legend()
+
+    axs[1][1].plot(history.history['mean_absolute_error'], label='train_mean_absolute_error')
+    axs[1][1].plot(history.history['val_mean_absolute_error'], label='val_mean_absolute_error')
+    axs[1][1].set_xlabel('Epochs')
+    axs[1][1].set_ylabel('Accuracy')
+    axs[1][1].set_title('(mae)')
+    axs[1][1].legend()
+
+    plt.tight_layout()
+    plt.show()
+
+def display_scores(scores):
+    print("Scores:", scores)
+    print("Mean:", scores.mean())
+    print("Standard deviation:", scores.std())
+
+def cross_val_evaluation(model,X_train, y_train, model_name):
+    scores = cross_val_score(model, X_train, y_train,cv=5) # scoring="neg_root_mean_squared_error"
+    print("\n ",model_name)
+    display_scores(scores)
+    
+def calcualte_scores(y, y_hat, show=True):
+    ## Evaluate the model and plot it
+    mdl_mse = mean_squared_error(y, y_hat)
+    mdl_rmse = np.sqrt(mdl_mse)
+    mdl_mae = mean_absolute_error(y, y_hat)
+    mdl_r2score = r2_score(y, y_hat)
+    
+    # Best possible score is 1.0, lower values are worse.
+    if show:
+        print("----- EVALUATION ON VAL SET ------")
+        print('MSE:', mdl_mse)
+        print('RMSE', mdl_rmse)
+        print('MAE:', mdl_mae)
+        print('R^2: ', mdl_r2score) 
+        print()
+        plt.scatter(y, y_hat)
+        plt.xlabel('y')
+        plt.ylabel('y^')
+        plt.show()
+    return mdl_mse,mdl_rmse,mdl_mae,mdl_r2score
+    
+def cut_off_outliers_std(data, value, cuantos:int=3):
+    data_mean, data_std = data[value].mean(), data[value].std()
+    # identify outliers
+    
+    cut_off = data_std * cuantos
+    lower, upper = data_mean - cut_off, data_mean + cut_off
+
+    outliers_lower_data = data[data[value] < lower]
+    outliers_upper_data = data[data[value] > upper]
+    removed = pd.concat((outliers_lower_data, outliers_upper_data), axis=0)
+
+    cleaned = data[data[value] > lower]
+    cleaned = cleaned[cleaned[value] < upper]
+
+    return removed, cleaned 
+
+def cut_off_outliers_qrt(data, value):
+    # calculate summary statistics
+    q25 = data[value].quantile(0.25)
+    q75 = data[value].quantile(0.75)
+    
+    iqr = q75 - q25
+    cut_off = iqr * 1.5
+    lower, upper = q25 - cut_off, q75 + cut_off
+    
+    outliers_lower_data = data[data[value] < lower]
+    outliers_upper_data = data[data[value] > upper]
+    removed = pd.concat((outliers_lower_data, outliers_upper_data), axis=0)
+
+    cleaned = data[data[value] > lower]
+    cleaned = cleaned[cleaned[value] < upper]
+
+    return removed, cleaned
+
+from scipy import stats
+def cut_off_outliers_zscore(df,value):
+    d = df[value]
+    if (len(d)>1):
+    #     print(d)
+        z = np.abs(stats.zscore(d))
+    #     print(z)
+        threshold = z.mean()
+    #     print(threshold)
+         # Position of the outlier
+        index = np.where(z > threshold)
+        return d.iloc[index].index
+    #     sns.boxplot(d)
+    #     scaler.fit(d)
+    #     print(scaler.mean_)
+    #     print(scaler.transform(d))
+    else:
+        return []
+
+# Pearson median skewness coefficient
+def pearson(df:pd.DataFrame, column:str):
+    """
+    is an alternative to skewness coefficient
+    """
+    assert df[column] is not None
+    assert column != ''
+    
+    result = 0
+    series = df[column]
+    data_mean = series.mean()
+    data_median = series.median()
+    data_std = series.std()
+    data_count = len(series)
+    
+    result = 3*(data_mean - data_median)*data_std
+    
+    return result
+
+
+def show_data_distribution(df:pd.DataFrame, column:str, cut_off:str='', show_quantiles:bool=True, show_mean:bool=True):
+    assert df[column] is not None
+    assert cut_off == '' or cut_off == 'mean' or cut_off == 'median'
+    
+    series = df[column]
+    
+    q25 = series.quantile(0.25)
+    q50 = series.quantile(0.50) # median
+    q75 = series.quantile(0.75)
+    data_mean = series.mean()
+    data_std = series.std()
+    count = len(series)
+    
+    series.plot()
+    
+    if show_quantiles:
+        plt.plot(df.index, [q25]*count, linestyle='dashed', color='purple')
+        plt.plot(df.index, [q50]*count, linestyle='dashed', color='red')
+        plt.plot(df.index, [q75]*count, linestyle='dashed', color='purple')
+    
+    if show_mean:
+        plt.plot(df.index, [data_mean]*count, linestyle='dashed', color='yellow')
+    
+    # drow line of outliers far from the median
+    if cut_off == 'median':
+        cut_off = (q75 - q25) * 1.5
+        plt.plot(df.index, [q25 - cut_off]*count, linestyle='dashed', color='red')
+        plt.plot(df.index, [q75 + cut_off]*count, linestyle='dashed', color='red')
+
+    # drow lines of outliers far from mean by 2 or 3 standard deviation
+    elif cut_off == 'mean':
+        cut_off = data_std * 3
+        plt.plot(df.index, [data_mean-cut_off]*count, linestyle='dashed', color='red')
+        plt.plot(df.index, [data_mean+cut_off]*count, linestyle='dashed', color='red')
+        
+    plt.show()  
+    
+    return {
+        '25': q25,
+        '50': q50,
+        '75': q75,
+        'mean': data_mean,
+        'std': data_std,
+        'count': count,
+        'cut_off': cut_off
+    }
+
+def visualize_per_catagory(df: pd.DataFrame, catagory:str, columns: list, title: str, xlabel: str = None, ylabel: str = None) -> None:
+    assert df[catagory] is not None
+    
+    CAT = df[catagory].value_counts().index.sort_values().to_list()
+    CAT
+    
+    colors = mpl.cm.rainbow(np.linspace(0, 1, len(CAT)))
+    
+    for i, cat in enumerate(CAT):
+        col = columns[0]
+        counts = df.loc[df[catagory] == cat, col].value_counts().sort_index()
+        plt.plot(counts.index, counts.values, linestyle='dashed', color='gray')
+        plt.scatter(counts.index, counts.values, label = cat, color=colors[i])
+    plt.legend()
+    
+    plt.xlabel(columns[0])
+    plt.ylabel(catagory)
+    plt.title(title)
+
+def get_nans_counts(df:pd.DataFrame, column:str, mean_of_column:str, mean_of_value):
+    return df[df[mean_of_column] == mean_of_value][column].isna().sum()
+
+def run_test(model, X, y, phase=None, show=True):
+    from time import time
+    if phase == None or phase == '':
+        phase = 'Testing'
+    if show:
+        print()
+    t0 = time()
+    y_hat = model.predict(X)
+    if show:
+        print(f"{phase} time:", round(time()-t0, 3), "s")
+    
+    mdl_mse,mdl_rmse,mdl_mae,mdl_r2score = calcualte_scores(y, y_hat, show)
+    
+    return y_hat, mdl_mse,mdl_rmse,mdl_mae,mdl_r2score
+    
+def test_model(
+    model, 
+    Xt=pd.DataFrame(), 
+    yt=pd.DataFrame(), 
+    Xv=pd.DataFrame(), 
+    yv=pd.DataFrame(), 
+    show=True
+):
+    from time import time
+    
+    ret = {}
+    if Xt.shape[0] > 0 and yt.shape[0] > 0:
+        y_hat1, mdl_mse1, mdl_rmse1, mdl_mae1, mdl_r2score1 = run_test(model, Xt, yt, 'Training', show)
+        ret['y_hat_t'] = y_hat1
+        ret['mse_t'] = mdl_mse1
+        ret['rmse_t'] = mdl_rmse1
+        ret['mae_t'] = mdl_mae1
+        ret['r2_t'] = mdl_r2score1
+    
+    if Xv.shape[0] > 0 and yv.shape[0] > 0:
+        y_hat2, mdl_mse2, mdl_rmse2, mdl_mae2, mdl_r2score2 = run_test(model, Xv, yv, 'Testing', show)
+        ret['y_hat_v'] = y_hat2
+        ret['mse_v'] = mdl_mse2
+        ret['rmse_v'] = mdl_rmse2
+        ret['mae_v'] = mdl_mae2
+        ret['r2_v'] = mdl_r2score2
+    
+    return pd.Series(ret)
+
+def get_evaluation(Regressor, args, which_arg, options_range, Xt, yt, Xv, yv):    
+    models_scores = {} 
+
+    # prepare the cross-validation procedure
+    for option in tqdm(options_range):
+        
+        ## prepare args 
+        args[which_arg] = option
+
+        ## the model
+        model = Regressor(**args)
+        
+        ## train model
+        model.fit(Xt, yt)
+
+        ## evaluate model
+        results = test_model(model, Xt, yt, Xv, yv, show=False)
+        
+        ## prepare output dataframe
+        models_scores[option] = results.copy()
+        
+    return models_scores
+
+def get_evaluation2(
+    Regressor1, 
+    Regressor2, 
+    args1, 
+    which_arg1,
+    args2,
+    which_arg2, 
+    options_range,
+    Xt, yt, Xv, yv
+):  
+    models_scores1 = {} 
+    models_scores2 = {} 
+    models_scores3 = {}
+    
+    # prepare the cross-validation procedure
+    for option in tqdm(options_range):
+        
+        ## prepare args 
+        args1[which_arg1] = option
+        args2[which_arg2] = option
+        
+        ## model
+        model1 = Regressor1(**args1)
+        
+        model2 = Regressor2(**args2)
+        
+        ## train model
+        model1.fit(Xt, yt)
+        model2.fit(Xt, yt)
+        
+        ## evaluate model
+        results1 = test_model(model1, Xt, yt, Xv, yv, show=False)
+        results2 = test_model(model2, Xt, yt, Xv, yv, show=False)
+        
+        ## prepare output dataframe
+        models_scores1[option] = results1.copy()
+        models_scores2[option] = results2.copy()
+    
+    for option in tqdm(options_range):
+        ret = {}
+        
+        pred_t = [
+            statistics.harmonic_mean([p1,p2]) 
+            if (p1>0) & (p2>0) else p1 
+            for p1,p2 in zip(
+                models_scores1[option]['y_hat_t'],
+                models_scores2[option]['y_hat_t']
+            )
+        ]
+        
+        mdl_mse,mdl_rmse,mdl_mae,mdl_r2score = calcualte_scores(yt, pred_t, show=False)
+        
+        ret['y_hat_t'] = np.array(pred_t.copy())
+        ret['mse_t'] = mdl_mse
+        ret['rmse_t'] = mdl_rmse
+        ret['mae_t'] = mdl_mae
+        ret['r2_t'] = mdl_r2score
+        
+        pred_v =  [
+            statistics.harmonic_mean([p1,p2]) 
+            if (p1>0) & (p2>0) else p1 
+            for p1,p2 in zip(
+                models_scores1[option]['y_hat_v'],
+                models_scores2[option]['y_hat_v']
+            )
+        ]
+        
+        mdl_mse,mdl_rmse,mdl_mae,mdl_r2score = calcualte_scores(yv, pred_v, show=False)
+        
+        ret['y_hat_v'] = np.array(pred_v.copy())
+        ret['mse_v'] = mdl_mse
+        ret['rmse_v'] = mdl_rmse
+        ret['mae_v'] = mdl_mae
+        ret['r2_v'] = mdl_r2score
+        
+        models_scores3[option] = pd.Series(ret.copy())
+        
+    return models_scores1,models_scores2,models_scores3
+
 
