@@ -356,7 +356,7 @@ def read_dask_dataframe(folder_path:str, folder_type:str, config:dict, add_meta:
     ddf = None
     
     if folder_type == 'csv':
-        # re read file
+        # read file
         ddf = dd.read_csv(
             urlpath=f'{folder_path}/{config.year}/{config.dataset}/{config.year}_{config.month:02d}_{config.monthname}_{config.dataset}.{folder_type}',
             blocksize='default',
@@ -405,11 +405,10 @@ def read_dask_dataframes(folder_path:str, folder_type:str, input_dataset:str, ye
             config.month = month
             config.monthname = month_name
             #print('----> ', year, month, month_name, input_dataset)
-            
-            ddf_year_list.append(
-                read_dask_dataframe(folder_path, folder_type, config)
-            )
-            
+            if os.path.exists(f'{folder_path}/{config.year}/{config.dataset}/{config.year}_{config.month:02d}_{config.monthname}_{config.dataset}.{folder_type}'):
+                ddf_year_list.append(
+                    read_dask_dataframe(folder_path, folder_type, config)
+                )            
             #print('----> ', 'Done -------- ----------')
         
         data[year] = dd.concat(ddf_year_list, interleave_partitions=False)
