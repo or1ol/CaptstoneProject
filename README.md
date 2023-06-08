@@ -28,3 +28,5 @@ Oriol Soler
 # 8. Conclusions
 
 # 9. Next steps, suggerencias
+
+![prueba insertar imagen](./img/img_prueba.jpeg)
