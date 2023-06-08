@@ -4,16 +4,16 @@ Sandra Díaz
 Daniel Fares
 Oriol Soler
 
-# 0. Summary
+# 0. Summary (Oriol)
 
-# 1. Introducción al problema (problema, como obtenemos los datos)
+# 1. Introducción al problema (problema, como obtenemos los datos) (Oriol)
 
-# 2. Data analysis 
-## 2.1. descriptiva
-## 2.2. Disponibilidad de bicicletas
-## 2.3. Correlación entre variables
-## 2.4. Capacidad y porcentaje de anclajes disponibles
-## 2.5. Key Insights
+# 2. Data analysis
+## 2.1. Descriptiva (Dani)
+## 2.2. Disponibilidad de bicicletas (Dani)
+## 2.3. Correlación entre variables (Sandra) 
+## 2.4. Capacidad y porcentaje de anclajes disponibles (Sandra)
+## 2.5. Key Insights (Dani) (Sandra)
 
 # 3. Data cleaning
 
@@ -28,5 +28,8 @@ Oriol Soler
 # 8. Conclusions
 
 # 9. Next steps, suggerencias
+
+# 10. Anexos
+url a los notebooks
 
 ![prueba insertar imagen](./img/img_prueba.jpeg)
