@@ -30,10 +30,10 @@ El objetivo es explorar la si existe una asociación entre dos variables para es
 - La capacidad (capacity) y el número de bicicletas disponibles (num_bikes_available)
 <img width="547" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/0c49eed1-a189-498f-914a-aa10bc948513">
 
-- El ctx0 y el día de la semana (dayofweek)
+- El ctx0 (num_docs_available/capacity) y el día de la semana (dayofweek)
 <img width="460" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/edf49541-8b01-4232-b347-3a5eb8d6c278">
 
-- El ctx0 y la hora (hour)
+- El ctx0 (num_docs_available/capacity) y la hora (hour)
 <img width="408" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/a7272579-f2f2-470d-a3fe-d4c9df52e76b">
 
 
