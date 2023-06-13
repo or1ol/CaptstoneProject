@@ -21,11 +21,17 @@ El objetivo es explorar la si existe una asociación entre dos variables para es
 
 - El número de anclajes disponibles (num_docks_available) y el número de bicicletas eléctricas disponibles
 
+- El número de anclajes disponibles (num_docks_available) y la hora (hour)
+
 - El número de anclajes disponibles (num_docks_available) y el día de la semana (dayofweek)
 <img width="575" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/6f9af222-6398-4115-8ac9-01bf59868efd">
 
 - El número de anclajes disponibles (num_docks_available) y la hora (hour)
 <img width="538" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/fdc2e56d-f9f2-4ae9-8bda-33e8affc2df7">
+
+- La capacidad (capacity) y el día de la semana (dayofweek)
+
+- La capacidad (capacity) y la hora (hour)
 
 - La capacidad (capacity) y el número de bicicletas disponibles (num_bikes_available)
 <img width="547" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/0c49eed1-a189-498f-914a-aa10bc948513">
