@@ -1,8 +1,8 @@
 # CaptstoneProject
 
-Sandra Díaz
-Daniel Fares
-Oriol Soler
+- Sandra Díaz
+- Daniel Fares
+- Oriol Soler
 
 # 0. Summary (Oriol)
 
