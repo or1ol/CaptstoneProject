@@ -43,9 +43,6 @@ El objetivo es explorar la si existe una asociación entre dos variables para es
 <img width="408" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/a7272579-f2f2-470d-a3fe-d4c9df52e76b">
 
 
-
-
-
 ## 2.4. Capacidad y porcentaje de anclajes disponibles (Sandra)
 ## 2.5. Key Insights (Dani) (Sandra)
 
