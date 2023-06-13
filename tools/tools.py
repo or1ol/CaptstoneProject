@@ -618,8 +618,8 @@ def display_scores(scores):
     print("Mean:", scores.mean())
     print("Standard deviation:", scores.std())
 
-def cross_val_evaluation(model,X_train, y_train, model_name):
-    scores = cross_val_score(model, X_train, y_train,cv=5) # scoring="neg_root_mean_squared_error"
+def cross_val_evaluation(model,X_train, y_train, model_name, n_jobs=5):
+    scores = cross_val_score(model, X_train, y_train,cv=5, scoring="neg_root_mean_squared_error", verbose=2, n_jobs=n_jobs)
     print("\n ",model_name)
     display_scores(scores)
     

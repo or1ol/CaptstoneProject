@@ -1,4 +1,5 @@
 dades
+Atres_dades
 dades_secundaris
 .ipynb_checkpoints
 **/.ipynb_checkpoints/**
@@ -6,3 +7,8 @@ __pycache__
 **/__pycache__/**
 dask-worker-space
 **/dask-worker-space/**
+**/.checkpoints/**
+Altres_dades
+checkpoints
+model.png
+rcnn_model.png
