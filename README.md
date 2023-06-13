@@ -20,6 +20,11 @@ El objetivo es explorar la si existe una asociación entre dos variables para es
 - El número de anclajes disponibles (num_docks_available) y el número de bicicletas manuales disponibles
 - El número de anclajes disponibles (num_docks_available) y el número de bicicletas eléctricas disponibles
 
+- La capacidad (capacity) y el número de bicicletas disponibles (num_bikes_available)
+<img width="547" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/0c49eed1-a189-498f-914a-aa10bc948513">
+
+- x
+
 
 
 
