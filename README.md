@@ -57,6 +57,12 @@ El patrón detectado anteriormente coincide con los días de actividad profesion
 # 3. Data cleaning
 
 # 4. Data enirchment (festivos, meteorología)
+## 4.1. Días festivos
+En el análisis del punto 2 se ha detectado que los días que caen en fin de semana se asocian con cambios en la demanda de las bicicletas. Esto está directamente relacionado con que son días no laborales. Sin embargo, hay que tener en cuenta que los festivos locales y nacionales como la Diada o Navidad, en caso de caer en día laboral, no se están interpretando como no laborables. Para ello, a partir de una base de datos que indica los días laborales desde 2019 hasta 2023, se han generado las siguientes variables adicionales:
+
+- Festius: marca los festivos locales, autonómicos y nacionales como tal.
+- Festius_sun: adicionalmente a lo anterior, añade los domingos como festivos.
+- Festius_sun_sat: además de lo anterior, se incluye el sábado como festivo.
 
 # 5. Data processing
 
