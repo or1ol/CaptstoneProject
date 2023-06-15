@@ -13,10 +13,24 @@ Uno de los primeros problemas a afrontar es la gran cantidad de datos disponible
 
 Posteriormente, se procede a hacer un estudio detallado de cada dimensión, estudiar que correlaciones hay entre  las variables, limpiar los datasets, enriquecer los datos y procesarlos para crear modelos predictivos.
 
-# 2. Data analysis
-## 2.1. Descriptiva (Dani)
-## 2.2. Disponibilidad de bicicletas (Dani)
-## 2.3. Correlación entre variables (Sandra)
+# 2. Data cleaning
+- data set, descargado datos dek 2019, 2020, 2021, 2022, 2023 (datos de test)
+- habia datos de 2018, 2019 (meses: 01, 02, 03)
+- convertir datos de timestamp (drop duplicates)
+- processing data por año
+- 
+
+# 3. Data analysis
+
+## 3.1. Descriptiva (Dani)
+un resumen de los que hemos visto de los notebook de exploring por año
+y comparacion 
+hablar del tema del covid
+
+## 3.2. Disponibilidad de bicicletas (Dani)
+Añadir imagenes de la data de la num_bikes_available por año 
+
+## 3.3. Correlación entre variables (Sandra)
 El objetivo es explorar la si existe una asociación entre dos variables para establecer si existe de una relacional lineal. En ese sentido, se ha estudiado la correlación entre:
 
 - El número de anclajes disponibles (num_docks_available) y el número de bicicletas disponibles (num_bikes_available)
@@ -47,8 +61,7 @@ El objetivo es explorar la si existe una asociación entre dos variables para es
 - El ctx0 (num_docs_available/capacity) y la hora (hour)
 <img width="408" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/a7272579-f2f2-470d-a3fe-d4c9df52e76b">
 
-
-## 2.4. Capacidad y porcentaje de anclajes disponibles (Sandra)
+## 3.4. Capacidad y porcentaje de anclajes disponibles (Sandra)
 Con la finalidad de entender el uso de las estaciones de bicicletas a lo largo del tiempo, se analiza en primer lugar el porcentaje de disponibilidad de bicicletas para cada estación (ctx0) por cada uno de los meses:
 <img width="521" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/ca41940b-fade-4336-936e-ba3bec919c19">
 
@@ -57,9 +70,7 @@ Se observa que existen dos picos claros de uso: a primera hora de la mañana y a
 
 El patrón detectado anteriormente coincide con los días de actividad profesional (lunes-viernes), y pierde relevancia el fin de semana (sábado y domingo). Es por eso que decidimos, más adelante, generar una nueva variable de días festivos (ver apartado 4).
 
-## 2.5. Key Insights (Dani) (Sandra)
-
-# 3. Data cleaning
+## 3.5. Key Insights (Dani) (Sandra)
 
 # 4. Data enirchment (festivos, meteorología)
 ## 4.1. Días festivos
