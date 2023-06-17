@@ -14,11 +14,19 @@ Uno de los primeros problemas a afrontar es la gran cantidad de datos disponible
 Posteriormente, se procede a hacer un estudio detallado de cada dimensión, estudiar que correlaciones hay entre  las variables, limpiar los datasets, enriquecer los datos y procesarlos para crear modelos predictivos.
 
 # 2. Data cleaning
-- data set, descargado datos dek 2019, 2020, 2021, 2022, 2023 (datos de test)
-- habia datos de 2018, 2019 (meses: 01, 02, 03)
-- convertir datos de timestamp (drop duplicates)
-- processing data por año
-- 
+
+En primer lugar, se ha realizado un análisis inicial con el objetivo de limpiar los ficheros de datos que carecen de sentido por algún motivo. Para ello, se han realizado los siguientes pasos:
+- Descarga de los datos de la página web oficial para los años 2019, 2020, 2021, 2022 y 2023 (incluyendo los datos no incorporados en la descarga inicial).
+- Cálculo de los valores faltantes (NaN) para las distintas variables de los datasets.
+- Cálculo de los valores que se corresponden con 0 de las distintas variables de los datasets.
+- Clasificación de las variables según si son categóricas o numéricas, así como el cálculo de valores únicos que devuelve cada una de ellas. 
+- Eliminación de elementos duplicados de las variables en las que no tienen sentido, como por ejemplo el ‘last_reported’.
+- Eliminación de columnas que no son necesarias: 'year_last_updated_date', 'month_last_updated_date', 'week_last_updated_date', 'dayofweek_last_updated_date', 'dayofmonth_last_updated_date', 'dayofyear_last_updated_date', 'hour_last_updated_date' y 'minutes_last_updated_date'.
+- Ajuste de la variable ‘post_code’ al ser incorrecta.
+- Ajuste variable ‘status’, agrupando bajo el valor 0 ‘in_service’ y bajo 1, ‘closed’.
+- Crear nuevas columnas para el ‘last_reported’ y el ‘last_updated’, asignando nuevas variables a los valores devueltos.
+- Uniformar el formato de los timestamp a fecha/hora.
+- Agrupar el timestamp en múltiplos de 60 para poder reducir la base de datos trabajada, ya que nos interesaba tener los datos en granularidad por hora en vez de minuto.
 
 # 3. Data analysis
 
