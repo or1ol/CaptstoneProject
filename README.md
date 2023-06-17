@@ -30,7 +30,7 @@ En primer lugar, se ha realizado un análisis inicial con el objetivo de limpiar
 
 # 3. Data analysis
 
-## 3.1. Descriptiva (Dani)
+## 3.1. Descriptiva
 un resumen de los que hemos visto de los notebook de exploring por año
 y comparacion 
 hablar del tema del covid
