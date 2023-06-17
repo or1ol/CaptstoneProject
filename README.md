@@ -40,13 +40,13 @@ En primer lugar, se han analizado los IDs de estaciones a lo largo de los años,
 
 ![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/73a5d118-da37-4131-b03c-06d9b22a2291)
 
-### 3.1.2. Anclajes disponibles (num_docks_available)
+### 3.1.2. Anclajes disponibles (num_docks_available) (Oriol)
 
-### 3.1.3. Bicicletas disponibles (bikes_available -total y per tipus-)
+### 3.1.3. Bicicletas disponibles (bikes_available -total y per tipus-) (Oriol)
 
-### 3.1.4. Capacity
+### 3.1.4. Capacity (Sandra)
 
-### 3.1.5. Ctx0 (num_docs_available/capacity)
+### 3.1.5. Ctx0 (num_docs_available/capacity) (Sandra)
 
 ## 3.2. Correlación entre variables (Sandra)
 El objetivo es explorar la si existe una asociación entre dos variables para establecer si existe de una relacional lineal. En ese sentido, se ha estudiado la correlación entre:
@@ -101,7 +101,7 @@ En el análisis del punto 2 se ha detectado que los días que caen en fin de sem
 - Festius_sun: adicionalmente a lo anterior, añade los domingos como festivos.
 - Festius_sun_sat: además de lo anterior, se incluye el sábado como festivo.
 
-## 4.2. Meteorología
+## 4.2. Meteorología (Oriol)
 
 # 5. Data processing
 
