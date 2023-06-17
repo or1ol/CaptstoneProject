@@ -26,6 +26,7 @@ En primer lugar, se ha realizado un análisis inicial con el objetivo de limpiar
 - Crear nuevas columnas para el ‘last_reported’ y el ‘last_updated’, asignando nuevas variables a los valores devueltos.
 - Uniformar el formato de los timestamp a fecha/hora.
 - Agrupar el timestamp en múltiplos de 60 para poder reducir la base de datos trabajada, ya que nos interesaba tener los datos en granularidad por hora en vez de minuto.
+- Incorporación de la variable ctx0, que relaciona los anclajes disponibles (num_docs_available) entre la capacidad (capacity), es decir, el número máximo de anclajes por estación. Adicionalmente, se incluyen también ctx1, ctx2, ctx3 y ctx4, que hacen referencia a la disponibilidad porcentual de bicicletas la hora anterior, las dos horas anteriores... y así sucesivamente. 
 
 # 3. Data analysis
 
@@ -34,10 +35,19 @@ un resumen de los que hemos visto de los notebook de exploring por año
 y comparacion 
 hablar del tema del covid
 
-### 3.2. Station_ID
+### 3.1.2 Station_ID
 En primer lugar, se han analizado los IDs de estaciones a lo largo de los años, para verificar si variaban en términos de volumen. Se ha percibido que no todos los IDs son constantes a lo largo de los años, y es por eso que se localizan los IDs únicos que están presentes en todos los años, encontrando un total de 405. 
 
 ![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/73a5d118-da37-4131-b03c-06d9b22a2291)
+
+### 3.1.2 Anclajes disponible (num_docks_available)
+
+### 3.1.3 Bicicletas disponibles (bikes_available -total y per tipus-)
+
+### 3.1.4 Capacity
+
+### 3.1.5 Ctx0 (num_docs_available/capacity)
+
 
 
 
