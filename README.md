@@ -111,7 +111,7 @@ En el análisis del punto 2 se ha detectado que los días que caen en fin de sem
 
 # 8. Conclusions
 
-# 9. Next steps, suggerencias
+# 9. Next steps, sugerencias
 
 # 10. Anexos
 url a los notebooks
