@@ -120,7 +120,8 @@ Los documentos trabajados son los siguientes:
 - Análisis completo explotarorio de los datos de 2021:
 - Análisis completo explotarorio de los datos de 2022:
 - Análisis completo explotarorio de los datos de 2023:
-- Modelos ejectuados:
+- Otros modelos ejecturados:
+- Modelo final ejectuado:
 
 
 ![prueba insertar imagen](./img/img_prueba.jpeg)
