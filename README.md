@@ -48,13 +48,7 @@ En primer lugar, se han analizado los IDs de estaciones a lo largo de los años,
 
 ### 3.1.5 Ctx0 (num_docs_available/capacity)
 
-
-
-
-## 3.2. Disponibilidad de bicicletas (Dani)
-Añadir imagenes de la data de la num_bikes_available por año 
-
-## 3.3. Correlación entre variables (Sandra)
+## 3.2. Correlación entre variables (Sandra)
 El objetivo es explorar la si existe una asociación entre dos variables para establecer si existe de una relacional lineal. En ese sentido, se ha estudiado la correlación entre:
 
 - El número de anclajes disponibles (num_docks_available) y el número de bicicletas disponibles (num_bikes_available)
@@ -85,7 +79,7 @@ El objetivo es explorar la si existe una asociación entre dos variables para es
 - El ctx0 (num_docs_available/capacity) y la hora (hour)
 <img width="408" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/a7272579-f2f2-470d-a3fe-d4c9df52e76b">
 
-## 3.4. Capacidad y porcentaje de anclajes disponibles (Sandra)
+### Capacidad y porcentaje de anclajes disponibles (Sandra)
 Con la finalidad de entender el uso de las estaciones de bicicletas a lo largo del tiempo, se analiza en primer lugar el porcentaje de disponibilidad de bicicletas para cada estación (ctx0) por cada uno de los meses:
 <img width="521" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/ca41940b-fade-4336-936e-ba3bec919c19">
 
@@ -94,7 +88,10 @@ Se observa que existen dos picos claros de uso: a primera hora de la mañana y a
 
 El patrón detectado anteriormente coincide con los días de actividad profesional (lunes-viernes), y pierde relevancia el fin de semana (sábado y domingo). Es por eso que decidimos, más adelante, generar una nueva variable de días festivos (ver apartado 4).
 
-## 3.5. Key Insights (Dani) (Sandra)
+## 3.3. Key Insights
+Teniendo en cuenta la exploración de datos realizada, las principales conclusión que extrapolamos son las siguientes:
+- Se eliminan los datos de la época de Covid por ser anómalos.
+- ...
 
 # 4. Data enirchment (festivos, meteorología)
 ## 4.1. Días festivos
