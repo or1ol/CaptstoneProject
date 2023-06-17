@@ -35,7 +35,7 @@ un resumen de los que hemos visto de los notebook de exploring por año
 y comparacion 
 hablar del tema del covid
 
-### 3.1.2 Station_ID
+### 3.1.1 Station_ID
 En primer lugar, se han analizado los IDs de estaciones a lo largo de los años, para verificar si variaban en términos de volumen. Se ha percibido que no todos los IDs son constantes a lo largo de los años, y es por eso que se localizan los IDs únicos que están presentes en todos los años, encontrando un total de 405. 
 
 ![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/73a5d118-da37-4131-b03c-06d9b22a2291)
