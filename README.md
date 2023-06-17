@@ -113,7 +113,14 @@ En el análisis del punto 2 se ha detectado que los días que caen en fin de sem
 
 # 9. Next steps, sugerencias
 
-# 10. Anexos
-url a los notebooks
+# 10. Anexos (url a los notebooks)
+Los documentos trabajados son los siguientes:
+- Análisis completo explotarorio de los datos de 2019:
+- Análisis completo explotarorio de los datos de 2020:
+- Análisis completo explotarorio de los datos de 2021:
+- Análisis completo explotarorio de los datos de 2022:
+- Análisis completo explotarorio de los datos de 2023:
+- Modelos ejectuados:
+
 
 ![prueba insertar imagen](./img/img_prueba.jpeg)
