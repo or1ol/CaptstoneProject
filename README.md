@@ -40,7 +40,7 @@ En primer lugar, se han analizado los IDs de estaciones a lo largo de los años,
 
 ![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/73a5d118-da37-4131-b03c-06d9b22a2291)
 
-### 3.1.2. Anclajes disponible (num_docks_available)
+### 3.1.2. Anclajes disponibles (num_docks_available)
 
 ### 3.1.3. Bicicletas disponibles (bikes_available -total y per tipus-)
 
