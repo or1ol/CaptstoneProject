@@ -101,6 +101,8 @@ En el análisis del punto 2 se ha detectado que los días que caen en fin de sem
 - Festius_sun: adicionalmente a lo anterior, añade los domingos como festivos.
 - Festius_sun_sat: además de lo anterior, se incluye el sábado como festivo.
 
+## 4.2. Meteorología
+
 # 5. Data processing
 
 # 6. Data prediction (model comparison)
