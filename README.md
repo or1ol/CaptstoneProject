@@ -120,6 +120,8 @@ Los documentos trabajados son los siguientes:
 - Análisis completo explotarorio de los datos de 2021:
 - Análisis completo explotarorio de los datos de 2022:
 - Análisis completo explotarorio de los datos de 2023:
+- Documento de funciones utilizadas 'tools':
+- Scripts XXX:
 - Otros modelos ejecutado:
 - Modelo final ejectuado:
 
