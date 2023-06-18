@@ -70,10 +70,13 @@ El objetivo es explorar la si existe una asociación entre dos variables para es
 <img width="635" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/d2773375-cc30-472f-a5c4-41376c6da726">
 
 - El número de anclajes disponibles (num_docks_available) y el número de bicicletas manuales disponibles
+<img width="835" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/1e13ee9e-0d70-4d59-b1a4-33e9adbcc67b">
 
 - El número de anclajes disponibles (num_docks_available) y el número de bicicletas eléctricas disponibles
+<img width="797" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/fd6274dc-cf23-4455-8749-ba87267c3fbc">
 
 - El número de anclajes disponibles (num_docks_available) y la hora (hour)
+<img width="587" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/a45c0c3c-b288-47da-b6d4-f1c12cd367ae">
 
 - El número de anclajes disponibles (num_docks_available) y el día de la semana (dayofweek)
 <img width="575" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/6f9af222-6398-4115-8ac9-01bf59868efd">
@@ -82,8 +85,10 @@ El objetivo es explorar la si existe una asociación entre dos variables para es
 <img width="538" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/fdc2e56d-f9f2-4ae9-8bda-33e8affc2df7">
 
 - La capacidad (capacity) y el día de la semana (dayofweek)
+<img width="536" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/b4a54857-3cc2-48fc-8738-527c30b736db">
 
 - La capacidad (capacity) y la hora (hour)
+<img width="476" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/1990e491-a6d5-4e99-ab6f-7667da3340e5">
 
 - La capacidad (capacity) y el número de bicicletas disponibles (num_bikes_available)
 <img width="547" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/0c49eed1-a189-498f-914a-aa10bc948513">
