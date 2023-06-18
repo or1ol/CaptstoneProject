@@ -44,9 +44,7 @@ En primer lugar, se han analizado los IDs de estaciones a lo largo de los años,
 
 ### 3.1.3. Bicicletas disponibles (bikes_available -total y per tipus-) (Oriol)
 
-### 3.1.4. Capacity (Sandra)
-
-### 3.1.5. Ctx0 (num_docs_available/capacity) (Sandra)
+### 3.1.4. Ctx0 (num_docs_available/capacity) (Sandra)
 
 ## 3.2. Correlación entre variables (Sandra)
 El objetivo es explorar la si existe una asociación entre dos variables para establecer si existe de una relacional lineal. En ese sentido, se ha estudiado la correlación entre:
