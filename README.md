@@ -102,6 +102,13 @@ En el análisis del punto 2 se ha detectado que los días que caen en fin de sem
 - Festius_sun_sat: además de lo anterior, se incluye el sábado como festivo.
 
 ## 4.2. Meteorología (Oriol)
+Una casuística que no estaba contemplada en el dataset inicial era la de la meteorología. Esta puede tener un alto impacto en el uso de las bicicletas en la ciudad, y por esto se incluye en el estudio.
+
+Los datos encontrados abarcan todos los años en los que se analiza el uso de bicicletas, e incluyen muchas variables ya sean relacionadas con la temperatura, humedad, presión atmosférica, precipitación, viento o irradiación solar. Estudiando la correlación entre las variables y  entendiendo cuales de ellas podían tener mayor efecto, se decide proceder con las siguientes:
+
+- Temperatura media diaria
+- Precipitación acumulada diaria
+
 
 # 5. Data processing
 
