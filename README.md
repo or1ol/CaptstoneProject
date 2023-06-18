@@ -41,7 +41,7 @@ En primer lugar, se han analizado los IDs de estaciones a lo largo de los años,
 
 ### 3.1.3. Bicicletas disponibles (bikes_available -total y per tipus-) (Oriol)
 
-### 3.1.4. Ctx0 (num_docs_available/capacity) (Sandra)
+### 3.1.4. Ctx0
 Ctx0 hace referencia al porcentaje de bibicletas disponibles según el volumen máximo de anclajes, relacionando la variable ‘num_docks_available’, vista en el punto 3.1.2., y la ‘capacity’, que indica el número de bicicletas máximo que puede contener un anclaje o ‘dock’. Por lo tanto, a mayor Ctx0, menos número de bicicletas disponibles.
 
 Atendiendo a la relación entre las variables, ‘num_docks_available’ y ‘num_bikes_available’, así como las que indican la tipología de bicicleta (‘num_bikes_available_types.mechanical’ y ‘num_bikes_available_types.ebike), no deberían ser mayores que la capacidad y, a su vez, la ‘capacity’ debería coincidir con la suma de ‘num_docks_available’ y ‘num_bikes_available’.
@@ -104,7 +104,7 @@ Teniendo en cuenta la exploración de datos realizada, las principales conclusi�
 - Se eliminan los datos de la época de Covid por ser anómalos.
 - ...
 
-# 4. Data enirchment (festivos, meteorología)
+# 4. Data enirchment
 ## 4.1. Días festivos
 En el análisis del punto 2 se ha detectado que los días que caen en fin de semana se asocian con cambios en la demanda de las bicicletas. Esto está directamente relacionado con que son días no laborales. Sin embargo, hay que tener en cuenta que los festivos locales y nacionales como la Diada o Navidad, en caso de caer en día laboral, no se están interpretando como no laborables. Para ello, a partir de una base de datos que indica los días laborales desde 2019 hasta 2023, se han generado las siguientes variables adicionales:
 
@@ -112,7 +112,7 @@ En el análisis del punto 2 se ha detectado que los días que caen en fin de sem
 - Festius_sun: adicionalmente a lo anterior, añade los domingos como festivos.
 - Festius_sun_sat: además de lo anterior, se incluye el sábado como festivo.
 
-## 4.2. Meteorología (Oriol)
+## 4.2. Meteorología
 Una casuística que no estaba contemplada en el dataset inicial era la de la meteorología. Esta puede tener un alto impacto en el uso de las bicicletas en la ciudad, y por esto se incluye en el estudio.
 
 Los datos encontrados abarcan todos los años en los que se analiza el uso de bicicletas, e incluyen muchas variables ya sean relacionadas con la temperatura, humedad, presión atmosférica, precipitación, viento o irradiación solar. Estudiando la correlación entre las variables y  entendiendo cuales de ellas podían tener mayor efecto, se decide proceder con las siguientes:
