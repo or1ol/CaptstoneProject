@@ -60,7 +60,7 @@ Se observa que existen dos picos claros de uso: a primera hora de la mañana y a
 
 <img width="534" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/a0350806-26a9-4f7b-bf57-e9fa053b1a00">
 
-El patrón detectado anteriormente coincide con los días de actividad profesional (lunes-viernes), y pierde relevancia el fin de semana (sábado y domingo). Es por eso que decidimos, más adelante, generar una nueva variable de días festivos (ver apartado 4).
+El patrón detectado anteriormente coincide con los días de actividad profesional (lunes-viernes), y pierde relevancia el fin de semana (sábado y domingo). Es por eso que se toma la decisión, más adelante, de generar una nueva variable de días festivos (ver apartado 4).
 
 
 ## 3.2. Correlación entre variables (Sandra)
