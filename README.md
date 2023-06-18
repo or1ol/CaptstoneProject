@@ -52,11 +52,12 @@ En cuanto a los años anteriores, durante el 2020 el Covid tuvo un impacto claro
 
 <img width="903" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/e99106be-bddd-4dc9-aa53-0e8fd48a903b">
 
-### Capacidad y porcentaje de anclajes disponibles (Sandra)
-Con la finalidad de entender el uso de las estaciones de bicicletas a lo largo del tiempo, se analiza en primer lugar el porcentaje de disponibilidad de bicicletas para cada estación (ctx0) por cada uno de los meses:
+Con la finalidad de entender el comportamiento de los usuarios, se analiza el porcentaje de disponibilidad de bicicletas para cada estación (Ctx0) por mes y hora:
 <img width="521" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/ca41940b-fade-4336-936e-ba3bec919c19">
 
-Se observa que existen dos picos claros de uso: a primera hora de la mañana y a lo largo de la tarde, a lo largo de todos los meses. Como esto parece coincidir con el horario laboral, adicionalmente analizamos el uso por horas según días de la semana:
+Se observa que existen dos picos claros de uso: a primera hora de la mañana y a lo largo de la tarde, a lo largo de todos los meses. 
+
+Como esto parece coincidir con el horario laboral, adicionalmente se estudia el uso por horas según días de la semana:
 <img width="534" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/a0350806-26a9-4f7b-bf57-e9fa053b1a00">
 
 El patrón detectado anteriormente coincide con los días de actividad profesional (lunes-viernes), y pierde relevancia el fin de semana (sábado y domingo). Es por eso que decidimos, más adelante, generar una nueva variable de días festivos (ver apartado 4).
