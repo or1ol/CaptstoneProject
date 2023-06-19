@@ -13,20 +13,20 @@ Uno de los primeros problemas a afrontar es la gran cantidad de datos disponible
 
 Posteriormente, se procede a hacer un estudio detallado de cada dimensión, estudiar que correlaciones hay entre  las variables, limpiar los datasets, enriquecer los datos y procesarlos para crear modelos predictivos.
 
-# 2. Data cleaning
+# 2. Data cleaning (ok)
 En primer lugar, se ha realizado un análisis inicial con el objetivo de limpiar los ficheros de datos que carecen de sentido por algún motivo. Para ello, se han realizado los siguientes pasos:
 - Descarga de los datos de la página web oficial para los años 2019, 2020, 2021, 2022 y 2023 (incluyendo los datos no incorporados en la descarga inicial).
 - Cálculo de los valores faltantes (NaN) para las distintas variables de los datasets.
 - Cálculo de los valores que se corresponden con 0 de las distintas variables de los datasets.
 - Clasificación de las variables según si son categóricas o numéricas, así como el cálculo de valores únicos que devuelve cada una de ellas. 
 - Eliminación de elementos duplicados de las variables en las que no tienen sentido, como por ejemplo el ‘last_reported’.
-- Eliminación de columnas que no son necesarias: 'year_last_updated_date', 'month_last_updated_date', 'week_last_updated_date', 'dayofweek_last_updated_date', 'dayofmonth_last_updated_date', 'dayofyear_last_updated_date', 'hour_last_updated_date' y 'minutes_last_updated_date'.
-- Ajuste de la variable ‘post_code’ al ser incorrecta.
+- Eliminación de columnas que no son necesarias: 'last_updated', 'ttl', 'is_installed', 'status', 'is_charging_station', 'is_returning', y 'is_renting'.post_code
 - Ajuste variable ‘status’, agrupando bajo el valor 0 ‘in_service’ y bajo 1, ‘closed’.
 - Crear nuevas columnas para el ‘last_reported’ y el ‘last_updated’, asignando nuevas variables a los valores devueltos.
 - Uniformar el formato de los timestamp a fecha/hora.
+- Incorporación de la variable ctx0, que relaciona los anclajes disponibles (num_docs_available) entre la capacidad (capacity), es decir, el número máximo de anclajes por estación. Adicionalmente, se incluyen también ctx1, ctx2, ctx3 y ctx4, que hacen referencia a la disponibilidad porcentual de bicicletas la hora anterior, las dos horas anteriores... y así sucesivamente.
 - Agrupar el timestamp en múltiplos de 60 para poder reducir la base de datos trabajada, ya que nos interesaba tener los datos en granularidad por hora en vez de minuto.
-- Incorporación de la variable ctx0, que relaciona los anclajes disponibles (num_docs_available) entre la capacidad (capacity), es decir, el número máximo de anclajes por estación. Adicionalmente, se incluyen también ctx1, ctx2, ctx3 y ctx4, que hacen referencia a la disponibilidad porcentual de bicicletas la hora anterior, las dos horas anteriores... y así sucesivamente. 
+- Generación de valores medios de las ultimas 2, 3 y 4 horas para asignar el valor más representativo a cada registro de timestamp agrupado por hora.
 
 # 3. Data analysis
 
@@ -54,10 +54,9 @@ Existen dos tipos de bicicletas en Bicing Barcelona: las mecánicas y las eléct
 
 Para entender el comportamiento agregado de esta variable, se observa el numero total de bicis disponibles para cada hora del dia por los diferentes meses del año. 
 
-[insertar grafic. eix X hores del dia, eix Y total bicis dispo. cada linia un mes de l'any diferent. Ferho pels 4 anys]
+** TODO ** [insertar grafic. eix X hores del dia, eix Y total bicis dispo. cada linia un mes de l'any diferent. Ferho pels 4 anys]
 
-(volem comentar que fem models amb alguns mesos de l'any i prou?)
-
+** TODO ** (parlar de l'augment de bicis disponibles degut al covid i de la reducció de l'us de les bicis en base a un count de registres per any o any i mes, posar gràfic de tendencia d'us de bici)
 
 
 
@@ -68,7 +67,7 @@ Atendiendo a la relación entre las variables, ‘num_docks_available’ y ‘nu
 
 Por otro lado, analizando la evolución de la media de Ctx0 a lo largo de los meses, no se localiza un patrón común a nivel mensual año tras año. Se detectan semejanzas de uso a partir del 2021, en la que se encuentra un volumen menor de bicicletas disponibles en los meses de mejor temperatura, entre mayo y octubre, con una caída en agosto. El primer factor se podría explicar por los factores meteorológicos y, el segundo, por las vacaciones laborales. 
 
-En cuanto a los años anteriores, durante el 2020 el Covid tuvo un impacto claro en el uso de las bicicletas: si bien el primer pico se encontraba alrededor de mayo, la cuarentena supuso un impedimento en lo que al uso de este medio de transporte se refiere. Por último, los datos de 2019 también son anómalos: encontramos un pico de uso en marzo y una bajada muy pronunciada el mes siguiente.
+En cuanto a los años anteriores, durante el 2020 el Covid tuvo un impacto claro en el uso de las bicicletas: si bien el primer pico se encontraba alrededor de mayo, la cuarentena supuso un impedimento en lo que al uso de este medio de transporte se refiere. Por último, los datos de 2019 también son anómalos: encontramos un pico de uso en marzo y una bajada muy pronunciada el mes siguiente. Esto puede ser debido a que los tres primeros meses de datos se obtienen de un dataset antiguo de Bicing.
 
 <img width="903" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/e99106be-bddd-4dc9-aa53-0e8fd48a903b">
 
@@ -119,10 +118,15 @@ El objetivo es explorar la si existe una asociación entre dos variables para es
 - El ctx0 (num_docs_available/capacity) y la hora (hour)
 <img width="408" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/a7272579-f2f2-470d-a3fe-d4c9df52e76b">
 
+** TODO ** Añadir correlacion de las variables que usamos en el pipeline con ctx0, ctx(1,2,3,4), month, dayofyear, festius_sun, weekend. 
+
 ## 3.3. Key Insights
 Teniendo en cuenta la exploración de datos realizada, las principales conclusión que extrapolamos son las siguientes:
 - Se eliminan los datos de la época de Covid por ser anómalos.
+- (volem comentar que fem models amb alguns mesos de l'any i prou?)
 - ...
+- Se eliminan los datos de los meses de verano ya que el problema planteado es predecir la disponiblidad de bicicletas para el mes de marzo de 2023 y el comportamiento de dicho mes difiere de los meses de verano. La hipótesis que sostenta esto es la relacionada con la meteorología.
+- 
 
 # 4. Data enirchment
 ## 4.1. Días festivos
@@ -143,6 +147,12 @@ Los datos encontrados abarcan todos los años en los que se analiza el uso de bi
 
 # 5. Data processing
 
+- Columnes borrades en el Data Processing: 'num_docks_available', 'timestamp'. 'num_bikes_available_types.ebike', 'num_bikes_available_types.mechanical', 'num_bikes_available'.
+- explicar com es tracta  Bicicletas disponibles (bikes_available -total y per tipus-) - FET
+
+Cuando el valor total de bicicletas disponibles no coincida con la suma del total de bicicletas mecánicas y electricas, se decide ajustar el valor de bicicletas totales disponibles con el valor de la suma de ambas tipologías de bicicleta.
+
+
 # 6. Data prediction (model comparison)
 
 # 7. Results
@@ -150,7 +160,13 @@ Los datos encontrados abarcan todos los años en los que se analiza el uso de bi
 # 8. Conclusions
 
 # 9. Next steps, sugerencias
-Estudiar les parades que en algun moment tenen 0 disponibilitat de bicis o 0 disponibilitat de docks - mal servei - possibilitat de solucionarho?
+Next steps
+- Realizar cuatro modelos diferenciados para cada estación del año atendiendo a los comportamientos específicos de los usuarios, posiblemente relacionado con los efectos meteorológicos.
+- 
+
+- 
+Proposals
+(no és next step, és proposal) Estudiar les parades que en algun moment tenen 0 disponibilitat de bicis o 0 disponibilitat de docks - mal servei - possibilitat de solucionarho?
 
 
 # 10. Anexos (url a los notebooks)
@@ -165,5 +181,6 @@ Los documentos trabajados son los siguientes:
 - Otros modelos ejecutado:
 - Modelo final ejectuado:
 
+![image](https://github.com/or1ol/CaptstoneProject/assets/116120046/a4be44ef-80a6-4353-a00e-87f446a2320d)
 
 ![prueba insertar imagen](./img/img_prueba.jpeg)
