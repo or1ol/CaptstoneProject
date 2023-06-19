@@ -146,11 +146,10 @@ Los datos encontrados abarcan todos los años en los que se analiza el uso de bi
 
 
 # 5. Data processing
-
+Tras el análisis realizado, con el objetivo de ajustar más los datos, se han realizado los siguientes ajustes:
 - Columnes borrades en el Data Processing: 'num_docks_available', 'timestamp'. 'num_bikes_available_types.ebike', 'num_bikes_available_types.mechanical', 'num_bikes_available'.
-- explicar com es tracta  Bicicletas disponibles (bikes_available -total y per tipus-) - FET
-
-Cuando el valor total de bicicletas disponibles no coincida con la suma del total de bicicletas mecánicas y electricas, se decide ajustar el valor de bicicletas totales disponibles con el valor de la suma de ambas tipologías de bicicleta.
+- Cuando el valor total de bicicletas disponibles no coincida con la suma del total de bicicletas mecánicas y electricas, se decide ajustar el valor de bicicletas totales disponibles con el valor de la suma de ambas tipologías de bicicleta.
+- 
 
 
 # 6. Data prediction (model comparison)
@@ -159,14 +158,13 @@ Cuando el valor total de bicicletas disponibles no coincida con la suma del tota
 
 # 8. Conclusions
 
-# 9. Next steps, sugerencias
-Next steps
+# 9. Next steps & Proposals
+## Next steps
 - Realizar cuatro modelos diferenciados para cada estación del año atendiendo a los comportamientos específicos de los usuarios, posiblemente relacionado con los efectos meteorológicos.
 - 
 
-- 
-Proposals
-(no és next step, és proposal) Estudiar les parades que en algun moment tenen 0 disponibilitat de bicis o 0 disponibilitat de docks - mal servei - possibilitat de solucionarho?
+## Proposals
+- Estudiar les parades que en algun moment tenen 0 disponibilitat de bicis o 0 disponibilitat de docks - mal servei - possibilitat de solucionarho?
 
 
 # 10. Anexos (url a los notebooks)
