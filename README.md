@@ -150,6 +150,7 @@ Tras el análisis realizado, con el objetivo de ajustar más los datos, se han r
 - Se han eliminado las columnas 'num_docks_available', 'timestamp'. 'num_bikes_available_types.ebike', 'num_bikes_available_types.mechanical', 'num_bikes_available'.
 - Cuando el valor total de bicicletas disponibles no coincida con la suma del total de bicicletas mecánicas y electricas, se decide ajustar el valor de bicicletas totales disponibles con el valor de la suma de ambas tipologías de bicicleta.
 - Merge con datos de festivos y meteorológicos.
+- Eliminar station_id (va en el punto 6).
 
 
 # 6. Data prediction (model comparison)
