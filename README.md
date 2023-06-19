@@ -145,11 +145,11 @@ Los datos encontrados abarcan todos los años en los que se analiza el uso de bi
 - Precipitación acumulada diaria
 
 
-# 5. Data processing
+# 5. Data processing (v1.6)
 Tras el análisis realizado, con el objetivo de ajustar más los datos, se han realizado los siguientes ajustes:
-- Columnes borrades en el Data Processing: 'num_docks_available', 'timestamp'. 'num_bikes_available_types.ebike', 'num_bikes_available_types.mechanical', 'num_bikes_available'.
+- Se han eliminado las columnas 'num_docks_available', 'timestamp'. 'num_bikes_available_types.ebike', 'num_bikes_available_types.mechanical', 'num_bikes_available'.
 - Cuando el valor total de bicicletas disponibles no coincida con la suma del total de bicicletas mecánicas y electricas, se decide ajustar el valor de bicicletas totales disponibles con el valor de la suma de ambas tipologías de bicicleta.
-- 
+- Merge con datos de festivos y meteorológicos.
 
 
 # 6. Data prediction (model comparison)
@@ -161,7 +161,6 @@ Tras el análisis realizado, con el objetivo de ajustar más los datos, se han r
 # 9. Next steps & Proposals
 ## Next steps
 - Realizar cuatro modelos diferenciados para cada estación del año atendiendo a los comportamientos específicos de los usuarios, posiblemente relacionado con los efectos meteorológicos.
-- 
 
 ## Proposals
 - Estudiar les parades que en algun moment tenen 0 disponibilitat de bicis o 0 disponibilitat de docks - mal servei - possibilitat de solucionarho?
@@ -169,7 +168,7 @@ Tras el análisis realizado, con el objetivo de ajustar más los datos, se han r
 
 # 10. Anexos (url a los notebooks)
 Los documentos trabajados son los siguientes:
-- Análisis completo explotarorio de los datos de 2019:
+- Análisis completo explotarorio de los datos de 2019: ![prueba insertar imagen](./2019_code/img_prueba.jpeg)
 - Análisis completo explotarorio de los datos de 2020:
 - Análisis completo explotarorio de los datos de 2021:
 - Análisis completo explotarorio de los datos de 2022:
