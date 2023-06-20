@@ -63,7 +63,10 @@ Existen dos tipos de bicicletas en Bicing Barcelona: las mecánicas y las eléct
 
 Para entender el comportamiento agregado de esta variable, se observa el numero total de bicis disponibles para cada hora del dia por los diferentes meses del año. 
 
-** TODO ** [insertar grafic. eix X hores del dia, eix Y total bicis dispo. cada linia un mes de l'any diferent. Ferho pels 4 anys]
+![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/74b42d69-8386-43c4-abb6-574853dc1b22)
+
+![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/9affe6e4-4e27-405e-b313-065f1e7302bb)
+
 
 ### 3.1.4. Ctx0
 Ctx0 hace referencia al porcentaje de bibicletas disponibles según el volumen máximo de anclajes, relacionando la variable ‘num_docks_available’, vista en el punto 3.1.2., y la ‘capacity’, que indica el número de bicicletas máximo que puede contener un anclaje o ‘dock’. Por lo tanto, a mayor Ctx0, menos número de bicicletas disponibles.
