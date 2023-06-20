@@ -170,7 +170,21 @@ Tras el análisis realizado, con el objetivo de ajustar más los datos, se han r
 - Eliminar station_id (va en el punto 6).
 
 
+
+
+APT6
+(explicar una mica el que caracteritza cada tipus de model -poca teoria- i els resultats que ens dóna)
+
+Modelos usados:
+- Linear Regresion
+- Decision tree
+- Random forest
+- Recurrent Neural Network
+- Grandient Boosting
+
+* Comentar extensament el millor model
 # 6. Data prediction (model comparison)
+
 
 # 7. Results
 
