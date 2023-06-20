@@ -35,7 +35,7 @@ En primer lugar, se ha realizado un análisis inicial con el objetivo de limpiar
 ### 3.1.1. Evolución del uso de las bicicletas a lo largo de los años
 A excepción del 2020, la tendencia del uso de las bicicletas en Barcelona a través del servicio del Bicing es creciente. Sin embargo, dicha subida se ve mermada en el propio 2020 a causa del Covid, una pandemia mundial que conllevó una cuarentena genérica de la población en España y que, consecuentemente, afectó a su vez a la capital catalana.
 
-![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/013e2967-7316-4e7a-9786-18f4047197e8)
+![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/a78cffc3-b1cd-4e59-8f64-33f01733bb06)
 <img width="921" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/8045cd84-43bf-487b-90cf-b75620a049d4">
 
 
