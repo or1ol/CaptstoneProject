@@ -57,7 +57,8 @@ Para entender el comportamiento agregado de esta variable, se observa el numero 
 ** TODO ** [insertar grafic. eix X hores del dia, eix Y total bicis dispo. cada linia un mes de l'any diferent. Ferho pels 4 anys]
 
 ** TODO ** (parlar de l'augment de bicis disponibles degut al covid i de la reducció de l'us de les bicis en base a un count de registres per any o any i mes, posar gràfic de tendencia d'us de bici)
-![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/5a7aafc7-2ef2-4afc-8cc0-1cc7a4b16697)
+<img width="921" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/8045cd84-43bf-487b-90cf-b75620a049d4">
+
 
 
 
