@@ -41,7 +41,10 @@ A excepción del 2020, la tendencia del uso de las bicicletas en Barcelona a tra
 
 
 ### 3.1.1. Station_ID
-En primer lugar, se han analizado los IDs de estaciones a lo largo de los años, para verificar si variaban en términos de volumen. Se ha percibido que no todos los IDs son constantes a lo largo de los años, y es por eso que se localizan los IDs únicos que están presentes en todos los años, encontrando un total de 405. 
+En primer lugar, se han analizado los IDs de estaciones a lo largo de los años, para verificar si variaban en términos de volumen. 
+![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/236a60e2-669f-4ae5-a796-457113489de6)
+
+Se ha percibido que no todos los IDs son constantes a lo largo de los años, y es por eso que se localizan los IDs únicos que están presentes en todos los años, encontrando un total de 405. 
 
 ![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/73a5d118-da37-4131-b03c-06d9b22a2291)
 
