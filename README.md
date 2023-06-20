@@ -37,15 +37,15 @@ En primer lugar, se han analizado los IDs de estaciones a lo largo de los años,
 
 ![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/73a5d118-da37-4131-b03c-06d9b22a2291)
 
-### 3.1.2. Anclajes disponibles (num_docks_available) (Oriol)
+### 3.1.2. Anclajes disponibles (num_docks_available)
 La variable num_docks_available indica la cantidad de anclajes disponibles que hay en cada estación de Bicing en cada momento. Este indicador es clave a lo largo del estudio ya que la predición se basa en la ratio entre bicis disponibles (variable directamente relacionada con los sitios vacios) sobre el total.
 
 Será necesario tener en cuenta que el valor de esta variable no puede valorarse de manera independiente, ya que las diferentes estaciones que hay en la ciudad no tienen el mismo tamaño, y por esto se trabajará con las ratios en vez de los valores absolutos. Aún así, no está de más observar la frequencia de sitios disponibles por estacion.
 
-[insertar grafic. eix X valors 1,2,3... num_docks_available, eix Y quantitat de parades amb aquell num de docks dispos]
+** TODO ** [insertar grafic. eix X valors 1,2,3... num_docks_available, eix Y quantitat de parades amb aquell num de docks dispos]
 
 
-### 3.1.3. Bicicletas disponibles (bikes_available -total y per tipus-) (Oriol)
+### 3.1.3. Bicicletas disponibles (bikes_available -total y per tipus-)
 Existen dos tipos de bicicletas en Bicing Barcelona: las mecánicas y las eléctricas. La información proporcionada por el dataset contiene el recuento de bicis mecánicas disponibles y bicis eléctricas disponibles por cada estación. Evidentemente la variable total bicis disponible debe ser la suma de las otras dos, hecho que permite verificar los datos y asegurar su robustez. En el apartado 5 (Data procesing) se explica como se tratan los registros donde no se cumple esta condición.
 
 
@@ -82,7 +82,7 @@ Se observa que existen dos picos claros de uso: a primera hora de la mañana y a
 El patrón detectado anteriormente coincide con los días de actividad profesional (lunes-viernes), y pierde relevancia el fin de semana (sábado y domingo). Es por eso que se toma la decisión, más adelante, de generar una nueva variable de días festivos (ver apartado 4).
 
 
-## 3.2. Correlación entre variables (Sandra)
+## 3.2. Correlación entre variables
 El objetivo es explorar la si existe una asociación entre dos variables para establecer si existe de una relacional lineal. En ese sentido, se ha estudiado la correlación entre:
 
 - El número de anclajes disponibles (num_docks_available) y el número de bicicletas disponibles (num_bikes_available)
