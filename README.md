@@ -134,15 +134,16 @@ El objetivo es explorar la si existe una asociación entre dos variables para es
 <img width="408" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/a7272579-f2f2-470d-a3fe-d4c9df52e76b">
 
 - El ctx0 (num_docs_available/capacity) y el mes (month)
+
 ![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/5af2aaab-e4cb-4c5c-a3f3-054dd596db49)
 
 ## 3.3. Key Insights
 Teniendo en cuenta la exploración de datos realizada, las principales conclusión que extrapolamos son las siguientes:
-- Se eliminan los datos de la época de Covid por ser anómalos.
-- (volem comentar que fem models amb alguns mesos de l'any i prou?)
-- ...
-- Se eliminan los datos de los meses de verano ya que el problema planteado es predecir la disponiblidad de bicicletas para el mes de marzo de 2023 y el comportamiento de dicho mes difiere de los meses de verano. La hipótesis que sostenta esto es la relacionada con la meteorología.
-- 
+- Los datos de la época de Covid son anómalos y representan una excepción en la evolución de los datos.
+- El comportamiento de los meses de verano difiere de el del mes de marzo. Esto es relevante porque el reto consiste en predecir las bicicletas para el mes de marzo de 2023. La hipótesis que sostenta esto es la relacionada con la meteorología.
+- La tipología de bicicletas (eléctricas o mecánicas) no es relevante para este estudio al no haber localizado diferencias de uso entre ambas.
+- Existen dos picos claros de uso de este medio de transporte: a primera hora de la mañana y a lo largo de la tarde. Por lo tanto, parece haber una relación directa con el horario laboral.
+- Los días de entre semana el uso de bicicletas es mayor que en fin de semana.
 
 # 4. Data enirchment
 ## 4.1. Días festivos
