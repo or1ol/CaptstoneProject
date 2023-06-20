@@ -108,11 +108,17 @@ El objetivo es explorar la si existe una asociación entre dos variables para es
 - El número de anclajes disponibles (num_docks_available) y la hora (hour)
 <img width="538" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/fdc2e56d-f9f2-4ae9-8bda-33e8affc2df7">
 
+- El número de anclajes disponibles (num_docks_available) y el mes (month)
+![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/bcd57a25-a974-4ba5-8571-b3cf052d3b14)
+
 - La capacidad (capacity) y el día de la semana (dayofweek)
 <img width="536" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/b4a54857-3cc2-48fc-8738-527c30b736db">
 
 - La capacidad (capacity) y la hora (hour)
 <img width="476" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/1990e491-a6d5-4e99-ab6f-7667da3340e5">
+
+- La capacidad (capacity) y el mes (month)
+![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/30cdbee2-e1e6-487b-ae6e-3169c00f94b1)
 
 - La capacidad (capacity) y el número de bicicletas disponibles (num_bikes_available)
 <img width="547" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/0c49eed1-a189-498f-914a-aa10bc948513">
@@ -123,7 +129,8 @@ El objetivo es explorar la si existe una asociación entre dos variables para es
 - El ctx0 (num_docs_available/capacity) y la hora (hour)
 <img width="408" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/a7272579-f2f2-470d-a3fe-d4c9df52e76b">
 
-** TODO ** Añadir correlacion de las variables que usamos en el pipeline con ctx0, ctx(1,2,3,4), month, dayofyear, festius_sun, weekend. 
+- El ctx0 (num_docs_available/capacity) y el mes (month)
+![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/5af2aaab-e4cb-4c5c-a3f3-054dd596db49)
 
 ## 3.3. Key Insights
 Teniendo en cuenta la exploración de datos realizada, las principales conclusión que extrapolamos son las siguientes:
