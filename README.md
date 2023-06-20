@@ -1,5 +1,5 @@
 # CaptstoneProject
-
+![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/c06bf96f-7e49-4116-a6a7-c82c74081d10)
 - Sandra Díaz
 - Daniel Fares
 - Oriol Soler
