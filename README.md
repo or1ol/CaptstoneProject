@@ -56,17 +56,18 @@ Será necesario tener en cuenta que el valor de esta variable no puede valorarse
 ** TODO ** [insertar grafic. eix X valors 1,2,3... num_docks_available, eix Y quantitat de parades amb aquell num de docks dispos]
 
 
-### 3.1.3. Bicicletas disponibles (bikes_available -total y per tipus-)
+### 3.1.3. Bicicletas disponibles
 Existen dos tipos de bicicletas en Bicing Barcelona: las mecánicas y las eléctricas. La información proporcionada por el dataset contiene el recuento de bicis mecánicas disponibles y bicis eléctricas disponibles por cada estación. Evidentemente la variable total bicis disponible debe ser la suma de las otras dos, hecho que permite verificar los datos y asegurar su robustez. En el apartado 5 (Data procesing) se explica como se tratan los registros donde no se cumple esta condición.
 
 ![image](https://github.com/or1ol/CaptstoneProject/assets/116120046/fe33b1e1-589e-4703-b280-cf2c83e8230f)
 
-Para entender el comportamiento agregado de esta variable, se observa el numero total de bicis disponibles para cada hora del dia por los diferentes meses del año. 
+Para entender el comportamiento de esta variable, se observa el numero medio de bicis disponibles para cada hora del dia por los diferentes meses del año y días de la semana. 
 
-![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/74b42d69-8386-43c4-abb6-574853dc1b22)
+<img width="1041" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/543e0612-599c-42e2-a8d8-fe071b2978eb">
 
-![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/9affe6e4-4e27-405e-b313-065f1e7302bb)
+<img width="1047" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/ac04829c-d3bb-4740-8ef3-bd4c9af861c9">
 
+Es evidente, por lo tanto, que no existe una diferencia relevante entre las dos tipologías de bicicletas, y que por ese mismo motivo se considerará el valor agregado. 
 
 ### 3.1.4. Ctx0
 Ctx0 hace referencia al porcentaje de bibicletas disponibles según el volumen máximo de anclajes, relacionando la variable ‘num_docks_available’, vista en el punto 3.1.2., y la ‘capacity’, que indica el número de bicicletas máximo que puede contener un anclaje o ‘dock’. Por lo tanto, a mayor Ctx0, menos número de bicicletas disponibles.
