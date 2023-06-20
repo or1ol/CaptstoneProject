@@ -32,6 +32,14 @@ En primer lugar, se ha realizado un análisis inicial con el objetivo de limpiar
 
 ## 3.1. Descriptiva
 
+### 3.1.1. Evolución del uso de las bicicletas a lo largo de los años
+A excepción del 2020, la tendencia del uso de las bicicletas en Barcelona a través del servicio del Bicing es creciente. Sin embargo, dicha subida se ve mermada en el propio 2020 a causa del Covid, una pandemia mundial que conllevó una cuarentena genérica de la población en España y que, consecuentemente, afectó a su vez a la capital catalana.
+
+![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/013e2967-7316-4e7a-9786-18f4047197e8)
+<img width="921" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/8045cd84-43bf-487b-90cf-b75620a049d4">
+
+
+
 ### 3.1.1. Station_ID
 En primer lugar, se han analizado los IDs de estaciones a lo largo de los años, para verificar si variaban en términos de volumen. Se ha percibido que no todos los IDs son constantes a lo largo de los años, y es por eso que se localizan los IDs únicos que están presentes en todos los años, encontrando un total de 405. 
 
@@ -48,19 +56,11 @@ Será necesario tener en cuenta que el valor de esta variable no puede valorarse
 ### 3.1.3. Bicicletas disponibles (bikes_available -total y per tipus-)
 Existen dos tipos de bicicletas en Bicing Barcelona: las mecánicas y las eléctricas. La información proporcionada por el dataset contiene el recuento de bicis mecánicas disponibles y bicis eléctricas disponibles por cada estación. Evidentemente la variable total bicis disponible debe ser la suma de las otras dos, hecho que permite verificar los datos y asegurar su robustez. En el apartado 5 (Data procesing) se explica como se tratan los registros donde no se cumple esta condición.
 
-
 ![image](https://github.com/or1ol/CaptstoneProject/assets/116120046/fe33b1e1-589e-4703-b280-cf2c83e8230f)
-
 
 Para entender el comportamiento agregado de esta variable, se observa el numero total de bicis disponibles para cada hora del dia por los diferentes meses del año. 
 
 ** TODO ** [insertar grafic. eix X hores del dia, eix Y total bicis dispo. cada linia un mes de l'any diferent. Ferho pels 4 anys]
-
-** TODO ** (parlar de l'augment de bicis disponibles degut al covid i de la reducció de l'us de les bicis en base a un count de registres per any o any i mes, posar gràfic de tendencia d'us de bici)
-<img width="921" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/8045cd84-43bf-487b-90cf-b75620a049d4">
-
-
-
 
 ### 3.1.4. Ctx0
 Ctx0 hace referencia al porcentaje de bibicletas disponibles según el volumen máximo de anclajes, relacionando la variable ‘num_docks_available’, vista en el punto 3.1.2., y la ‘capacity’, que indica el número de bicicletas máximo que puede contener un anclaje o ‘dock’. Por lo tanto, a mayor Ctx0, menos número de bicicletas disponibles.
