@@ -368,7 +368,7 @@ def read_dask_dataframe(folder_path:str, folder_type:str, config:dict, add_meta:
             storage_options=None,
             include_path_column=False,
             header=0,
-            dtype={'post_code': 'float64','street_number': 'object','street_name': 'object'}
+            dtype={'post_code': 'object','street_number': 'object','street_name': 'object', 'cross_street':'object', 'altitude':'object', 'planned_date':'object', 'lat':'object', 'lon':'object', 'name': 'object', 'physical_configuration': 'object', 'address': 'object', 'capacity': 'object', 'last_updated': 'object', 'ttl': 'object', 'nearby_distance': 'object', 'is_charging_station': 'object', 'x_ride_code_support': 'object', 'rental_uris': 'object'}
         )
     else: 
         raise 'Not supported yet'
