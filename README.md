@@ -179,12 +179,26 @@ Modelos usados:
 - Linear Regresion
 - Decision tree
 - Random forest
-- Recurrent Neural Network
 - Grandient Boosting
 
 * Comentar extensament el millor model
 # 6. Data prediction (model comparison)
 
+Models:
+
+
+Model comparison:
+
+| Model                  | cv | train | val | test | 1 | 2 | 3 | 4 | 5 | 11 | 12 | 11,12,1 | 12,1,2 | 1,2,3 | 2,3,4 | 3,4,5 | 2,3 | 3,4 |
+|------------------------|----|-------|-----|------|---|---|---|---|---|----|----|---------|--------|-------|-------|-------|-----|-----|
+| Linear Regresion       |    |       |     |      |   |   |   |   |   |    |    |         |        |       |       |       |     |     |
+| Linear Regresion Lasso |    |       |     |      |   |   |   |   |   |    |    |         |        |       |       |       |     |     |
+| Linear Regresion Ridge |    |       |     |      |   |   |   |   |   |    |    |         |        |       |       |       |     |     |
+| Linear Regresion       |    |       |     |      |   |   |   |   |   |    |    |         |        |       |       |       |     |     |
+| Decision tree          |    |       |     |      |   |   |   |   |   |    |    |         |        |       |       |       |     |     |
+| Random forest          |    |       |     |      |   |   |   |   |   |    |    |         |        |       |       |       |     |     |
+| Grandient Boosting     |    |       |     |      |   |   |   |   |   |    |    |         |        |       |       |       |     |     |
+| HistGrandient Boosting |    |       |     |      |   |   |   |   |   |    |    |         |        |       |       |       |     |     |
 
 # 7. Results
 
