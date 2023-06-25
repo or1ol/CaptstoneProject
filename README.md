@@ -226,4 +226,4 @@ Los documentos trabajados son los siguientes:
 
 ![image](https://github.com/or1ol/CaptstoneProject/assets/116120046/a4be44ef-80a6-4353-a00e-87f446a2320d)
 
-![prueba insertar imagen](./img/img_prueba.jpeg)
+![prueba insertar imagen](./img/MapaBCN.png)
