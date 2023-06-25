@@ -112,6 +112,12 @@ Los datos encontrados abarcan todos los años en los que se analiza el uso de bi
 
 # 6. Data prediction (model comparison)
 
+Linear Regression
+Decision Tree 
+Random Forest 
+
+
+
 # 7. Results
 
 # 8. Conclusions
