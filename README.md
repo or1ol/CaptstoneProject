@@ -187,18 +187,27 @@ Modelos usados:
 Models:
 
 
+Decision tree
+
+
+Parameters:
+Max Depth = 12 
+
+![prueba insertar imagen](./img/DecisionTreeFineTuning.png)
+
 Model comparison:
 
-| Model                  | cv | train | val | test | 1 | 2 | 3 | 4 | 5 | 11 | 12 | 11,12,1 | 12,1,2 | 1,2,3 | 2,3,4 | 3,4,5 | 2,3 | 3,4 |
-|------------------------|----|-------|-----|------|---|---|---|---|---|----|----|---------|--------|-------|-------|-------|-----|-----|
-| Linear Regresion       |    |       |     |      |   |   |   |   |   |    |    |         |        |       |       |       |     |     |
-| Linear Regresion Lasso |    |       |     |      |   |   |   |   |   |    |    |         |        |       |       |       |     |     |
-| Linear Regresion Ridge |    |       |     |      |   |   |   |   |   |    |    |         |        |       |       |       |     |     |
-| Linear Regresion       |    |       |     |      |   |   |   |   |   |    |    |         |        |       |       |       |     |     |
-| Decision tree          |    |       |     |      |   |   |   |   |   |    |    |         |        |       |       |       |     |     |
-| Random forest          |    |       |     |      |   |   |   |   |   |    |    |         |        |       |       |       |     |     |
-| Grandient Boosting     |    |       |     |      |   |   |   |   |   |    |    |         |        |       |       |       |     |     |
-| HistGrandient Boosting |    |       |     |      |   |   |   |   |   |    |    |         |        |       |       |       |     |     |
+| Dataset 21-22          | RMSE    |         |         |         |
+|------------------------|---------|---------|---------|---------|
+| Model                  | CV mean | Train   | Val     | Test    |
+| Linear Regresion       | 0.11361 | 0.11360 | 0.09456 | 0.11804 | 
+| Linear Regresion Lasso | 0.11705 | 0.11704 | 0.09910 | 0.12136 | 
+| Linear Regresion Ridge | 0.11361 | 0.11360 | 0.09456 | 0.11804 | 
+| ElasticNet             | 0.11570 | 0.11569 | 0.09739 | 0.12007 | 
+| Decision tree          | 0.10918 | 0.10752 | 0.09348 | 0.11381 |
+| Random forest          |  |  |  |  |
+| Grandient Boosting     |  |  |  |  |
+| HistGrandient Boosting |  |  |  |  |
 
 # 7. Results
 
