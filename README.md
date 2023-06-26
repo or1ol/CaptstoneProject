@@ -169,12 +169,6 @@ Tras el análisis realizado, con el objetivo de ajustar más los datos, se han r
 - Merge con datos de festivos y meteorológicos.
 - Eliminar station_id (va en el punto 6).
 
-
-
-
-APT6
-(explicar una mica el que caracteritza cada tipus de model -poca teoria- i els resultats que ens dóna)
-
 Modelos usados:
 - Linear Regresion
 - Decision tree
@@ -186,14 +180,27 @@ Modelos usados:
 
 Models:
 
+Linear Regresion:
+[Texto]
 
-Decision tree
-
-
+Decision tree:
+[Texto]
 Parameters:
 Max Depth = 12 
-
 ![prueba insertar imagen](./img/DecisionTreeFineTuning.png)
+
+Random forest:
+[Texto]
+Parameters:
+Max Depth = 12 
+![prueba insertar imagen](./img/DecisionTreeFineTuning.png)
+
+Grandient Boosting:
+[Texto]
+Parameters:
+Max Depth = 12 
+![prueba insertar imagen](./img/DecisionTreeFineTuning.png)
+
 
 Model comparison:
 
@@ -204,14 +211,30 @@ Model comparison:
 | Linear Regresion Lasso | 0.11705 | 0.11704 | 0.09910 | 0.12136 | 
 | Linear Regresion Ridge | 0.11361 | 0.11360 | 0.09456 | 0.11804 | 
 | ElasticNet             | 0.11570 | 0.11569 | 0.09739 | 0.12007 | 
-| Decision tree          | 0.10918 | 0.10752 | 0.09348 | 0.11381 |
-| Random forest          |  |  |  |  |
-| Grandient Boosting     |  |  |  |  |
-| HistGrandient Boosting |  |  |  |  |
+| Decision tree          | 0.10918 | 0.10752 | 0.09348 | 0.11381 | Es muy sensible a la data (Que es muy facil de tener overfitting)
+| Random forest          | 0.10759 | 0.10622 | 0.09016 | 0.11192 | Intenta elmininar el la sensibilidad a la data
+| Grandient Boosting     | 0.10281 | 0.09796 | 0.09083 | 0.10771 | 
+
+La data de val es data de estaciones que no han existido desde 2019 
+implica que la station_id para esta data es nan 
+
 
 # 7. Results
 
+Hemos visto que el gradient boosting ha dado mejor resultados que el random forest 
+
+
 # 8. Conclusions
+
+
+ctx0, ctx1, ctx2, ctx3, ctx4
+
+El Gradient boosting es el mejor 
+
+el hecho de haber enrequecido los datos
+Data del tiempo ha anadido valor
+Data de geolocalization
+
 
 # 9. Next steps & Proposals
 ## Next steps
@@ -236,3 +259,6 @@ Los documentos trabajados son los siguientes:
 ![image](https://github.com/or1ol/CaptstoneProject/assets/116120046/a4be44ef-80a6-4353-a00e-87f446a2320d)
 
 ![prueba insertar imagen](./img/MapaBCN.png)
+
+
+https://meet.google.com/nog-rysr-mjt
