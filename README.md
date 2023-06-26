@@ -178,26 +178,47 @@ Modelos usados:
 * Comentar extensament el millor model
 # 6. Data prediction (model comparison)
 
-Models:
+## Models:
 
-Linear Regresion:
-[Texto]
+### Linear Regresion:
+#### Descripcion: 
 
-Decision tree:
-[Texto]
-Parameters:
-Max Depth = 12 
+
+### Decision tree:
+#### Descripcion: 
+Es un algoritmo de Machine Learning. Es un m´etodo de clasificaci´on en
+que, una vez entrenado, parece como una estructura de ”if-then statments” ordenadas en
+un ´arbol. Decision Tree es muy simple de ver como toma la decisi´on, solo sigue el camino
+desde arriba hasta abajo contestando a todas las preguntas planteadas correctamente
+hasta llegar a un resultado, y con el ”trace back” desde este nodo final da la clasificaci´on
+racional de la entrada.
+
+#### Parameters:
+Para afinar el modelo, hemos corrido unos tests usando la data completa y comparar el resultado del model en este instante y con una set de parametros de entrada. 
+En conclusion el Max_Depth = 12 ha sido el mejor parametro: 
 ![prueba insertar imagen](./img/DecisionTreeFineTuning.png)
 
-Random forest:
-[Texto]
-Parameters:
-Max Depth = 12 
-![prueba insertar imagen](./img/DecisionTreeFineTuning.png)
+### Random forest:
+#### Descripcion: 
+Crea un bosque y hace de alguna manera que sea aleatoria, el bosque implementado es un 
+conjunto de Decision trees, Random Forest tiene esta ventaja que se puede usar para la clasificaci´on como los
+problemas de regresi´on, tambi´en este algoritmo trae extra aleatoriedad al modelo en la
+manera de crear los ´arboles. En lugar de buscar la mejor caracter´ıstica entre un subcon-
+junto aleatorio de caracter´ısticas. Por lo tanto, cuando est´a generando un ´arbol en un
+bosque aleatorio, solo se considera un subconjunto aleatorio de las caracter´ısticas para
+dividir un nodo.
 
-Grandient Boosting:
+
+#### Parameters:
+Para afinar el modelo, hemos corrido unos tests usando la data completa y comparar el resultado del model en este instante y con una set de parametros de entrada. 
+Max Depth = 12 
+![prueba insertar imagen](./img/RandomForestFineTuning.png)
+
+### Grandient Boosting:
+#### Descripcion: 
 [Texto]
-Parameters:
+
+#### Parameters:
 Max Depth = 12 
 ![prueba insertar imagen](./img/DecisionTreeFineTuning.png)
 
@@ -211,18 +232,16 @@ Model comparison:
 | Linear Regresion Lasso | 0.11705 | 0.11704 | 0.09910 | 0.12136 | 
 | Linear Regresion Ridge | 0.11361 | 0.11360 | 0.09456 | 0.11804 | 
 | ElasticNet             | 0.11570 | 0.11569 | 0.09739 | 0.12007 | 
-| Decision tree          | 0.10918 | 0.10752 | 0.09348 | 0.11381 | Es muy sensible a la data (Que es muy facil de tener overfitting)
-| Random forest          | 0.10759 | 0.10622 | 0.09016 | 0.11192 | Intenta elmininar el la sensibilidad a la data
+| Decision tree          | 0.10918 | 0.10752 | 0.09348 | 0.11381 | 
+| Random forest          | 0.10759 | 0.10622 | 0.09016 | 0.11192 |
 | Grandient Boosting     | 0.10281 | 0.09796 | 0.09083 | 0.10771 | 
 
 La data de val es data de estaciones que no han existido desde 2019 
 implica que la station_id para esta data es nan 
 
-
 # 7. Results
 
 Hemos visto que el gradient boosting ha dado mejor resultados que el random forest 
-
 
 # 8. Conclusions
 
@@ -239,6 +258,7 @@ Data de geolocalization
 # 9. Next steps & Proposals
 ## Next steps
 - Realizar cuatro modelos diferenciados para cada estación del año atendiendo a los comportamientos específicos de los usuarios, posiblemente relacionado con los efectos meteorológicos.
+
 
 ## Proposals
 - Estudiar les parades que en algun moment tenen 0 disponibilitat de bicis o 0 disponibilitat de docks - mal servei - possibilitat de solucionarho?
@@ -259,6 +279,3 @@ Los documentos trabajados son los siguientes:
 ![image](https://github.com/or1ol/CaptstoneProject/assets/116120046/a4be44ef-80a6-4353-a00e-87f446a2320d)
 
 ![prueba insertar imagen](./img/MapaBCN.png)
-
-
-https://meet.google.com/nog-rysr-mjt
