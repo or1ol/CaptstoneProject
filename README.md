@@ -251,6 +251,9 @@ Hemos visto que el gradient boosting ha dado mejor resultados que el random fore
 GB tiene menos overfitting que RF. GB tiene mejor performance que RF. Descartando algunos meses del año, el modelo todavía ajusta mejor. 
 usar one hot encoding en station id empera el modelo
 
+![DecisonTree](img/DecisionTreeMonthsComparison.png)
+![RandomForest](img/RandomForestMonthsComparison.png)
+![GradientBoosting](img/GradientBoostingMonthsComparison.png)
 
 # 8. Conclusions
 
