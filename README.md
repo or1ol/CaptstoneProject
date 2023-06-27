@@ -243,29 +243,32 @@ implica que la station_id para esta data es nan
 
 Analizados todos los modelos usados, se comprueba que el modelo de regresión lineal al ser el más senzillo de todos genera un error mayor que los demás. Al intentar mejorar los resultados obtenidos con el método de regresión lineal, se prueba Lasso y Ridge. Con Ridge se iguala el error, pero el método de Lasso ajusta peor la predición. Dado que el método ElasticNet es una combinación de los métodos Lasso y Ridge, no se esperaba ninguna mejora, pero se comprueba que el erro queda acotado entre los dos métodos anteriores.
 
+## Decision Trees:
 Intentando mejorar el rendimiento de la predicción se considera probar el modelo de Decision tree, aún ser un modelo altamente sensible a la variación de los datos. Se consigue reducir el error, pero se constata que no es un modelo nada robusta ya que dependiendo mucho de los valores de train se conseguía un error muy variable.
 
 ![DecisonTree](img/DecisionTreeMonthsComparison.png) 
-pendiente comentar
 
+*Visualizacion de los resultado de entrenamiento del modelo Deccision tree sobre los datos de cada mes por separado. "rmse_t_train", son las estaciones de bicing que aparecieron durante los años de 2019-2022. rmse_t_test, son las estaciones de bicing que no aparicieron en todos los escogidos. rmse_v_test, son los datso del mes de Marzo de 2023 (para simular la data de testing de kaggle para el proyecto). Podemos ver que el modelo Decision tree es un modelo muy sensible a la variacion de la data mostrando sintomas de overfitting muy grave comparado con el resto de modelos (el error minimo que consequio este modelo es 0.95 comparado con el pero de la data de testing de 2023 que es 0.13).*
+
+
+## Random Forest:
 En una siguiente iteración, y con el objetivo de reducir el error a la vez que augmentar la robustez del modelo, se estudia el comportamiento de Random Forest. Este modelo consigue mejorar la fiabilidad de la predicción.
 
 ![RandomForest](img/RandomForestMonthsComparison.png)
-pendiente comentar
 
+*Visualizacion de los resultado de entrenamiento del modelo Deccision tree sobre los datos de cada mes por separado. "rmse_t_train", son las estaciones de bicing que aparecieron durante los años de 2019-2022. rmse_t_test, son las estaciones de bicing que no aparicieron en todos los escogidos. rmse_v_test, son los datso del mes de Marzo de 2023 (para simular la data de testing de kaggle para el proyecto). Random forest, como un modelo de boosting que utiliza en sequencia el modelo de Decision Tree. Consigue menos overfitting y la hora mejor predicciones que el model Decision Trees.*
+
+## Gradient Boosting:
 Finalmente, se prueba el modelo de Gradient Boosting. De este modelo se conoce que tiene menos overfitting que Random Forest, y al entrenarlo y provarlo se constata que genera la mejor predicción obtenida.
 
 ![GradientBoosting](img/GradientBoostingMonthsComparison.png)
-pendiente comentar
+
+*Visualizacion de los resultado de entrenamiento del modelo Deccision tree sobre los datos de cada mes por separado. "rmse_t_train", son las estaciones de bicing que aparecieron durante los años de 2019-2022. rmse_t_test, son las estaciones de bicing que no aparicieron en todos los escogidos. rmse_v_test, son los datso del mes de Marzo de 2023 (para simular la data de testing de kaggle para el proyecto). A nivel de eficiencia de de predicion ha demostrado mejor resultado que el Random forest pero no deja de tener las mismas sintomas de overfitting.*
 
 
->Hemos visto que el gradient boosting ha dado mejor resultados que el random forest.
->GB tiene menos overfitting que RF. GB tiene mejor performance que RF. Descartando algunos meses del año, el modelo todavía ajusta mejor. 
->usar one hot encoding en station id empera el modelo
-
-
-
-
+## Finalmente
+- Como mesura de mejora. Hemos generado modelo por cada estacion del año o mejor dicho descartando algunos meses del año, el modelo todavía ajusta mejor para predecir los datos de Marzo del 2023. 
+- Una de las ideas para poder aprovechar de la feature station_id, ha sido aplicar el OneHotEncoding sobre esta. Lastimamente, el comportamiento de los modelos empeor`o. 
 
 # 8. Conclusions
 
