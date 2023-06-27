@@ -208,7 +208,6 @@ En conclusion, el Max_Depth = 12 ha sido el mejor parametro:
 Random Forest crea un conjunto aleatorio de Decision trees, con la ventaja que se puede usar tanto para clasificar como para problemas de regresión. De modo muy resumido, cuando está generando un árbol en un
 conjunto (también nombrado bosque) aleatorio, solo se considera un subconjunto también aleatorio de las características para dividir un nodo.
 
-
 #### Parameters:
 Para afinar el modelo, se han ejecutado unos tests usando la data completa y comparado los resultados del modelo con una set de parametros de entrada. 
 
@@ -218,13 +217,15 @@ En conclusion, el Max_Depth = 12 ha sido el mejor parametro:
 
 ### Grandient Boosting:
 #### Descripcion: 
-[Texto]
+Boosting es una tecnica de machine learning de ensambling, combinando varios modelos debiles en series. Generando un modelo mas rebusto. Este modelo es un modelo que aprende de forma sequencial, los peores casos del modelo anterior con la intencion de mejorar esta predicion. 
+
+El primer modelo debil en gradient boosting, no se entrena sobre la dataset, a cambio, devuele la media de la columna relavante. Asi que la funcion residual (residual error, y-ŷ) de este primer modelo sera la columna de entrada or columna relevante para el segundo modelo computando la funcion residual del segon modelo que sera la entrada para el sigueinte modelo, y a continuacion iterativamente hasta que alcanze errores residuales iqual a zero, minimizando asi el mean squared error. Gradiente boosting actualiza los coeficientes computando el gradiente negativo de la funcion de error en respeto a la prediccion. 
+
+Una variante del Gradient Boosting es el eXtreme Gradiente Boosting, aplicando una regularizacion siendo mas rapido y mas eficiente que el Gradiente boosting. 
 
 #### Parameters:
-
-En conclusion, el Max_Depth = 12 ha sido el mejor parametro:
-
-![prueba insertar imagen](./img/DecisionTreeFineTuning.png)
+Debido al tiempo de ejecucion este modelo no ha sido capaz de ejecutar una funcion muy cara a la computacion como el gridsearch cv buscando los mejores parametros.
+El mejor valor escogido ha sido n_estimators igual a 100 (valor por default), y el max_depth igual a 12. 
 
 A considerar finalmente:
 
