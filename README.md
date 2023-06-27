@@ -169,13 +169,7 @@ Tras el análisis realizado, con el objetivo de ajustar más los datos, se han r
 - Merge con datos de festivos y meteorológicos.
 - Eliminar station_id (va en el punto 6).
 
-Modelos usados:
-- Linear Regresion
-- Decision tree
-- Random forest
-- Grandient Boosting
 
-* Comentar extensament el millor model
 # 6. Data prediction (model comparison)
 
 ## Models:
