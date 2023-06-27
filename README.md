@@ -180,35 +180,28 @@ Tras el análisis realizado, con el objetivo de ajustar más los datos, se han r
 
 ### Decision tree:
 #### Descripcion: 
-Es un algoritmo de Machine Learning. Es un método de clasificación en
-que, una vez entrenado, parece como una estructura de ”if-then statments” ordenadas en
-un árbol. Decision Tree es muy simple de ver como toma la decisión, solo sigue el camino
+Se trata de un algoritmo de Machine Learning. Es un método de clasificación que, una vez entrenado, se asemeja a una estructura de "if-then statments" ordenadas en un árbol. Mediante el Decision Tree se ve de manera muy simple como se realiza la toma de decisiones, ya que solo sigue el camino
 desde arriba hasta abajo contestando a todas las preguntas planteadas correctamente
-hasta llegar a un resultado, y con el ”trace back” desde este nodo final da la clasificaci´on
+hasta llegar a un resultado, y con el "trace back" desde este nodo final da la clasificación
 racional de la entrada.
 
 #### Parameters:
-Para afinar el modelo, hemos corrido unos tests usando la data completa y comparar el resultado del model en este instante y con una set de parametros de entrada. 
+Para afinar el modelo, se han ejecutado unos tests usando la data completa y comparado los resultados del modelo con una set de parametros de entrada. 
 
-En conclusion el Max_Depth = 12 ha sido el mejor parametro: 
+En conclusion, el Max_Depth = 12 ha sido el mejor parametro: 
 
 ![prueba insertar imagen](./img/DecisionTreeFineTuning.png)
 
 ### Random forest:
 #### Descripcion: 
-Crea un bosque y hace de alguna manera que sea aleatoria, el bosque implementado es un 
-conjunto de Decision trees, Random Forest tiene esta ventaja que se puede usar para la clasificaci´on como los
-problemas de regresi´on, tambi´en este algoritmo trae extra aleatoriedad al modelo en la
-manera de crear los ´arboles. En lugar de buscar la mejor caracter´ıstica entre un subcon-
-junto aleatorio de caracter´ısticas. Por lo tanto, cuando est´a generando un ´arbol en un
-bosque aleatorio, solo se considera un subconjunto aleatorio de las caracter´ısticas para
-dividir un nodo.
+Random Forest crea un conjunto aleatorio de Decision trees, con la ventaja que se puede usar tanto para clasificar como para problemas de regresión. De modo muy resumido, cuando está generando un árbol en un
+conjunto (también nombrado bosque) aleatorio, solo se considera un subconjunto también aleatorio de las características para dividir un nodo.
 
 
 #### Parameters:
-Para afinar el modelo, hemos corrido unos tests usando la data completa y comparar el resultado del model en este instante y con una set de parametros de entrada. 
+Para afinar el modelo, se han ejecutado unos tests usando la data completa y comparado los resultados del modelo con una set de parametros de entrada. 
 
-Max Depth = 12 
+En conclusion, el Max_Depth = 12 ha sido el mejor parametro: 
 
 ![prueba insertar imagen](./img/RandomForestFineTuning.png)
 
@@ -218,7 +211,7 @@ Max Depth = 12
 
 #### Parameters:
 
-Max Depth = 12 
+En conclusion, el Max_Depth = 12 ha sido el mejor parametro:
 
 ![prueba insertar imagen](./img/DecisionTreeFineTuning.png)
 
@@ -235,9 +228,7 @@ Model comparison:
 | Decision tree          | 0.10918 | 0.10752 | 0.09348 | 0.11381 | 
 | Random forest          | 0.10759 | 0.10622 | 0.09016 | 0.11192 |
 | Grandient Boosting     | 0.10281 | 0.09796 | 0.09083 | 0.10771 | 
-0.10249
-La data de val es data de estaciones que no han existido desde 2019 
-implica que la station_id para esta data es nan 
+
 
 # 7. Results
 
