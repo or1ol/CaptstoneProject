@@ -180,9 +180,9 @@ Tras el análisis realizado, con el objetivo de ajustar más los datos, se han r
 
 ### Decision tree:
 #### Descripcion: 
-Es un algoritmo de Machine Learning. Es un m´etodo de clasificaci´on en
+Es un algoritmo de Machine Learning. Es un método de clasificación en
 que, una vez entrenado, parece como una estructura de ”if-then statments” ordenadas en
-un ´arbol. Decision Tree es muy simple de ver como toma la decisi´on, solo sigue el camino
+un árbol. Decision Tree es muy simple de ver como toma la decisión, solo sigue el camino
 desde arriba hasta abajo contestando a todas las preguntas planteadas correctamente
 hasta llegar a un resultado, y con el ”trace back” desde este nodo final da la clasificaci´on
 racional de la entrada.
@@ -241,7 +241,16 @@ implica que la station_id para esta data es nan
 
 # 7. Results
 
-Hemos visto que el gradient boosting ha dado mejor resultados que el random forest 
+Analizados todos los modelos usados, se comprueba que el modelo de regresión lineal al ser el más senzillo de todos genera un error mayor que los demás. Al intentar mejorar los resultados obtenidos con el método de regresión lineal, se prueba Lasso y Ridge. Con Ridge se iguala el error, pero el método de Lasso ajusta peor la predición. Dado que el método ElasticNet es una combinación de los métodos Lasso y Ridge, no se esperaba ninguna mejora, pero se comprueba que el erro queda acotado entre los dos métodos anteriores.
+
+Intentando mejorar el rendimiento de la predicción se considera probar el modelo de Decision tree, aún ser un modelo altamente sensible a la variación de los datos. Se consigue reducir el error, pero se constata que no es un modelo nada robusta ya que dependiendo mucho de los valores de train se conseguía un error muy variable.
+
+En una siguiente iteración, y con el objetivo de reducir el error a la vez que[...]
+
+Hemos visto que el gradient boosting ha dado mejor resultados que el random forest.
+GB tiene menos overfitting que RF. GB tiene mejor performance que RF. Descartando algunos meses del año, el modelo todavía ajusta mejor. 
+usar one hot encoding en station id empera el modelo
+
 
 # 8. Conclusions
 
