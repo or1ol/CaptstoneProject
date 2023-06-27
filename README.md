@@ -235,7 +235,7 @@ Model comparison:
 | Decision tree          | 0.10918 | 0.10752 | 0.09348 | 0.11381 | 
 | Random forest          | 0.10759 | 0.10622 | 0.09016 | 0.11192 |
 | Grandient Boosting     | 0.10281 | 0.09796 | 0.09083 | 0.10771 | 
-
+0.10249
 La data de val es data de estaciones que no han existido desde 2019 
 implica que la station_id para esta data es nan 
 
