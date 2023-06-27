@@ -13,7 +13,7 @@ Uno de los primeros problemas a afrontar es la gran cantidad de datos disponible
 
 Posteriormente, se procede a hacer un estudio detallado de cada dimensión, estudiar que correlaciones hay entre  las variables, limpiar los datasets, enriquecer los datos y procesarlos para crear modelos predictivos.
 
-# 2. Data cleaning (ok)
+# 2. Data cleaning 
 En primer lugar, se ha realizado un análisis inicial con el objetivo de limpiar los ficheros de datos que carecen de sentido por algún motivo. Para ello, se han realizado los siguientes pasos:
 - Descarga de los datos de la página web oficial para los años 2019, 2020, 2021, 2022 y 2023 (incluyendo los datos no incorporados en la descarga inicial).
 - Cálculo de los valores faltantes (NaN) para las distintas variables de los datasets.
@@ -51,7 +51,7 @@ Se ha percibido que no todos los IDs son constantes a lo largo de los años, y e
 ### 3.1.2. Anclajes disponibles (num_docks_available)
 La variable num_docks_available indica la cantidad de anclajes disponibles que hay en cada estación de Bicing en cada momento. Este indicador es clave a lo largo del estudio ya que la predición se basa en la ratio entre bicis disponibles (variable directamente relacionada con los sitios vacios) sobre el total.
 
-Será necesario tener en cuenta que el valor de esta variable no puede valorarse de manera independiente, ya que las diferentes estaciones que hay en la ciudad no tienen el mismo tamaño, y por esto se trabajará con las ratios en vez de los valores absolutos. Aún así, no está de más observar la frequencia de sitios disponibles por estacion.
+Será necesario tener en cuenta que el valor de esta variable no puede valorarse de manera independiente, ya que las diferentes estaciones que hay en la ciudad no tienen el mismo tamaño, y por esto se trabajará con las ratios en vez de los valores absolutos. Aún así, no está de más observar la frequencia de sitios disponibles por estación.
 
 ** TODO ** [insertar grafic. eix X valors 1,2,3... num_docks_available, eix Y quantitat de parades amb aquell num de docks dispos]
 
@@ -162,7 +162,7 @@ Los datos encontrados abarcan todos los años en los que se analiza el uso de bi
 - Precipitación acumulada diaria
 
 
-# 5. Data processing (v1.6)
+# 5. Data processing
 Tras el análisis realizado, con el objetivo de ajustar más los datos, se han realizado los siguientes ajustes:
 - Se han eliminado las columnas 'num_docks_available', 'timestamp'. 'num_bikes_available_types.ebike', 'num_bikes_available_types.mechanical', 'num_bikes_available'.
 - Cuando el valor total de bicicletas disponibles no coincida con la suma del total de bicicletas mecánicas y electricas, se decide ajustar el valor de bicicletas totales disponibles con el valor de la suma de ambas tipologías de bicicleta.
@@ -176,18 +176,19 @@ Tras el análisis realizado, con el objetivo de ajustar más los datos, se han r
 
 ### Linear Regresion:
 #### Descripcion: 
-Modelo estatistico, se usa para explicar la varianza de un incogneta Y atraves de otros variables x1,x2,x3,...xn por una funcion lineal. 
+Linear Regresion es un modelo estadístico que se usa para explicar la varianza de un incognita a través de otras variables (x1,x2,x3,...xn) con una función lineal. 
 
-De otras maneras, para poder capturar los affectos no lineal de las variables independientes x1,x2,x3,...xn  
-Ridge Regression: es un modelo que pinaliza los coeficientes cuando se elejan demasiado de zero. De esta manera, reduce la complejidad del model imponiendo que los coeficientes seigan pequeños y cercanos a zero. 
-Este modelo, suma la l2-norm a la suma de squared errors de las predicciones con el objetivo de minimizar este error. 
+Por otro lado, para poder capturar los efectos no lineales de las variables independientes (x1,x2,x3,...xn) utilizaríamos los siguientes modelos:
+
+Ridge Regression:
+Es un modelo que penaliza los coeficientes cuando se alejan demasiado de cero. De esta manera, reduce la complejidad del modelo, imponiendo que los coeficientes sean pequeños y cercanos a zero. 
+Este modelo suma la l2-norm a la suma de squared errors de las predicciones con el objetivo de minimizar el error. 
 
 Lasso Regression:
-A cambio Lasso regressor, añade la l1-norm a la suma de squared errors de las predicciones con el objetivo de minimizar este error. 
+En cambio, el método de Lasso añade la l1-norm a la suma de squared errors de las predicciones con el objetivo de minimizar el error. 
 
-Como una composicion de los dos:
 ElasticNet:
-Es un modelo de regression lineal usa el termino de penalizacion para minimizar las coeficientes y ponerlos cerca de zero. Aplica una combinacion de l1-norm y l2-norm de los coeficientes (simulando una composicion de los dos Lasso y Ridge). Usando un paremtro ademas, llamado "Lambda" para controlar el balance entre las dos normas. cuando lambda es zero es un model equivalente a un modelo Lasso y cuand es uno, es un modelo equivalente a Ridge. De esta forma ElasticNet puede adaptarse a diferente situaciones y datasets.  
+Es un modelo de regression lineal que combina los dos anteriores. Utiliza el término de penalización para minimizar los coeficientes y ponerlos cerca de cero. Aplica una combinacion de l1-norm y l2-norm de los coeficientes. Además, incorpora un parámtro llamado "Lambda" para controlar el balance entre las dos normas. Cuando lambda es cero el modelo es equivalente a un modelo Lasso, y cuando por contrario es uno, el modelo es equivalente a Ridge. De esta forma, ElasticNet puede adaptarse a diferente situaciones y datasets.  
 
 ### Decision tree:
 #### Descripcion: 
