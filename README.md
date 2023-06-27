@@ -245,15 +245,27 @@ Analizados todos los modelos usados, se comprueba que el modelo de regresión li
 
 Intentando mejorar el rendimiento de la predicción se considera probar el modelo de Decision tree, aún ser un modelo altamente sensible a la variación de los datos. Se consigue reducir el error, pero se constata que no es un modelo nada robusta ya que dependiendo mucho de los valores de train se conseguía un error muy variable.
 
-En una siguiente iteración, y con el objetivo de reducir el error a la vez que[...]
+![DecisonTree](img/DecisionTreeMonthsComparison.png) 
+pendiente comentar
 
-Hemos visto que el gradient boosting ha dado mejor resultados que el random forest.
-GB tiene menos overfitting que RF. GB tiene mejor performance que RF. Descartando algunos meses del año, el modelo todavía ajusta mejor. 
-usar one hot encoding en station id empera el modelo
+En una siguiente iteración, y con el objetivo de reducir el error a la vez que augmentar la robustez del modelo, se estudia el comportamiento de Random Forest. Este modelo consigue mejorar la fiabilidad de la predicción.
 
-![DecisonTree](img/DecisionTreeMonthsComparison.png)
 ![RandomForest](img/RandomForestMonthsComparison.png)
+pendiente comentar
+
+Finalmente, se prueba el modelo de Gradient Boosting. De este modelo se conoce que tiene menos overfitting que Random Forest, y al entrenarlo y provarlo se constata que genera la mejor predicción obtenida.
+
 ![GradientBoosting](img/GradientBoostingMonthsComparison.png)
+pendiente comentar
+
+
+>Hemos visto que el gradient boosting ha dado mejor resultados que el random forest.
+>GB tiene menos overfitting que RF. GB tiene mejor performance que RF. Descartando algunos meses del año, el modelo todavía ajusta mejor. 
+>usar one hot encoding en station id empera el modelo
+
+
+
+
 
 # 8. Conclusions
 
