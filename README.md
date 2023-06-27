@@ -195,7 +195,9 @@ racional de la entrada.
 
 #### Parameters:
 Para afinar el modelo, hemos corrido unos tests usando la data completa y comparar el resultado del model en este instante y con una set de parametros de entrada. 
+
 En conclusion el Max_Depth = 12 ha sido el mejor parametro: 
+
 ![prueba insertar imagen](./img/DecisionTreeFineTuning.png)
 
 ### Random forest:
@@ -211,7 +213,9 @@ dividir un nodo.
 
 #### Parameters:
 Para afinar el modelo, hemos corrido unos tests usando la data completa y comparar el resultado del model en este instante y con una set de parametros de entrada. 
+
 Max Depth = 12 
+
 ![prueba insertar imagen](./img/RandomForestFineTuning.png)
 
 ### Grandient Boosting:
@@ -219,7 +223,9 @@ Max Depth = 12
 [Texto]
 
 #### Parameters:
+
 Max Depth = 12 
+
 ![prueba insertar imagen](./img/DecisionTreeFineTuning.png)
 
 
@@ -266,11 +272,11 @@ Data de geolocalization
 
 # 10. Anexos (url a los notebooks)
 Los documentos trabajados son los siguientes:
-- Análisis completo explotarorio de los datos de 2019: ![prueba insertar imagen](./2019_code/img_prueba.jpeg)
-- Análisis completo explotarorio de los datos de 2020:
-- Análisis completo explotarorio de los datos de 2021:
-- Análisis completo explotarorio de los datos de 2022:
-- Análisis completo explotarorio de los datos de 2023:
+- Análisis completo explotarorio de los datos de 2019: [notebook](./2019_code/ScriptDataExploring.ipynb)
+- Análisis completo explotarorio de los datos de 2020: [notebook](./2020_code/ScriptDataExploring.ipynb)
+- Análisis completo explotarorio de los datos de 2021: [notebook](./2021_code/ScriptDataExploring.ipynb)
+- Análisis completo explotarorio de los datos de 2022: [notebook](./2022_code/ScriptDataExploring.ipynb)
+- Análisis completo explotarorio de los datos de 2023: [notebook](./2023_code/ScriptDataExploring.ipynb)
 - Documento de funciones utilizadas 'tools':
 - Scripts XXX:
 - Otros modelos ejecutado:
