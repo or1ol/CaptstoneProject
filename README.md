@@ -176,7 +176,18 @@ Tras el análisis realizado, con el objetivo de ajustar más los datos, se han r
 
 ### Linear Regresion:
 #### Descripcion: 
+Modelo estatistico, se usa para explicar la varianza de un incogneta Y atraves de otros variables x1,x2,x3,...xn por una funcion lineal. 
 
+De otras maneras, para poder capturar los affectos no lineal de las variables independientes x1,x2,x3,...xn  
+Ridge Regression: es un modelo que pinaliza los coeficientes cuando se elejan demasiado de zero. De esta manera, reduce la complejidad del model imponiendo que los coeficientes seigan pequeños y cercanos a zero. 
+Este modelo, suma la l2-norm a la suma de squared errors de las predicciones con el objetivo de minimizar este error. 
+
+Lasso Regression:
+A cambio Lasso regressor, añade la l1-norm a la suma de squared errors de las predicciones con el objetivo de minimizar este error. 
+
+Como una composicion de los dos:
+ElasticNet:
+Es un modelo de regression lineal usa el termino de penalizacion para minimizar las coeficientes y ponerlos cerca de zero. Aplica una combinacion de l1-norm y l2-norm de los coeficientes (simulando una composicion de los dos Lasso y Ridge). Usando un paremtro ademas, llamado "Lambda" para controlar el balance entre las dos normas. cuando lambda es zero es un model equivalente a un modelo Lasso y cuand es uno, es un modelo equivalente a Ridge. De esta forma ElasticNet puede adaptarse a diferente situaciones y datasets.  
 
 ### Decision tree:
 #### Descripcion: 
@@ -256,7 +267,7 @@ En una siguiente iteración, y con el objetivo de reducir el error a la vez que 
 
 ![RandomForest](img/RandomForestMonthsComparison.png)
 
-*Visualizacion de los resultado de entrenamiento del modelo Deccision tree sobre los datos de cada mes por separado. "rmse_t_train", son las estaciones de bicing que aparecieron durante los años de 2019-2022. rmse_t_test, son las estaciones de bicing que no aparicieron en todos los escogidos. rmse_v_test, son los datso del mes de Marzo de 2023 (para simular la data de testing de kaggle para el proyecto). Random forest, como un modelo de boosting que utiliza en sequencia el modelo de Decision Tree. Consigue menos overfitting y la hora mejor predicciones que el model Decision Trees.*
+*Visualizacion de los resultado de entrenamiento del modelo Deccision tree sobre los datos de cada mes por separado. "rmse_t_train", son las estaciones de bicing que aparecieron durante los años de 2019-2022. rmse_t_test, son las estaciones de bicing que no aparicieron en todos los escogidos. rmse_v_test, son los datso del mes de Marzo de 2023 (para simular la data de testing de kaggle para el proyecto). Este modelo, consigue menos overfitting y la hora mejor predicciones que el model Decision Trees.*
 
 ## Gradient Boosting:
 Finalmente, se prueba el modelo de Gradient Boosting. De este modelo se conoce que tiene menos overfitting que Random Forest, y al entrenarlo y provarlo se constata que genera la mejor predicción obtenida.
