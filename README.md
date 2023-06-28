@@ -4,14 +4,14 @@
 - Daniel Fares
 - Oriol Soler
 
-# 0. Summary
 
 # 1. Introducción al problema
-El reto propuesto para el proyecto Capstone consiste en predecir el porcentaje de sitios disponibles para aparcar las bicis de Bicing Barcelona por estación según sus datos históricos. Estos son recogidos y publicados mensualmente al portal Open Data del ayuntamiento de Barcelona, y contienen parametros relativos a cada estación y sus bicicletas.
+El reto propuesto para el proyecto Capstone consiste en predecir el porcentaje de sitios disponibles para aparcar las bicis de Bicing Barcelona por estación según sus datos históricos. Estos datos son recogidos y publicados mensualmente al portal Open Data del ayuntamiento de Barcelona, y contienen parametros relativos a cada estación y sus bicicletas.
 
 Uno de los primeros problemas a afrontar es la gran cantidad de datos disponibles. Este hecho dificulta en gran medida las primeras etapas del proyecto dado que la obtención y primeros análisis de los datos llevan mucho tiempo y esfuerzo. Para conseguirlo, se usa Dask, una librería de Python que permite parallel computing.
 
 Posteriormente, se procede a hacer un estudio detallado de cada dimensión, estudiar que correlaciones hay entre  las variables, limpiar los datasets, enriquecer los datos y procesarlos para crear modelos predictivos.
+
 
 # 2. Data cleaning 
 En primer lugar, se ha realizado un análisis inicial con el objetivo de limpiar los ficheros de datos que carecen de sentido por algún motivo. Para ello, se han realizado los siguientes pasos:
@@ -20,7 +20,7 @@ En primer lugar, se ha realizado un análisis inicial con el objetivo de limpiar
 - Cálculo de los valores que se corresponden con 0 de las distintas variables de los datasets.
 - Clasificación de las variables según si son categóricas o numéricas, así como el cálculo de valores únicos que devuelve cada una de ellas. 
 - Eliminación de elementos duplicados de las variables en las que no tienen sentido, como por ejemplo el ‘last_reported’.
-- Eliminación de columnas que no son necesarias: 'last_updated', 'ttl', 'is_installed', 'status', 'is_charging_station', 'is_returning', y 'is_renting'.post_code
+- Eliminación de columnas que no son necesarias: 'last_updated', 'ttl', 'is_installed', 'status', 'is_charging_station', 'is_returning', y 'is_renting'.post_code.
 - Ajuste variable ‘status’, agrupando bajo el valor 0 ‘in_service’ y bajo 1, ‘closed’.
 - Crear nuevas columnas para el ‘last_reported’ y el ‘last_updated’, asignando nuevas variables a los valores devueltos.
 - Uniformar el formato de los timestamp a fecha/hora.
@@ -28,12 +28,13 @@ En primer lugar, se ha realizado un análisis inicial con el objetivo de limpiar
 - Agrupar el timestamp en múltiplos de 60 para poder reducir la base de datos trabajada, ya que nos interesaba tener los datos en granularidad por hora en vez de minuto.
 - Generación de valores medios de las ultimas 2, 3 y 4 horas para asignar el valor más representativo a cada registro de timestamp agrupado por hora.
 
+
 # 3. Data analysis
 
 ## 3.1. Descriptiva
 
 ### 3.1.1. Evolución del uso de las bicicletas a lo largo de los años
-A excepción del 2020, la tendencia del uso de las bicicletas en Barcelona a través del servicio del Bicing es creciente. Sin embargo, dicha subida se ve mermada en el propio 2020 a causa del Covid, una pandemia mundial que conllevó una cuarentena genérica de la población en España y que, consecuentemente, afectó a su vez a la capital catalana.
+A excepción del 2020, la tendencia del uso de las bicicletas en Barcelona a través del servicio del Bicing es creciente. Sin embargo, dicha subida se ve mermada en el propio 2020 a causa del Covid, una pandemia mundial que conllevó una cuarentena general de la población en España y que, consecuentemente, afectó a su vez a la capital catalana.
 
 ![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/a78cffc3-b1cd-4e59-8f64-33f01733bb06)
 <img width="921" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/8045cd84-43bf-487b-90cf-b75620a049d4">
@@ -53,15 +54,13 @@ La variable num_docks_available indica la cantidad de anclajes disponibles que h
 
 Será necesario tener en cuenta que el valor de esta variable no puede valorarse de manera independiente, ya que las diferentes estaciones que hay en la ciudad no tienen el mismo tamaño, y por esto se trabajará con las ratios en vez de los valores absolutos. Aún así, no está de más observar la frequencia de sitios disponibles por estación.
 
-** TODO ** [insertar grafic. eix X valors 1,2,3... num_docks_available, eix Y quantitat de parades amb aquell num de docks dispos]
-
 
 ### 3.1.3. Bicicletas disponibles
 Existen dos tipos de bicicletas en Bicing Barcelona: las mecánicas y las eléctricas. La información proporcionada por el dataset contiene el recuento de bicis mecánicas disponibles y bicis eléctricas disponibles por cada estación. Evidentemente la variable total bicis disponible debe ser la suma de las otras dos, hecho que permite verificar los datos y asegurar su robustez. En el apartado 5 (Data procesing) se explica como se tratan los registros donde no se cumple esta condición.
 
 ![image](https://github.com/or1ol/CaptstoneProject/assets/116120046/fe33b1e1-589e-4703-b280-cf2c83e8230f)
 
-Para entender el comportamiento de esta variable, se observa el numero medio de bicis disponibles para cada hora del dia por los diferentes meses del año y días de la semana. 
+Para entender el comportamiento de esta variable, se observa el numero medio de bicis disponibles para cada hora del día por los diferentes meses del año y días de la semana. 
 
 <img width="1041" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/543e0612-599c-42e2-a8d8-fe071b2978eb">
 
@@ -70,7 +69,7 @@ Para entender el comportamiento de esta variable, se observa el numero medio de 
 Es evidente, por lo tanto, que no existe una diferencia relevante entre las dos tipologías de bicicletas, y que por ese mismo motivo se considerará el valor agregado. 
 
 ### 3.1.4. Ctx0
-Ctx0 hace referencia al porcentaje de bibicletas disponibles según el volumen máximo de anclajes, relacionando la variable ‘num_docks_available’, vista en el punto 3.1.2., y la ‘capacity’, que indica el número de bicicletas máximo que puede contener un anclaje o ‘dock’. Por lo tanto, a mayor Ctx0, menos número de bicicletas disponibles.
+Ctx0 hace referencia al porcentaje de bicicletas disponibles según el volumen máximo de anclajes, relacionando la variable ‘num_docks_available’, vista en el punto 3.1.2., y la ‘capacity’, que indica el número de bicicletas máximo que puede contener un anclaje o ‘dock’. Por lo tanto, a mayor Ctx0, menos número de bicicletas disponibles.
 
 Atendiendo a la relación entre las variables, ‘num_docks_available’ y ‘num_bikes_available’, así como las que indican la tipología de bicicleta (‘num_bikes_available_types.mechanical’ y ‘num_bikes_available_types.ebike), no deberían ser mayores que la capacidad y, a su vez, la ‘capacity’ debería coincidir con la suma de ‘num_docks_available’ y ‘num_bikes_available’.
 
@@ -84,7 +83,7 @@ Con la finalidad de entender el comportamiento de los usuarios, se analiza el po
 
 <img width="521" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/ca41940b-fade-4336-936e-ba3bec919c19">
 
-Se observa que existen dos picos claros de uso: a primera hora de la mañana y a lo largo de la tarde, a lo largo de todos los meses. Como esto parece coincidir con el horario laboral, adicionalmente se estudia el uso por horas según días de la semana:
+Se observa que existen dos picos claros de uso: a primera hora de la mañana y a lo largo de la tarde, por todos los meses del año. Como esto parece coincidir con el horario laboral, adicionalmente se estudia el uso por horas según días de la semana:
 
 <img width="534" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/a0350806-26a9-4f7b-bf57-e9fa053b1a00">
 
@@ -138,16 +137,17 @@ El objetivo es explorar la si existe una asociación entre dos variables para es
 ![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/5af2aaab-e4cb-4c5c-a3f3-054dd596db49)
 
 ## 3.3. Key Insights
-Teniendo en cuenta la exploración de datos realizada, las principales conclusión que extrapolamos son las siguientes:
+Teniendo en cuenta la exploración de datos realizada, las principales conclusiones que extrapolamos son las siguientes:
 - Los datos de la época de Covid son anómalos y representan una excepción en la evolución de los datos.
-- El comportamiento de los meses de verano difiere de el del mes de marzo. Esto es relevante porque el reto consiste en predecir las bicicletas para el mes de marzo de 2023. La hipótesis que sostenta esto es la relacionada con la meteorología.
+- El comportamiento de los meses de verano difiere de el mes de marzo. Esto es relevante porque el reto consiste en predecir las bicicletas para el mes de marzo de 2023. La hipótesis que sostenta esto es la relacionada con la meteorología.
 - La tipología de bicicletas (eléctricas o mecánicas) no es relevante para este estudio al no haber localizado diferencias de uso entre ambas.
 - Existen dos picos claros de uso de este medio de transporte: a primera hora de la mañana y a lo largo de la tarde. Por lo tanto, parece haber una relación directa con el horario laboral.
 - Los días de entre semana el uso de bicicletas es mayor que en fin de semana.
 
+
 # 4. Data enirchment
 ## 4.1. Días festivos
-En el análisis del punto 2 se ha detectado que los días que caen en fin de semana se asocian con cambios en la demanda de las bicicletas. Esto está directamente relacionado con que son días no laborales. Sin embargo, hay que tener en cuenta que los festivos locales y nacionales como la Diada o Navidad, en caso de caer en día laboral, no se están interpretando como no laborables. Para ello, a partir de una base de datos que indica los días laborales desde 2019 hasta 2023, se han generado las siguientes variables adicionales:
+En el análisis del punto 2 se ha detectado que los días que caen en fin de semana se asocian con cambios en la demanda de las bicicletas. Esto está directamente relacionado con que son días no laborales. Sin embargo, hay que tener en cuenta que los festivos locales y nacionales como la Diada o Navidad, en caso de caer en día laboral, no se están interpretando como festivos. Para ello, a partir de una base de datos que indica los días laborales desde 2019 hasta 2023, se han generado las siguientes variables adicionales:
 
 - Festius: marca los festivos locales, autonómicos y nacionales como tal.
 - Festius_sun: adicionalmente a lo anterior, añade los domingos como festivos.
@@ -167,7 +167,7 @@ Tras el análisis realizado, con el objetivo de ajustar más los datos, se han r
 - Se han eliminado las columnas 'num_docks_available', 'timestamp'. 'num_bikes_available_types.ebike', 'num_bikes_available_types.mechanical', 'num_bikes_available'.
 - Cuando el valor total de bicicletas disponibles no coincida con la suma del total de bicicletas mecánicas y electricas, se decide ajustar el valor de bicicletas totales disponibles con el valor de la suma de ambas tipologías de bicicleta.
 - Merge con datos de festivos y meteorológicos.
-- Eliminar station_id (va en el punto 6).
+- Eliminar station_id.
 
 
 # 6. Data prediction (model comparison)
@@ -175,13 +175,13 @@ Tras el análisis realizado, con el objetivo de ajustar más los datos, se han r
 ## Models:
 
 ### Linear Regresion:
-#### Descripcion: 
+#### Descripción: 
 Linear Regresion es un modelo estadístico que se usa para explicar la varianza de un incognita a través de otras variables (x1,x2,x3,...xn) con una función lineal. 
 
 Por otro lado, para poder capturar los efectos no lineales de las variables independientes (x1,x2,x3,...xn) utilizaríamos los siguientes modelos:
 
 Ridge Regression:
-Es un modelo que penaliza los coeficientes cuando se alejan demasiado de cero. De esta manera, reduce la complejidad del modelo, imponiendo que los coeficientes sean pequeños y cercanos a zero. 
+Es un modelo que penaliza los coeficientes cuando se alejan demasiado de cero. De esta manera, reduce la complejidad del modelo, imponiendo que los coeficientes sean pequeños y cercanos a cero. 
 Este modelo suma la l2-norm a la suma de squared errors de las predicciones con el objetivo de minimizar el error. 
 
 Lasso Regression:
@@ -191,7 +191,7 @@ ElasticNet:
 Es un modelo de regression lineal que combina los dos anteriores. Utiliza el término de penalización para minimizar los coeficientes y ponerlos cerca de cero. Aplica una combinacion de l1-norm y l2-norm de los coeficientes. Además, incorpora un parámtro llamado "Lambda" para controlar el balance entre las dos normas. Cuando lambda es cero el modelo es equivalente a un modelo Lasso, y cuando por contrario es uno, el modelo es equivalente a Ridge. De esta forma, ElasticNet puede adaptarse a diferente situaciones y datasets.  
 
 ### Decision tree:
-#### Descripcion: 
+#### Descripción: 
 Se trata de un algoritmo de Machine Learning. Es un método de clasificación que, una vez entrenado, se asemeja a una estructura de "if-then statments" ordenadas en un árbol. Mediante el Decision Tree se ve de manera muy simple como se realiza la toma de decisiones, ya que solo sigue el camino
 desde arriba hasta abajo contestando a todas las preguntas planteadas correctamente
 hasta llegar a un resultado, y con el "trace back" desde este nodo final da la clasificación
@@ -205,30 +205,30 @@ En conclusion, el Max_Depth = 12 ha sido el mejor parametro:
 ![prueba insertar imagen](./img/DecisionTreeFineTuning.png)
 
 ### Random forest:
-#### Descripcion: 
-Random Forest crea un conjunto aleatorio de Decision trees, con la ventaja que se puede usar tanto para clasificar como para problemas de regresión. De modo muy resumido, cuando está generando un árbol en un
-conjunto (también nombrado bosque) aleatorio, solo se considera un subconjunto también aleatorio de las características para dividir un nodo.
+#### Descripción: 
+Random Forest crea un conjunto aleatorio de Decision trees, con la ventaja que se puede usar tanto para clasificar como para problemas de regresión. De modo muy resumido, cuando está generando un árbol en un conjunto (también nombrado bosque) aleatorio, solo se considera un subconjunto también aleatorio de las características para dividir un nodo.
 
 #### Parameters:
 Para afinar el modelo, se han ejecutado unos tests usando la data completa y comparado los resultados del modelo con una set de parametros de entrada. 
 
-En conclusion, el Max_Depth = 12 ha sido el mejor parametro: 
+En conclusión, el Max_Depth = 12 ha sido el mejor parametro: 
 
 ![prueba insertar imagen](./img/RandomForestFineTuning.png)
 
 ### Grandient Boosting:
-#### Descripcion: 
-Boosting es una tecnica de machine learning de ensambling, combinando varios modelos debiles en series. Generando un modelo mas rebusto. Este modelo es un modelo que aprende de forma sequencial, los peores casos del modelo anterior con la intencion de mejorar esta predicion. 
+#### Descripción: 
+Gradient Boosting es una técnica de machine learning basada en ensambling, combinando varios modelos débiles en serie y generando un modelo más robusto. Este modelo aprende de forma sequencial, usando los peores casos del modelo anterior en el siguiente para mejorar la predición. 
 
-El primer modelo debil en gradient boosting, no se entrena sobre la dataset, a cambio, devuele la media de la columna relavante. Asi que la funcion residual (residual error, y-ŷ) de este primer modelo sera la columna de entrada or columna relevante para el segundo modelo computando la funcion residual del segon modelo que sera la entrada para el sigueinte modelo, y a continuacion iterativamente hasta que alcanze errores residuales iqual a zero, minimizando asi el mean squared error. Gradiente boosting actualiza los coeficientes computando el gradiente negativo de la funcion de error en respeto a la prediccion. 
+El primer modelo débil en gradient boosting no se entrena sobre el dataset, pero devuele la media de la columna más relavante. Así, la funcion residual (residual error, y-ŷ) de este primer modelo será la columna de entrada o columna relevante para el segundo modelo computando la función residual del segundo modelo, iterando de manera continuada hasta que alcance errores residuales iguales a cero, minimizando así el mean squared error. Gradient Boosting actualiza los coeficientes computando el gradiente negativo de la función de error con respeto a la predicción. 
 
-Una variante del Gradient Boosting es el eXtreme Gradiente Boosting, aplicando una regularizacion siendo mas rapido y mas eficiente que el Gradiente boosting. 
+Una variante del Gradient Boosting es el eXtreme Gradiente Boosting, que aplica una regularización para ser más rápido y más eficiente que el Gradient Boosting. 
 
 #### Parameters:
-Debido al tiempo de ejecucion este modelo no ha sido capaz de ejecutar una funcion muy cara a la computacion como el gridsearch cv buscando los mejores parametros.
-El mejor valor escogido ha sido n_estimators igual a 100 (valor por default), y el max_depth igual a 12. 
+Debido al tiempo de ejecución, no ha sido posible encontrar los mejores parámetros con este modelo,al igual que con gridsearch cv.
 
-Una prueba de mejorar los parametros de eXtremeGradientBoosting
+El valor escogido para n_estimators ha sido 100 (valor por default), y el max_depth ha sido 12. 
+
+Este ha sido el resultado al intentar encontrar los mejores valores para los parámetros de eXtremeGradientBoosting.
 
 ![prueba insertar imagen](./img/GradientBoostingFineTuning.png)
 
@@ -263,7 +263,6 @@ Intentando mejorar el rendimiento de la predicción se considera probar el model
 
 *Visualizacion de los resultado de entrenamiento del modelo Decision tree sobre los datos de cada mes por separado. "rmse_t_train": son las estaciones de bicing que aparecieron durante los años de 2019-2022. "rmse_t_test": son las estaciones de bicing que no aparicieron en todos los escogidos. "rmse_v_test": son los datos del mes de marzo de 2023 (para simular la data de testing de kaggle para el proyecto). Podemos ver que el modelo Decision tree es un modelo muy sensible a la variacion de la data mostrando sintomas de overfitting severos comparado con el resto de modelos (el error minimo que consiguió este modelo es 0.95 comparado con el anterior, pero de la data de testing de 2023 que es 0.13).*
 
-
 ## Random Forest:
 En una siguiente iteración, y con el objetivo de reducir el error a la vez que augmentar la robustez del modelo, se estudia el comportamiento de Random Forest. Este modelo consigue mejorar la fiabilidad de la predicción.
 
@@ -280,24 +279,21 @@ Finalmente, se prueba el modelo de Gradient Boosting. De este modelo se conoce q
  
 
 # 8. Conclusions
+Los resultados obtenidos indican que el modelo eXtreme Gradient Boosting ha dado el mejor rendimiento en la predicción de la disponibilidad de Bicing Barcelona, con un error de 0.10281. Random Forest obtiene el segundo mejor resultado, con un error de 0.10759, seguido por Decision Tree con un error de 0.10918.
 
+Con todo, se observa que los modelos de ensambling, como el eXtreme Gradient Boosting y Random Forest, tienden a ser más efectivos en la predicción de la disponibilidad de bicicletas Bicing en comparación con los modelos de árbol de decisión individual, gracias al hecho que combina múltiples modelos más débiles. Otro aspecto positivo a tener en cuenta con respecto a otros modelos es que éste no se ve tan afectado por overfitting, mostrando una mayor estabilidad.
 
-ctx0, ctx1, ctx2, ctx3, ctx4
-
-El Gradient boosting es el mejor 
-
-el hecho de haber enrequecido los datos
-Data del tiempo ha anadido valor
-Data de geolocalization
+Otro punto a destacar es que el hecho de haber enriquecido los datos con variables relevantes detectadas gracias a la exploración previa de los datos ha significado una mejora notable en cuanto a los resultados obtenidos. Este hecho se ha comprobado entrenando el mismo modelo con  el dataset original y el dataset enriquecido con información meteorológica y de los días festivos del periodo analizado.
 
 
 # 9. Next steps & Proposals
 ## Next steps
+- Los modelos que han aproximado mejor la predicción requieren una gran capacidad de computación y además són muy sensibles a los ajustes seleccionados de los parámetros. Para obtener un rendimiento los más óptimo posible sería recomendable seguir buscando de manera exhaustiva dichos parámetros.
+
 - Realizar cuatro modelos diferenciados para cada estación del año atendiendo a los comportamientos específicos de los usuarios, posiblemente relacionado con los efectos meteorológicos.
 
-
 ## Proposals
-- Estudiar les parades que en algun moment tenen 0 disponibilitat de bicis o 0 disponibilitat de docks - mal servei - possibilitat de solucionarho?
+- Paralelamente, se propone estudiar de manera individual las estaciones en los momentos que no tienen ninguna bicicleta o ningún dock disponible. Estas "roturas de stock", junto con las averías mecánicas de las bicicletas, se traducen en una de las peores experiencias de usuario. Es decir, intentar evitar que un usuario se encuentre con una estación sin ninguna bicicleta disponible, o por el contrario, un usuario que se dispone a aparcar la bicicleta no pueda encontrar ningún dock disponible para dejarla.
 
 
 # 10. Anexos (url a los notebooks)
@@ -308,7 +304,7 @@ Los documentos trabajados son los siguientes:
 - Análisis completo explotarorio de los datos de 2022: [notebook de exploracion](./2022_code/ScriptDataExploring.ipynb)
 - Análisis completo explotarorio de los datos de 2023: [notebook de exploracion](./2023_code/ScriptDataExploring.ipynb)
 - Documento de funciones utilizadas 'tools': [utils](./tools/tools.py)
-- Scripts XXX: [Script data processing inicial](./tools/ScriptDataProcessing.ipynb) 
+- Scripts: [Script data processing inicial](./tools/ScriptDataProcessing.ipynb) 
 - Otros modelos ejecutado: [Primera seleccion de variables](./dades_complet_v1-6-Prediction.ipynb) 
 - Modelo final ejectuado: [Ultima selection de variables](./dades_complet_v1-6-Prediction-21-22-alladditionaldata.ipynb)
 
@@ -318,4 +314,4 @@ Vease notebook [notebook de visualizacion](./station_geoinformacio.csv)
 
 ![prueba insertar imagen](./img/MapaBCN.png)
 
-Una captura de las calles de barcelona donde se muestran todas las estaciones selecionados señalando la estacion con la ID 1 
+Una captura de las calles de barcelona donde se muestran todas las estaciones selecionados señalando la estacion con la ID 1.
