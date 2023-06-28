@@ -6,12 +6,14 @@
 
 # 0. Summary
 
+
 # 1. Introducción al problema
 El reto propuesto para el proyecto Capstone consiste en predecir el porcentaje de sitios disponibles para aparcar las bicis de Bicing Barcelona por estación según sus datos históricos. Estos son recogidos y publicados mensualmente al portal Open Data del ayuntamiento de Barcelona, y contienen parametros relativos a cada estación y sus bicicletas.
 
 Uno de los primeros problemas a afrontar es la gran cantidad de datos disponibles. Este hecho dificulta en gran medida las primeras etapas del proyecto dado que la obtención y primeros análisis de los datos llevan mucho tiempo y esfuerzo. Para conseguirlo, se usa Dask, una librería de Python que permite parallel computing.
 
 Posteriormente, se procede a hacer un estudio detallado de cada dimensión, estudiar que correlaciones hay entre  las variables, limpiar los datasets, enriquecer los datos y procesarlos para crear modelos predictivos.
+
 
 # 2. Data cleaning 
 En primer lugar, se ha realizado un análisis inicial con el objetivo de limpiar los ficheros de datos que carecen de sentido por algún motivo. Para ello, se han realizado los siguientes pasos:
@@ -27,6 +29,7 @@ En primer lugar, se ha realizado un análisis inicial con el objetivo de limpiar
 - Incorporación de la variable ctx0, que relaciona los anclajes disponibles (num_docs_available) entre la capacidad (capacity), es decir, el número máximo de anclajes por estación. Adicionalmente, se incluyen también ctx1, ctx2, ctx3 y ctx4, que hacen referencia a la disponibilidad porcentual de bicicletas la hora anterior, las dos horas anteriores... y así sucesivamente.
 - Agrupar el timestamp en múltiplos de 60 para poder reducir la base de datos trabajada, ya que nos interesaba tener los datos en granularidad por hora en vez de minuto.
 - Generación de valores medios de las ultimas 2, 3 y 4 horas para asignar el valor más representativo a cada registro de timestamp agrupado por hora.
+
 
 # 3. Data analysis
 
@@ -54,7 +57,6 @@ La variable num_docks_available indica la cantidad de anclajes disponibles que h
 Será necesario tener en cuenta que el valor de esta variable no puede valorarse de manera independiente, ya que las diferentes estaciones que hay en la ciudad no tienen el mismo tamaño, y por esto se trabajará con las ratios en vez de los valores absolutos. Aún así, no está de más observar la frequencia de sitios disponibles por estación.
 
 ** TODO ** [insertar grafic. eix X valors 1,2,3... num_docks_available, eix Y quantitat de parades amb aquell num de docks dispos]
-
 
 ### 3.1.3. Bicicletas disponibles
 Existen dos tipos de bicicletas en Bicing Barcelona: las mecánicas y las eléctricas. La información proporcionada por el dataset contiene el recuento de bicis mecánicas disponibles y bicis eléctricas disponibles por cada estación. Evidentemente la variable total bicis disponible debe ser la suma de las otras dos, hecho que permite verificar los datos y asegurar su robustez. En el apartado 5 (Data procesing) se explica como se tratan los registros donde no se cumple esta condición.
@@ -144,6 +146,7 @@ Teniendo en cuenta la exploración de datos realizada, las principales conclusi�
 - La tipología de bicicletas (eléctricas o mecánicas) no es relevante para este estudio al no haber localizado diferencias de uso entre ambas.
 - Existen dos picos claros de uso de este medio de transporte: a primera hora de la mañana y a lo largo de la tarde. Por lo tanto, parece haber una relación directa con el horario laboral.
 - Los días de entre semana el uso de bicicletas es mayor que en fin de semana.
+
 
 # 4. Data enirchment
 ## 4.1. Días festivos
@@ -264,7 +267,6 @@ Intentando mejorar el rendimiento de la predicción se considera probar el model
 
 *Visualizacion de los resultado de entrenamiento del modelo Decision tree sobre los datos de cada mes por separado. "rmse_t_train": son las estaciones de bicing que aparecieron durante los años de 2019-2022. "rmse_t_test": son las estaciones de bicing que no aparicieron en todos los escogidos. "rmse_v_test": son los datos del mes de marzo de 2023 (para simular la data de testing de kaggle para el proyecto). Podemos ver que el modelo Decision tree es un modelo muy sensible a la variacion de la data mostrando sintomas de overfitting severos comparado con el resto de modelos (el error minimo que consiguió este modelo es 0.95 comparado con el anterior, pero de la data de testing de 2023 que es 0.13).*
 
-
 ## Random Forest:
 En una siguiente iteración, y con el objetivo de reducir el error a la vez que augmentar la robustez del modelo, se estudia el comportamiento de Random Forest. Este modelo consigue mejorar la fiabilidad de la predicción.
 
@@ -281,31 +283,20 @@ Finalmente, se prueba el modelo de Gradient Boosting. De este modelo se conoce q
  
 
 # 8. Conclusions
-
 Los resultados obtenidos indican que el modelo eXtreme Gradient Boosting ha dado el mejor rendimiento en la predicción de la disponibilidad de Bicing Barcelona, con un error de 0.10281. Random Forest obtiene el segundo mejor resultado, con un error de 0.10759, seguido por Decision Tree con un error de 0.10918.
 
 Con todo, se observa que los modelos de ensambling, como el eXtreme Gradient Boosting y Random Forest, tienden a ser más efectivos en la predicción de la disponibilidad de bicicletas Bicing en comparación con los modelos de árbol de decisión individual, gracias al hecho que combina múltiples modelos más débiles. Otro aspecto positivo a tener en cuenta con respecto a otros modelos es que éste no se ve tan afectado por overfitting, mostrando una mayor estabilidad.
 
 Otro punto a destacar es que el hecho de haber enriquecido los datos con variables relevantes detectadas gracias a la exploración previa de los datos ha significado una mejora notable en cuanto a los resultados obtenidos. Este hecho se ha comprobado entrenando el mismo modelo con  el dataset original y el dataset enriquecido con información meteorológica y de los días festivos del periodo analizado.
 
-ctx0, ctx1, ctx2, ctx3, ctx4
-
-El Gradient boosting es el mejor 
-
-el hecho de haber enrequecido los datos
-Data del tiempo ha anadido valor
-Data de geolocalization
-
 
 # 9. Next steps & Proposals
 ## Next steps
-
 - Los modelos que han aproximado mejor la predicción requieren una gran capacidad de computación y además són muy sensibles a los ajustes seleccionados de los parámetros. Para obtener un rendimiento los más optimo posible sería recomendable seguir buscando de manera exhaustiva dichos parámetros.
 
 - Realizar cuatro modelos diferenciados para cada estación del año atendiendo a los comportamientos específicos de los usuarios, posiblemente relacionado con los efectos meteorológicos.
 
 ## Proposals
-
 - Paralelamente, se propone estudiar de manera individual las estaciones en los momentos que no tienen ninguna bicicleta o ningún dock disponible. Estas "roturas de stock", junto con las averías mecánicas de las bicicletas, se traducen en una de las peores experiencias de usuario. Es decir, intentar evitar que un usuario se encuentre con una estación sin ninguna bicicleta disponible, o por el contrario, un usuario que se dispone a aparcar la bicicleta no pueda encontrar ningún dock disponible para dejarla.
 
 
@@ -317,7 +308,7 @@ Los documentos trabajados son los siguientes:
 - Análisis completo explotarorio de los datos de 2022: [notebook de exploracion](./2022_code/ScriptDataExploring.ipynb)
 - Análisis completo explotarorio de los datos de 2023: [notebook de exploracion](./2023_code/ScriptDataExploring.ipynb)
 - Documento de funciones utilizadas 'tools': [utils](./tools/tools.py)
-- Scripts XXX: [Script data processing inicial](./tools/ScriptDataProcessing.ipynb) 
+- Scripts: [Script data processing inicial](./tools/ScriptDataProcessing.ipynb) 
 - Otros modelos ejecutado: [Primera seleccion de variables](./dades_complet_v1-6-Prediction.ipynb) 
 - Modelo final ejectuado: [Ultima selection de variables](./dades_complet_v1-6-Prediction-21-22-alladditionaldata.ipynb)
 
@@ -327,4 +318,4 @@ Vease notebook [notebook de visualizacion](./station_geoinformacio.csv)
 
 ![prueba insertar imagen](./img/MapaBCN.png)
 
-Una captura de las calles de barcelona donde se muestran todas las estaciones selecionados señalando la estacion con la ID 1 
+Una captura de las calles de barcelona donde se muestran todas las estaciones selecionados señalando la estacion con la ID 1.
