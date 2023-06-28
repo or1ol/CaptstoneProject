@@ -228,6 +228,10 @@ Una variante del Gradient Boosting es el eXtreme Gradiente Boosting, aplicando u
 Debido al tiempo de ejecucion este modelo no ha sido capaz de ejecutar una funcion muy cara a la computacion como el gridsearch cv buscando los mejores parametros.
 El mejor valor escogido ha sido n_estimators igual a 100 (valor por default), y el max_depth igual a 12. 
 
+Una prueba de mejorar los parametros de eXtremeGradientBoosting
+
+![prueba insertar imagen](./img/GradientBoostingFineTuning.png)
+
 A considerar finalmente:
 
 Se ha generado un modelo descartando los datos de algunos meses del año para ajustar mejor la predición propuesta, con los datos de marzo del 2023, en linea con los resultados del análisis realizado.
@@ -298,16 +302,20 @@ Data de geolocalization
 
 # 10. Anexos (url a los notebooks)
 Los documentos trabajados son los siguientes:
-- Análisis completo explotarorio de los datos de 2019: [notebook](./2019_code/ScriptDataExploring.ipynb)
-- Análisis completo explotarorio de los datos de 2020: [notebook](./2020_code/ScriptDataExploring.ipynb)
-- Análisis completo explotarorio de los datos de 2021: [notebook](./2021_code/ScriptDataExploring.ipynb)
-- Análisis completo explotarorio de los datos de 2022: [notebook](./2022_code/ScriptDataExploring.ipynb)
-- Análisis completo explotarorio de los datos de 2023: [notebook](./2023_code/ScriptDataExploring.ipynb)
-- Documento de funciones utilizadas 'tools':
-- Scripts XXX:
-- Otros modelos ejecutado:
-- Modelo final ejectuado:
+- Análisis completo explotarorio de los datos de 2019: [notebook de exploracion](./2019_code/ScriptDataExploring.ipynb)
+- Análisis completo explotarorio de los datos de 2020: [notebook de exploracion](./2020_code/ScriptDataExploring.ipynb)
+- Análisis completo explotarorio de los datos de 2021: [notebook de exploracion](./2021_code/ScriptDataExploring.ipynb)
+- Análisis completo explotarorio de los datos de 2022: [notebook de exploracion](./2022_code/ScriptDataExploring.ipynb)
+- Análisis completo explotarorio de los datos de 2023: [notebook de exploracion](./2023_code/ScriptDataExploring.ipynb)
+- Documento de funciones utilizadas 'tools': [utils](./tools/tools.py)
+- Scripts XXX: [Script data processing inicial](./tools/ScriptDataProcessing.ipynb) 
+- Otros modelos ejecutado: [Primera seleccion de variables](./dades_complet_v1-6-Prediction.ipynb) 
+- Modelo final ejectuado: [Ultima selection de variables](./dades_complet_v1-6-Prediction-21-22-alladditionaldata.ipynb)
 
-![image](https://github.com/or1ol/CaptstoneProject/assets/116120046/a4be44ef-80a6-4353-a00e-87f446a2320d)
+Visualizaciones extra:
+Utilizando datos de carretera de BCN [Obtenidos desde OpenDataBCN website]
+Vease notebook [notebook de visualizacion](./station_geoinformacio.csv)
 
 ![prueba insertar imagen](./img/MapaBCN.png)
+
+Una captura de las calles de barcelona donde se muestran todas las estaciones selecionados señalando la estacion con la ID 1 

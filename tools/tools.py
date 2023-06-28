@@ -481,7 +481,12 @@ def scatter_columns(
     
     for i, value in enumerate(tqdm(keys)):
         
-        computed = df[df[col_z] == value].groupby([col_x])[col_y].mean().reset_index().compute().sort_values(by=col_x)
+        computed = None
+        
+        if type(s) == pd.Series:
+            computed = df[df[col_z] == value].groupby([col_x])[col_y].mean().reset_index().sort_values(by=col_x)
+        elif type(s) == dd.core.Series: 
+            computed = df[df[col_z] == value].groupby([col_x])[col_y].mean().reset_index().compute().sort_values(by=col_x)
         
         x = get_column(computed, col_x)
         y = get_column(computed, col_y)
@@ -499,7 +504,6 @@ def scatter_columns(
     #plt.show()
     
 # code to save checkpoint
-
 def save_checkpoint(ddf:dd.core.DataFrame, config_year:dict):
 
     path_to_file = f'{config_year.path}/{config_year.year}/{config_year.dataset}'
@@ -571,9 +575,6 @@ def list2rank(l):
 def spearmanRank(X, Y):
     # X and Y are same-length lists
     return PearsonCorr(list2rank(X), list2rank(Y))
-
-
-
 
 
 def plot_history(history):
@@ -852,84 +853,3 @@ def get_evaluation(Regressor, args, which_arg, options_range, Xt, yt, Xv, yv):
         models_scores[option] = results.copy()
         
     return models_scores
-
-def get_evaluation2(
-    Regressor1, 
-    Regressor2, 
-    args1, 
-    which_arg1,
-    args2,
-    which_arg2, 
-    options_range,
-    Xt, yt, Xv, yv
-):  
-    models_scores1 = {} 
-    models_scores2 = {} 
-    models_scores3 = {}
-    
-    # prepare the cross-validation procedure
-    for option in tqdm(options_range):
-        
-        ## prepare args 
-        args1[which_arg1] = option
-        args2[which_arg2] = option
-        
-        ## model
-        model1 = Regressor1(**args1)
-        
-        model2 = Regressor2(**args2)
-        
-        ## train model
-        model1.fit(Xt, yt)
-        model2.fit(Xt, yt)
-        
-        ## evaluate model
-        results1 = test_model(model1, Xt, yt, Xv, yv, show=False)
-        results2 = test_model(model2, Xt, yt, Xv, yv, show=False)
-        
-        ## prepare output dataframe
-        models_scores1[option] = results1.copy()
-        models_scores2[option] = results2.copy()
-    
-    for option in tqdm(options_range):
-        ret = {}
-        
-        pred_t = [
-            statistics.harmonic_mean([p1,p2]) 
-            if (p1>0) & (p2>0) else p1 
-            for p1,p2 in zip(
-                models_scores1[option]['y_hat_t'],
-                models_scores2[option]['y_hat_t']
-            )
-        ]
-        
-        mdl_mse,mdl_rmse,mdl_mae,mdl_r2score = calcualte_scores(yt, pred_t, show=False)
-        
-        ret['y_hat_t'] = np.array(pred_t.copy())
-        ret['mse_t'] = mdl_mse
-        ret['rmse_t'] = mdl_rmse
-        ret['mae_t'] = mdl_mae
-        ret['r2_t'] = mdl_r2score
-        
-        pred_v =  [
-            statistics.harmonic_mean([p1,p2]) 
-            if (p1>0) & (p2>0) else p1 
-            for p1,p2 in zip(
-                models_scores1[option]['y_hat_v'],
-                models_scores2[option]['y_hat_v']
-            )
-        ]
-        
-        mdl_mse,mdl_rmse,mdl_mae,mdl_r2score = calcualte_scores(yv, pred_v, show=False)
-        
-        ret['y_hat_v'] = np.array(pred_v.copy())
-        ret['mse_v'] = mdl_mse
-        ret['rmse_v'] = mdl_rmse
-        ret['mae_v'] = mdl_mae
-        ret['r2_v'] = mdl_r2score
-        
-        models_scores3[option] = pd.Series(ret.copy())
-        
-    return models_scores1,models_scores2,models_scores3
-
-
