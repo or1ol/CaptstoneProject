@@ -1,9 +1,10 @@
 # CaptstoneProject
-![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/c06bf96f-7e49-4116-a6a7-c82c74081d10)
+<center><img width="100%" alt="image" src="./img/1.png"></center>
 - Sandra Díaz
 - Daniel Fares
 - Oriol Soler
 
+<br>
 
 # 1. Introducción al problema
 El reto propuesto para el proyecto Capstone consiste en predecir el porcentaje de sitios disponibles para aparcar las bicis de Bicing Barcelona por estación según sus datos históricos. Estos datos son recogidos y publicados mensualmente al portal Open Data del ayuntamiento de Barcelona, y contienen parametros relativos a cada estación y sus bicicletas.
@@ -12,6 +13,8 @@ Uno de los primeros problemas a afrontar es la gran cantidad de datos disponible
 
 Posteriormente, se procede a hacer un estudio detallado de cada dimensión, estudiar que correlaciones hay entre  las variables, limpiar los datasets, enriquecer los datos y procesarlos para crear modelos predictivos.
 
+
+<br>
 
 # 2. Data cleaning 
 En primer lugar, se ha realizado un análisis inicial con el objetivo de limpiar los ficheros de datos que carecen de sentido por algún motivo. Para ello, se han realizado los siguientes pasos:
@@ -29,6 +32,8 @@ En primer lugar, se ha realizado un análisis inicial con el objetivo de limpiar
 - Generación de valores medios de las ultimas 2, 3 y 4 horas para asignar el valor más representativo a cada registro de timestamp agrupado por hora.
 
 
+<br>
+
 # 3. Data analysis
 
 ## 3.1. Descriptiva
@@ -36,39 +41,63 @@ En primer lugar, se ha realizado un análisis inicial con el objetivo de limpiar
 ### 3.1.1. Evolución del uso de las bicicletas a lo largo de los años
 A excepción del 2020, la tendencia del uso de las bicicletas en Barcelona a través del servicio del Bicing es creciente. Sin embargo, dicha subida se ve mermada en el propio 2020 a causa del Covid, una pandemia mundial que conllevó una cuarentena general de la población en España y que, consecuentemente, afectó a su vez a la capital catalana.
 
-![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/a78cffc3-b1cd-4e59-8f64-33f01733bb06)
-<img width="921" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/8045cd84-43bf-487b-90cf-b75620a049d4">
+<br>
+
+<center><img width="90%" alt="image" src="./img/311b.png"></center>
+
+<br>
 
 Aún así, la diferencia entre 2019 y 2020, por lógica, debería ser mayor. Dado que el 2019 no estaba completo en el dataset inicial, se procede a completarlo manualmente con la descarga de los datos restantes de un segundo dataset. Esto podría explicar la falta de coherencia en términos de volumen de ese año.
 
-### 3.1.1. Station_ID
-En primer lugar, se han analizado los IDs de estaciones a lo largo de los años, para verificar si variaban en términos de volumen. 
-![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/236a60e2-669f-4ae5-a796-457113489de6)
+<br>
+<center><img width="40%" alt="image" src="./img/311a.png"></center>
+<br>
+
+### 3.1.2. Station_ID
+En primer lugar, se han analizado los IDs de estaciones a lo largo de los años, para verificar si variaban en términos de volumen.
+
+<br>
+
+<center><img width="60%" alt="image" src="./img/312a.png"></center>
+
+<br>
 
 Se ha percibido que no todos los IDs son constantes a lo largo de los años, y es por eso que se localizan los IDs únicos que están presentes en todos los años, encontrando un total de 405. 
 
-![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/73a5d118-da37-4131-b03c-06d9b22a2291)
+<br>
 
-### 3.1.2. Anclajes disponibles (num_docks_available)
+<center><img width="70%" alt="image" src="./img/312b.png"></center>
+
+<br>
+
+
+### 3.1.3. Anclajes disponibles (num_docks_available)
 La variable num_docks_available indica la cantidad de anclajes disponibles que hay en cada estación de Bicing en cada momento. Este indicador es clave a lo largo del estudio ya que la predición se basa en la ratio entre bicis disponibles (variable directamente relacionada con los sitios vacios) sobre el total.
 
 Será necesario tener en cuenta que el valor de esta variable no puede valorarse de manera independiente, ya que las diferentes estaciones que hay en la ciudad no tienen el mismo tamaño, y por esto se trabajará con las ratios en vez de los valores absolutos. Aún así, no está de más observar la frequencia de sitios disponibles por estación.
 
-
-### 3.1.3. Bicicletas disponibles
+### 3.1.4. Bicicletas disponibles
 Existen dos tipos de bicicletas en Bicing Barcelona: las mecánicas y las eléctricas. La información proporcionada por el dataset contiene el recuento de bicis mecánicas disponibles y bicis eléctricas disponibles por cada estación. Evidentemente la variable total bicis disponible debe ser la suma de las otras dos, hecho que permite verificar los datos y asegurar su robustez. En el apartado 5 (Data procesing) se explica como se tratan los registros donde no se cumple esta condición.
 
-![image](https://github.com/or1ol/CaptstoneProject/assets/116120046/fe33b1e1-589e-4703-b280-cf2c83e8230f)
+<br>
+
+<center><img width="70%" alt="image" src="./img/314a.png"></center>
+
+<br>
 
 Para entender el comportamiento de esta variable, se observa el numero medio de bicis disponibles para cada hora del día por los diferentes meses del año y días de la semana. 
 
-<img width="1041" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/543e0612-599c-42e2-a8d8-fe071b2978eb">
+<br>
 
-<img width="1047" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/ac04829c-d3bb-4740-8ef3-bd4c9af861c9">
+<center><img width="90%" alt="image" src="./img/314b.png"></center>
+
+<center><img width="90%" alt="image" src="./img/314c.png"></center>
+
+<br>
 
 Es evidente, por lo tanto, que no existe una diferencia relevante entre las dos tipologías de bicicletas, y que por ese mismo motivo se considerará el valor agregado. 
 
-### 3.1.4. Ctx0
+### 3.1.5. Ctx0
 Ctx0 hace referencia al porcentaje de bicicletas disponibles según el volumen máximo de anclajes, relacionando la variable ‘num_docks_available’, vista en el punto 3.1.2., y la ‘capacity’, que indica el número de bicicletas máximo que puede contener un anclaje o ‘dock’. Por lo tanto, a mayor Ctx0, menos número de bicicletas disponibles.
 
 Atendiendo a la relación entre las variables, ‘num_docks_available’ y ‘num_bikes_available’, así como las que indican la tipología de bicicleta (‘num_bikes_available_types.mechanical’ y ‘num_bikes_available_types.ebike), no deberían ser mayores que la capacidad y, a su vez, la ‘capacity’ debería coincidir con la suma de ‘num_docks_available’ y ‘num_bikes_available’.
@@ -77,15 +106,30 @@ Por otro lado, analizando la evolución de la media de Ctx0 a lo largo de los me
 
 En cuanto a los años anteriores, durante el 2020 el Covid tuvo un impacto claro en el uso de las bicicletas: si bien el primer pico se encontraba alrededor de mayo, la cuarentena supuso un impedimento en lo que al uso de este medio de transporte se refiere. Por último, los datos de 2019 también son anómalos: encontramos un pico de uso en marzo y una bajada muy pronunciada el mes siguiente. Esto puede ser debido a que los tres primeros meses de datos se obtienen de un dataset antiguo de Bicing.
 
-<img width="903" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/e99106be-bddd-4dc9-aa53-0e8fd48a903b">
+<br>
+
+<center><img width="90%" alt="image" src="./img/315a.png"></center>
+
+<br>
+
 
 Con la finalidad de entender el comportamiento de los usuarios, se analiza el porcentaje de disponibilidad de bicicletas para cada estación (Ctx0) por mes y hora:
 
-<img width="521" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/ca41940b-fade-4336-936e-ba3bec919c19">
+
+<br>
+
+<center><img width="90%" alt="image" src="./img/315b.png"></center>
+
+<br>
 
 Se observa que existen dos picos claros de uso: a primera hora de la mañana y a lo largo de la tarde, por todos los meses del año. Como esto parece coincidir con el horario laboral, adicionalmente se estudia el uso por horas según días de la semana:
 
-<img width="534" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/a0350806-26a9-4f7b-bf57-e9fa053b1a00">
+
+<br>
+
+<center><img width="90%" alt="image" src="./img/315c.png"></center>
+
+<br>
 
 El patrón detectado anteriormente coincide con los días de actividad profesional (lunes-viernes), y pierde relevancia el fin de semana (sábado y domingo). Es por eso que se toma la decisión, más adelante, de generar una nueva variable de días festivos (ver apartado 4).
 
@@ -94,47 +138,117 @@ El patrón detectado anteriormente coincide con los días de actividad profesion
 El objetivo es explorar la si existe una asociación entre dos variables para establecer si existe de una relacional lineal. En ese sentido, se ha estudiado la correlación entre:
 
 - El número de anclajes disponibles (num_docks_available) y el número de bicicletas disponibles (num_bikes_available)
-<img width="635" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/d2773375-cc30-472f-a5c4-41376c6da726">
+
+
+<br>
+
+<center><img width="90%" alt="image" src="./img/a.png"></center>
+
+<br>
 
 - El número de anclajes disponibles (num_docks_available) y el número de bicicletas manuales disponibles
-<img width="835" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/1e13ee9e-0d70-4d59-b1a4-33e9adbcc67b">
+
+<br>
+
+<center><img width="90%" alt="image" src="./img/b.png"></center>
+
+<br>
 
 - El número de anclajes disponibles (num_docks_available) y el número de bicicletas eléctricas disponibles
-<img width="797" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/fd6274dc-cf23-4455-8749-ba87267c3fbc">
+
+<br>
+
+<center><img width="90%" alt="image" src="./img/c.png"></center>
+
+<br>
 
 - El número de anclajes disponibles (num_docks_available) y la hora (hour)
-<img width="587" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/a45c0c3c-b288-47da-b6d4-f1c12cd367ae">
+
+<br>
+
+<center><img width="90%" alt="image" src="./img/d.png"></center>
+
+<br>
 
 - El número de anclajes disponibles (num_docks_available) y el día de la semana (dayofweek)
-<img width="575" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/6f9af222-6398-4115-8ac9-01bf59868efd">
+
+<br>
+
+<center><img width="90%" alt="image" src="./img/e.png"></center>
+
+<br>
 
 - El número de anclajes disponibles (num_docks_available) y la hora (hour)
-<img width="538" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/fdc2e56d-f9f2-4ae9-8bda-33e8affc2df7">
+
+<br>
+
+<center><img width="90%" alt="image" src="./img/f.png"></center>
+
+<br>
 
 - El número de anclajes disponibles (num_docks_available) y el mes (month)
-![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/bcd57a25-a974-4ba5-8571-b3cf052d3b14)
+
+<br>
+
+<center><img width="90%" alt="image" src="./img/g.png"></center>
+
+<br>
 
 - La capacidad (capacity) y el día de la semana (dayofweek)
-<img width="536" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/b4a54857-3cc2-48fc-8738-527c30b736db">
+
+<br>
+
+<center><img width="90%" alt="image" src="./img/h.png"></center>
+
+<br>
 
 - La capacidad (capacity) y la hora (hour)
-<img width="476" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/1990e491-a6d5-4e99-ab6f-7667da3340e5">
+
+<br>
+
+<center><img width="90%" alt="image" src="./img/i.png"></center>
+
+<br>
 
 - La capacidad (capacity) y el mes (month)
-![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/30cdbee2-e1e6-487b-ae6e-3169c00f94b1)
+
+<br>
+
+<center><img width="90%" alt="image" src="./img/j.png"></center>
+
+<br>
 
 - La capacidad (capacity) y el número de bicicletas disponibles (num_bikes_available)
-<img width="547" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/0c49eed1-a189-498f-914a-aa10bc948513">
+
+<br>
+
+<center><img width="90%" alt="image" src="./img/l.png"></center>
+
+<br>
 
 - El ctx0 (num_docs_available/capacity) y el día de la semana (dayofweek)
-<img width="460" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/edf49541-8b01-4232-b347-3a5eb8d6c278">
+
+<br>
+
+<center><img width="90%" alt="image" src="./img/m.png"></center>
+
+<br>
 
 - El ctx0 (num_docs_available/capacity) y la hora (hour)
-<img width="408" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/a7272579-f2f2-470d-a3fe-d4c9df52e76b">
+
+<br>
+
+<center><img width="90%" alt="image" src="./img/n.png"></center>
+
+<br>
 
 - El ctx0 (num_docs_available/capacity) y el mes (month)
 
-![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/5af2aaab-e4cb-4c5c-a3f3-054dd596db49)
+<br>
+
+<center><img width="90%" alt="image" src="./img/o.png"></center>
+
+<br>
 
 ## 3.3. Key Insights
 Teniendo en cuenta la exploración de datos realizada, las principales conclusiones que extrapolamos son las siguientes:
@@ -144,6 +258,7 @@ Teniendo en cuenta la exploración de datos realizada, las principales conclusio
 - Existen dos picos claros de uso de este medio de transporte: a primera hora de la mañana y a lo largo de la tarde. Por lo tanto, parece haber una relación directa con el horario laboral.
 - Los días de entre semana el uso de bicicletas es mayor que en fin de semana.
 
+<br>
 
 # 4. Data enirchment
 ## 4.1. Días festivos
@@ -153,6 +268,7 @@ En el análisis del punto 2 se ha detectado que los días que caen en fin de sem
 - Festius_sun: adicionalmente a lo anterior, añade los domingos como festivos.
 - Festius_sun_sat: además de lo anterior, se incluye el sábado como festivo.
 
+
 ## 4.2. Meteorología
 Una casuística que no estaba contemplada en el dataset inicial era la de la meteorología. Esta puede tener un alto impacto en el uso de las bicicletas en la ciudad, y por esto se incluye en el estudio.
 
@@ -161,6 +277,7 @@ Los datos encontrados abarcan todos los años en los que se analiza el uso de bi
 - Temperatura media diaria
 - Precipitación acumulada diaria
 
+<br>
 
 # 5. Data processing
 Tras el análisis realizado, con el objetivo de ajustar más los datos, se han realizado los siguientes ajustes:
@@ -169,10 +286,11 @@ Tras el análisis realizado, con el objetivo de ajustar más los datos, se han r
 - Merge con datos de festivos y meteorológicos.
 - Eliminar station_id.
 
+<br>
 
 # 6. Data prediction (model comparison)
 
-## Models:
+## Modelos seleccionados:
 
 ### Linear Regresion:
 #### Descripción: 
@@ -202,7 +320,11 @@ Para afinar el modelo, se han ejecutado unos tests usando la data completa y com
 
 En conclusion, el Max_Depth = 12 ha sido el mejor parametro: 
 
-![prueba insertar imagen](./img/DecisionTreeFineTuning.png)
+<br>
+
+<center><img width="70%" alt="image" src="./img/DecisionTreeFineTuning.png"></center>
+
+<br>
 
 ### Random forest:
 #### Descripción: 
@@ -213,7 +335,11 @@ Para afinar el modelo, se han ejecutado unos tests usando la data completa y com
 
 En conclusión, el Max_Depth = 12 ha sido el mejor parametro: 
 
-![prueba insertar imagen](./img/RandomForestFineTuning.png)
+<br>
+
+<center><img width="70%" alt="image" src="./img/RandomForestFineTuning.png"></center>
+
+<br>
 
 ### Grandient Boosting:
 #### Descripción: 
@@ -230,7 +356,11 @@ El valor escogido para n_estimators ha sido 100 (valor por default), y el max_de
 
 Este ha sido el resultado al intentar encontrar los mejores valores para los parámetros de eXtremeGradientBoosting.
 
-![prueba insertar imagen](./img/GradientBoostingFineTuning.png)
+<br>
+
+<center><img width="70%" alt="image" src="./img/GradientBoostingFineTuning.png"></center>
+
+<br>
 
 A considerar finalmente:
 
@@ -250,6 +380,7 @@ Model comparison:
 | Random forest          | 0.10759 | 0.10622 | 0.09016 | 0.11192 |
 | Grandient Boosting     | 0.10281 | 0.09796 | 0.09083 | 0.10771 | 
 
+<br>
 
 # 7. Results
 
@@ -259,24 +390,38 @@ Analizados todos los modelos usados, se comprueba que el modelo de regresión li
 ## Decision Trees:
 Intentando mejorar el rendimiento de la predicción se considera probar el modelo de Decision tree, a pesar de ser un modelo altamente sensible a la variación de los datos. Se consigue reducir el error, pero se constata que no es un modelo nada robusto ya que dependiendo mucho de los valores de train se conseguía un error muy variable.
 
-![DecisonTree](img/DecisionTreeMonthsComparison.png) 
+<br>
+
+<center><img width="70%" alt="image" src="./img/DecisionTreeMonthsComparison.png"></center>
+
+<br>
 
 *Visualizacion de los resultado de entrenamiento del modelo Decision tree sobre los datos de cada mes por separado. "rmse_t_train": son las estaciones de bicing que aparecieron durante los años de 2019-2022. "rmse_t_test": son las estaciones de bicing que no aparicieron en todos los escogidos. "rmse_v_test": son los datos del mes de marzo de 2023 (para simular la data de testing de kaggle para el proyecto). Podemos ver que el modelo Decision tree es un modelo muy sensible a la variacion de la data mostrando sintomas de overfitting severos comparado con el resto de modelos (el error minimo que consiguió este modelo es 0.95 comparado con el anterior, pero de la data de testing de 2023 que es 0.13).*
 
 ## Random Forest:
 En una siguiente iteración, y con el objetivo de reducir el error a la vez que augmentar la robustez del modelo, se estudia el comportamiento de Random Forest. Este modelo consigue mejorar la fiabilidad de la predicción.
 
-![RandomForest](img/RandomForestMonthsComparison.png)
+<br>
+
+<center><img width="70%" alt="image" src="./img/RandomForestMonthsComparison.png"></center>
+
+<br>
 
 *Visualizacion de los resultados de entrenamiento del modelo Deccision tree sobre los datos de cada mes por separado. "rmse_t_train": son las estaciones de bicing que aparecieron durante los años de 2019-2022. "rmse_t_test": son las estaciones de bicing que no aparicieron en todos los escogidos. "rmse_v_test": son los datos del mes de Marzo de 2023 (para simular la data de testing de kaggle para el proyecto). Consigue menos overfitting y a la vez mejores predicciones que el modelo Decision Tree.*
 
 ## Gradient Boosting:
 Finalmente, se prueba el modelo de Gradient Boosting. De este modelo se conoce que tiene menos overfitting que Random Forest, y al entrenarlo y probarlo se constata que genera la mejor predicción obtenida.
 
-![GradientBoosting](img/GradientBoostingMonthsComparison.png)
+<br>
+
+<center><img width="70%" alt="image" src="./img/GradientBoostingMonthsComparison.png"></center>
+
+<br>
 
 *Visualizacion de los resultados de entrenamiento del modelo Gradient Boosting sobre los datos de cada mes por separado. "rmse_t_train": son las estaciones de bicing que aparecieron durante los años de 2019-2022. "rmse_t_test": son las estaciones de bicing que no aparicieron en todos los escogidos. "rmse_v_test": son los datos del mes de marzo de 2023 para simular la data de testing de kaggle para el proyecto. A nivel de eficiencia de predicion ha demostrado mejor resultado que el Random forest pero sigue teniendo los mismos simptomas de overfitting.*
  
+
+<br>
 
 # 8. Conclusions
 Los resultados obtenidos indican que el modelo eXtreme Gradient Boosting ha dado el mejor rendimiento en la predicción de la disponibilidad de Bicing Barcelona, con un error de 0.10281. Random Forest obtiene el segundo mejor resultado, con un error de 0.10759, seguido por Decision Tree con un error de 0.10918.
@@ -285,6 +430,8 @@ Con todo, se observa que los modelos de ensambling, como el eXtreme Gradient Boo
 
 Otro punto a destacar es que el hecho de haber enriquecido los datos con variables relevantes detectadas gracias a la exploración previa de los datos ha significado una mejora notable en cuanto a los resultados obtenidos. Este hecho se ha comprobado entrenando el mismo modelo con  el dataset original y el dataset enriquecido con información meteorológica y de los días festivos del periodo analizado.
 
+
+<br>
 
 # 9. Next steps & Proposals
 ## Next steps
@@ -295,6 +442,8 @@ Otro punto a destacar es que el hecho de haber enriquecido los datos con variabl
 ## Proposals
 - Paralelamente, se propone estudiar de manera individual las estaciones en los momentos que no tienen ninguna bicicleta o ningún dock disponible. Estas "roturas de stock", junto con las averías mecánicas de las bicicletas, se traducen en una de las peores experiencias de usuario. Es decir, intentar evitar que un usuario se encuentre con una estación sin ninguna bicicleta disponible, o por el contrario, un usuario que se dispone a aparcar la bicicleta no pueda encontrar ningún dock disponible para dejarla.
 
+
+<br>
 
 # 10. Anexos (url a los notebooks)
 Los documentos trabajados son los siguientes:
@@ -312,6 +461,10 @@ Visualizaciones extra:
 Utilizando datos de carretera de BCN [Obtenidos desde OpenDataBCN website]
 Vease notebook [notebook de visualizacion](./station_geoinformacio.csv)
 
-![prueba insertar imagen](./img/MapaBCN.png)
+<br>
+
+<center><img width="70%" alt="image" src="./img/MapaBCN.png"></center>
+
+<br>
 
 Una captura de las calles de barcelona donde se muestran todas las estaciones selecionados señalando la estacion con la ID 1.
