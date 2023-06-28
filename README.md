@@ -83,7 +83,7 @@ Con la finalidad de entender el comportamiento de los usuarios, se analiza el po
 
 <img width="521" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/ca41940b-fade-4336-936e-ba3bec919c19">
 
-Se observa que existen dos picos claros de uso: a primera hora de la mañana y a lo largo de la tarde, a lo largo de todos los meses. Como esto parece coincidir con el horario laboral, adicionalmente se estudia el uso por horas según días de la semana:
+Se observa que existen dos picos claros de uso: a primera hora de la mañana y a lo largo de la tarde, por todos los meses del año. Como esto parece coincidir con el horario laboral, adicionalmente se estudia el uso por horas según días de la semana:
 
 <img width="534" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/a0350806-26a9-4f7b-bf57-e9fa053b1a00">
 
@@ -137,9 +137,9 @@ El objetivo es explorar la si existe una asociación entre dos variables para es
 ![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/5af2aaab-e4cb-4c5c-a3f3-054dd596db49)
 
 ## 3.3. Key Insights
-Teniendo en cuenta la exploración de datos realizada, las principales conclusión que extrapolamos son las siguientes:
+Teniendo en cuenta la exploración de datos realizada, las principales conclusiones que extrapolamos son las siguientes:
 - Los datos de la época de Covid son anómalos y representan una excepción en la evolución de los datos.
-- El comportamiento de los meses de verano difiere de el del mes de marzo. Esto es relevante porque el reto consiste en predecir las bicicletas para el mes de marzo de 2023. La hipótesis que sostenta esto es la relacionada con la meteorología.
+- El comportamiento de los meses de verano difiere de el mes de marzo. Esto es relevante porque el reto consiste en predecir las bicicletas para el mes de marzo de 2023. La hipótesis que sostenta esto es la relacionada con la meteorología.
 - La tipología de bicicletas (eléctricas o mecánicas) no es relevante para este estudio al no haber localizado diferencias de uso entre ambas.
 - Existen dos picos claros de uso de este medio de transporte: a primera hora de la mañana y a lo largo de la tarde. Por lo tanto, parece haber una relación directa con el horario laboral.
 - Los días de entre semana el uso de bicicletas es mayor que en fin de semana.
@@ -147,7 +147,7 @@ Teniendo en cuenta la exploración de datos realizada, las principales conclusi�
 
 # 4. Data enirchment
 ## 4.1. Días festivos
-En el análisis del punto 2 se ha detectado que los días que caen en fin de semana se asocian con cambios en la demanda de las bicicletas. Esto está directamente relacionado con que son días no laborales. Sin embargo, hay que tener en cuenta que los festivos locales y nacionales como la Diada o Navidad, en caso de caer en día laboral, no se están interpretando como no laborables. Para ello, a partir de una base de datos que indica los días laborales desde 2019 hasta 2023, se han generado las siguientes variables adicionales:
+En el análisis del punto 2 se ha detectado que los días que caen en fin de semana se asocian con cambios en la demanda de las bicicletas. Esto está directamente relacionado con que son días no laborales. Sin embargo, hay que tener en cuenta que los festivos locales y nacionales como la Diada o Navidad, en caso de caer en día laboral, no se están interpretando como festivos. Para ello, a partir de una base de datos que indica los días laborales desde 2019 hasta 2023, se han generado las siguientes variables adicionales:
 
 - Festius: marca los festivos locales, autonómicos y nacionales como tal.
 - Festius_sun: adicionalmente a lo anterior, añade los domingos como festivos.
@@ -181,7 +181,7 @@ Linear Regresion es un modelo estadístico que se usa para explicar la varianza 
 Por otro lado, para poder capturar los efectos no lineales de las variables independientes (x1,x2,x3,...xn) utilizaríamos los siguientes modelos:
 
 Ridge Regression:
-Es un modelo que penaliza los coeficientes cuando se alejan demasiado de cero. De esta manera, reduce la complejidad del modelo, imponiendo que los coeficientes sean pequeños y cercanos a zero. 
+Es un modelo que penaliza los coeficientes cuando se alejan demasiado de cero. De esta manera, reduce la complejidad del modelo, imponiendo que los coeficientes sean pequeños y cercanos a cero. 
 Este modelo suma la l2-norm a la suma de squared errors de las predicciones con el objetivo de minimizar el error. 
 
 Lasso Regression:
@@ -206,13 +206,12 @@ En conclusion, el Max_Depth = 12 ha sido el mejor parametro:
 
 ### Random forest:
 #### Descripción: 
-Random Forest crea un conjunto aleatorio de Decision trees, con la ventaja que se puede usar tanto para clasificar como para problemas de regresión. De modo muy resumido, cuando está generando un árbol en un
-conjunto (también nombrado bosque) aleatorio, solo se considera un subconjunto también aleatorio de las características para dividir un nodo.
+Random Forest crea un conjunto aleatorio de Decision trees, con la ventaja que se puede usar tanto para clasificar como para problemas de regresión. De modo muy resumido, cuando está generando un árbol en un conjunto (también nombrado bosque) aleatorio, solo se considera un subconjunto también aleatorio de las características para dividir un nodo.
 
 #### Parameters:
 Para afinar el modelo, se han ejecutado unos tests usando la data completa y comparado los resultados del modelo con una set de parametros de entrada. 
 
-En conclusion, el Max_Depth = 12 ha sido el mejor parametro: 
+En conclusión, el Max_Depth = 12 ha sido el mejor parametro: 
 
 ![prueba insertar imagen](./img/RandomForestFineTuning.png)
 
@@ -220,7 +219,7 @@ En conclusion, el Max_Depth = 12 ha sido el mejor parametro:
 #### Descripción: 
 Gradient Boosting es una técnica de machine learning basada en ensambling, combinando varios modelos débiles en serie y generando un modelo más robusto. Este modelo aprende de forma sequencial, usando los peores casos del modelo anterior en el siguiente para mejorar la predición. 
 
-El primer modelo débil en gradient boosting no se entrena sobre el dataset, pero devuele la media de la columna más relavante. Así, la funcion residual (residual error, y-ŷ) de este primer modelo será la columna de entrada o columna relevante para el segundo modelo computando la función residual del segundo modelo, iterando de manera continuada hasta que alcanze errores residuales iguales a cero, minimizando así el mean squared error. Gradient boosting actualiza los coeficientes computando el gradiente negativo de la función de error con respeto a la predicción. 
+El primer modelo débil en gradient boosting no se entrena sobre el dataset, pero devuele la media de la columna más relavante. Así, la funcion residual (residual error, y-ŷ) de este primer modelo será la columna de entrada o columna relevante para el segundo modelo computando la función residual del segundo modelo, iterando de manera continuada hasta que alcance errores residuales iguales a cero, minimizando así el mean squared error. Gradient Boosting actualiza los coeficientes computando el gradiente negativo de la función de error con respeto a la predicción. 
 
 Una variante del Gradient Boosting es el eXtreme Gradiente Boosting, que aplica una regularización para ser más rápido y más eficiente que el Gradient Boosting. 
 
@@ -289,7 +288,7 @@ Otro punto a destacar es que el hecho de haber enriquecido los datos con variabl
 
 # 9. Next steps & Proposals
 ## Next steps
-- Los modelos que han aproximado mejor la predicción requieren una gran capacidad de computación y además són muy sensibles a los ajustes seleccionados de los parámetros. Para obtener un rendimiento los más optimo posible sería recomendable seguir buscando de manera exhaustiva dichos parámetros.
+- Los modelos que han aproximado mejor la predicción requieren una gran capacidad de computación y además són muy sensibles a los ajustes seleccionados de los parámetros. Para obtener un rendimiento los más óptimo posible sería recomendable seguir buscando de manera exhaustiva dichos parámetros.
 
 - Realizar cuatro modelos diferenciados para cada estación del año atendiendo a los comportamientos específicos de los usuarios, posiblemente relacionado con los efectos meteorológicos.
 
