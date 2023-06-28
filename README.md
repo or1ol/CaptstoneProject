@@ -6,7 +6,7 @@
 
 
 # 1. Introducción al problema
-El reto propuesto para el proyecto Capstone consiste en predecir el porcentaje de sitios disponibles para aparcar las bicis de Bicing Barcelona por estación según sus datos históricos. Estos son recogidos y publicados mensualmente al portal Open Data del ayuntamiento de Barcelona, y contienen parametros relativos a cada estación y sus bicicletas.
+El reto propuesto para el proyecto Capstone consiste en predecir el porcentaje de sitios disponibles para aparcar las bicis de Bicing Barcelona por estación según sus datos históricos. Estos datos son recogidos y publicados mensualmente al portal Open Data del ayuntamiento de Barcelona, y contienen parametros relativos a cada estación y sus bicicletas.
 
 Uno de los primeros problemas a afrontar es la gran cantidad de datos disponibles. Este hecho dificulta en gran medida las primeras etapas del proyecto dado que la obtención y primeros análisis de los datos llevan mucho tiempo y esfuerzo. Para conseguirlo, se usa Dask, una librería de Python que permite parallel computing.
 
@@ -20,7 +20,7 @@ En primer lugar, se ha realizado un análisis inicial con el objetivo de limpiar
 - Cálculo de los valores que se corresponden con 0 de las distintas variables de los datasets.
 - Clasificación de las variables según si son categóricas o numéricas, así como el cálculo de valores únicos que devuelve cada una de ellas. 
 - Eliminación de elementos duplicados de las variables en las que no tienen sentido, como por ejemplo el ‘last_reported’.
-- Eliminación de columnas que no son necesarias: 'last_updated', 'ttl', 'is_installed', 'status', 'is_charging_station', 'is_returning', y 'is_renting'.post_code
+- Eliminación de columnas que no son necesarias: 'last_updated', 'ttl', 'is_installed', 'status', 'is_charging_station', 'is_returning', y 'is_renting'.post_code.
 - Ajuste variable ‘status’, agrupando bajo el valor 0 ‘in_service’ y bajo 1, ‘closed’.
 - Crear nuevas columnas para el ‘last_reported’ y el ‘last_updated’, asignando nuevas variables a los valores devueltos.
 - Uniformar el formato de los timestamp a fecha/hora.
@@ -34,7 +34,7 @@ En primer lugar, se ha realizado un análisis inicial con el objetivo de limpiar
 ## 3.1. Descriptiva
 
 ### 3.1.1. Evolución del uso de las bicicletas a lo largo de los años
-A excepción del 2020, la tendencia del uso de las bicicletas en Barcelona a través del servicio del Bicing es creciente. Sin embargo, dicha subida se ve mermada en el propio 2020 a causa del Covid, una pandemia mundial que conllevó una cuarentena genérica de la población en España y que, consecuentemente, afectó a su vez a la capital catalana.
+A excepción del 2020, la tendencia del uso de las bicicletas en Barcelona a través del servicio del Bicing es creciente. Sin embargo, dicha subida se ve mermada en el propio 2020 a causa del Covid, una pandemia mundial que conllevó una cuarentena general de la población en España y que, consecuentemente, afectó a su vez a la capital catalana.
 
 ![image](https://github.com/or1ol/CaptstoneProject/assets/116820348/a78cffc3-b1cd-4e59-8f64-33f01733bb06)
 <img width="921" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/8045cd84-43bf-487b-90cf-b75620a049d4">
