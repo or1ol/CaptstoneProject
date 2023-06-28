@@ -60,7 +60,7 @@ Existen dos tipos de bicicletas en Bicing Barcelona: las mecánicas y las eléct
 
 ![image](https://github.com/or1ol/CaptstoneProject/assets/116120046/fe33b1e1-589e-4703-b280-cf2c83e8230f)
 
-Para entender el comportamiento de esta variable, se observa el numero medio de bicis disponibles para cada hora del dia por los diferentes meses del año y días de la semana. 
+Para entender el comportamiento de esta variable, se observa el numero medio de bicis disponibles para cada hora del día por los diferentes meses del año y días de la semana. 
 
 <img width="1041" alt="image" src="https://github.com/or1ol/CaptstoneProject/assets/116820348/543e0612-599c-42e2-a8d8-fe071b2978eb">
 
@@ -175,7 +175,7 @@ Tras el análisis realizado, con el objetivo de ajustar más los datos, se han r
 ## Models:
 
 ### Linear Regresion:
-#### Descripcion: 
+#### Descripción: 
 Linear Regresion es un modelo estadístico que se usa para explicar la varianza de un incognita a través de otras variables (x1,x2,x3,...xn) con una función lineal. 
 
 Por otro lado, para poder capturar los efectos no lineales de las variables independientes (x1,x2,x3,...xn) utilizaríamos los siguientes modelos:
@@ -191,7 +191,7 @@ ElasticNet:
 Es un modelo de regression lineal que combina los dos anteriores. Utiliza el término de penalización para minimizar los coeficientes y ponerlos cerca de cero. Aplica una combinacion de l1-norm y l2-norm de los coeficientes. Además, incorpora un parámtro llamado "Lambda" para controlar el balance entre las dos normas. Cuando lambda es cero el modelo es equivalente a un modelo Lasso, y cuando por contrario es uno, el modelo es equivalente a Ridge. De esta forma, ElasticNet puede adaptarse a diferente situaciones y datasets.  
 
 ### Decision tree:
-#### Descripcion: 
+#### Descripción: 
 Se trata de un algoritmo de Machine Learning. Es un método de clasificación que, una vez entrenado, se asemeja a una estructura de "if-then statments" ordenadas en un árbol. Mediante el Decision Tree se ve de manera muy simple como se realiza la toma de decisiones, ya que solo sigue el camino
 desde arriba hasta abajo contestando a todas las preguntas planteadas correctamente
 hasta llegar a un resultado, y con el "trace back" desde este nodo final da la clasificación
@@ -205,7 +205,7 @@ En conclusion, el Max_Depth = 12 ha sido el mejor parametro:
 ![prueba insertar imagen](./img/DecisionTreeFineTuning.png)
 
 ### Random forest:
-#### Descripcion: 
+#### Descripción: 
 Random Forest crea un conjunto aleatorio de Decision trees, con la ventaja que se puede usar tanto para clasificar como para problemas de regresión. De modo muy resumido, cuando está generando un árbol en un
 conjunto (también nombrado bosque) aleatorio, solo se considera un subconjunto también aleatorio de las características para dividir un nodo.
 
@@ -217,7 +217,7 @@ En conclusion, el Max_Depth = 12 ha sido el mejor parametro:
 ![prueba insertar imagen](./img/RandomForestFineTuning.png)
 
 ### Grandient Boosting:
-#### Descripcion: 
+#### Descripción: 
 Gradient Boosting es una técnica de machine learning basada en ensambling, combinando varios modelos débiles en serie y generando un modelo más robusto. Este modelo aprende de forma sequencial, usando los peores casos del modelo anterior en el siguiente para mejorar la predición. 
 
 El primer modelo débil en gradient boosting no se entrena sobre el dataset, pero devuele la media de la columna más relavante. Así, la funcion residual (residual error, y-ŷ) de este primer modelo será la columna de entrada o columna relevante para el segundo modelo computando la función residual del segundo modelo, iterando de manera continuada hasta que alcanze errores residuales iguales a cero, minimizando así el mean squared error. Gradient boosting actualiza los coeficientes computando el gradiente negativo de la función de error con respeto a la predicción. 
