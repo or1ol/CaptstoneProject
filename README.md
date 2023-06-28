@@ -167,7 +167,7 @@ Tras el análisis realizado, con el objetivo de ajustar más los datos, se han r
 - Se han eliminado las columnas 'num_docks_available', 'timestamp'. 'num_bikes_available_types.ebike', 'num_bikes_available_types.mechanical', 'num_bikes_available'.
 - Cuando el valor total de bicicletas disponibles no coincida con la suma del total de bicicletas mecánicas y electricas, se decide ajustar el valor de bicicletas totales disponibles con el valor de la suma de ambas tipologías de bicicleta.
 - Merge con datos de festivos y meteorológicos.
-- Eliminar station_id (va en el punto 6).
+- Eliminar station_id.
 
 
 # 6. Data prediction (model comparison)
@@ -218,17 +218,18 @@ En conclusion, el Max_Depth = 12 ha sido el mejor parametro:
 
 ### Grandient Boosting:
 #### Descripcion: 
-Boosting es una tecnica de machine learning de ensambling, combinando varios modelos debiles en series. Generando un modelo mas rebusto. Este modelo es un modelo que aprende de forma sequencial, los peores casos del modelo anterior con la intencion de mejorar esta predicion. 
+Gradient Boosting es una técnica de machine learning basada en ensambling, combinando varios modelos débiles en serie y generando un modelo más robusto. Este modelo aprende de forma sequencial, usando los peores casos del modelo anterior en el siguiente para mejorar la predición. 
 
-El primer modelo debil en gradient boosting, no se entrena sobre la dataset, a cambio, devuele la media de la columna relavante. Asi que la funcion residual (residual error, y-ŷ) de este primer modelo sera la columna de entrada or columna relevante para el segundo modelo computando la funcion residual del segon modelo que sera la entrada para el sigueinte modelo, y a continuacion iterativamente hasta que alcanze errores residuales iqual a zero, minimizando asi el mean squared error. Gradiente boosting actualiza los coeficientes computando el gradiente negativo de la funcion de error en respeto a la prediccion. 
+El primer modelo débil en gradient boosting no se entrena sobre el dataset, pero devuele la media de la columna más relavante. Así, la funcion residual (residual error, y-ŷ) de este primer modelo será la columna de entrada o columna relevante para el segundo modelo computando la función residual del segundo modelo, iterando de manera continuada hasta que alcanze errores residuales iguales a cero, minimizando así el mean squared error. Gradient boosting actualiza los coeficientes computando el gradiente negativo de la función de error con respeto a la predicción. 
 
-Una variante del Gradient Boosting es el eXtreme Gradiente Boosting, aplicando una regularizacion siendo mas rapido y mas eficiente que el Gradiente boosting. 
+Una variante del Gradient Boosting es el eXtreme Gradiente Boosting, que aplica una regularización para ser más rápido y más eficiente que el Gradient Boosting. 
 
 #### Parameters:
-Debido al tiempo de ejecucion este modelo no ha sido capaz de ejecutar una funcion muy cara a la computacion como el gridsearch cv buscando los mejores parametros.
-El mejor valor escogido ha sido n_estimators igual a 100 (valor por default), y el max_depth igual a 12. 
+Debido al tiempo de ejecución, no ha sido posible encontrar los mejores parámetros con este modelo,al igual que con gridsearch cv.
 
-Una prueba de mejorar los parametros de eXtremeGradientBoosting
+El valor escogido para n_estimators ha sido 100 (valor por default), y el max_depth ha sido 12. 
+
+Este ha sido el resultado al intentar encontrar los mejores valores para los parámetros de eXtremeGradientBoosting.
 
 ![prueba insertar imagen](./img/GradientBoostingFineTuning.png)
 
@@ -281,6 +282,11 @@ Finalmente, se prueba el modelo de Gradient Boosting. De este modelo se conoce q
 
 # 8. Conclusions
 
+Los resultados obtenidos indican que el modelo eXtreme Gradient Boosting ha dado el mejor rendimiento en la predicción de la disponibilidad de Bicing Barcelona, con un error de 0.10281. Random Forest obtiene el segundo mejor resultado, con un error de 0.10759, seguido por Decision Tree con un error de 0.10918.
+
+Con todo, se observa que los modelos de ensambling, como el eXtreme Gradient Boosting y Random Forest, tienden a ser más efectivos en la predicción de la disponibilidad de bicicletas Bicing en comparación con los modelos de árbol de decisión individual, gracias al hecho que combina múltiples modelos más débiles. Otro aspecto positivo a tener en cuenta con respecto a otros modelos es que éste no se ve tan afectado por overfitting, mostrando una mayor estabilidad.
+
+Otro punto a destacar es que el hecho de haber enriquecido los datos con variables relevantes detectadas gracias a la exploración previa de los datos ha significado una mejora notable en cuanto a los resultados obtenidos. Este hecho se ha comprobado entrenando el mismo modelo con  el dataset original y el dataset enriquecido con información meteorológica y de los días festivos del periodo analizado.
 
 ctx0, ctx1, ctx2, ctx3, ctx4
 
@@ -293,11 +299,14 @@ Data de geolocalization
 
 # 9. Next steps & Proposals
 ## Next steps
+
+- Los modelos que han aproximado mejor la predicción requieren una gran capacidad de computación y además són muy sensibles a los ajustes seleccionados de los parámetros. Para obtener un rendimiento los más optimo posible sería recomendable seguir buscando de manera exhaustiva dichos parámetros.
+
 - Realizar cuatro modelos diferenciados para cada estación del año atendiendo a los comportamientos específicos de los usuarios, posiblemente relacionado con los efectos meteorológicos.
 
-
 ## Proposals
-- Estudiar les parades que en algun moment tenen 0 disponibilitat de bicis o 0 disponibilitat de docks - mal servei - possibilitat de solucionarho?
+
+- Paralelamente, se propone estudiar de manera individual las estaciones en los momentos que no tienen ninguna bicicleta o ningún dock disponible. Estas "roturas de stock", junto con las averías mecánicas de las bicicletas, se traducen en una de las peores experiencias de usuario. Es decir, intentar evitar que un usuario se encuentre con una estación sin ninguna bicicleta disponible, o por el contrario, un usuario que se dispone a aparcar la bicicleta no pueda encontrar ningún dock disponible para dejarla.
 
 
 # 10. Anexos (url a los notebooks)
